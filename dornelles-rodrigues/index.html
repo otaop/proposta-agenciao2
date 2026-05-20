@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Proposta — Dornelles & Rodrigues Advogados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="deck-stage.js"></script>
+<style>
+  :root {
+    --bg: #191526;
+    --bg-deep: #120F1D;
+    --ink: #F4F2F8;
+    --ink-soft: #C9C3DB;
+    --ink-mute: #8A839E;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.14);
+    --accent: #E89A82;    /* coral discreto */
+    --accent-soft: #E89A8230;
+    --lilac: #8B7BB8;
+    --card: rgba(255, 255, 255, 0.025);
+    --card-hi: rgba(255, 255, 255, 0.045);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: var(--ink); }
+
+  deck-stage > section {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 70% 55% at 88% -10%, rgba(232,154,130,0.08), transparent 60%),
+      radial-gradient(ellipse 55% 70% at -5% 110%, rgba(139,123,184,0.10), transparent 60%),
+      radial-gradient(ellipse 90% 90% at 50% 50%, rgba(255,255,255,0.015), transparent 70%),
+      var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Common chrome ---------- */
+  .frame {
+    position: absolute;
+    inset: 72px 96px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .corner-mark {
+    position: absolute;
+    top: 56px;
+    left: 96px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    z-index: 5;
+  }
+  .corner-mark .dot {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(232,154,130,0.15);
+  }
+  .corner-mark .text {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .pager {
+    position: absolute;
+    bottom: 48px;
+    right: 96px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+  .pager strong { color: var(--ink); font-weight: 500; }
+
+  .brand-tag {
+    position: absolute;
+    bottom: 48px;
+    left: 96px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--ink-mute);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .brand-tag .o2 {
+    width: 125px;
+    height: 26px;
+    background: url("assets/logo-o2.png") left center / contain no-repeat;
+    filter: brightness(1) opacity(0.9);
+  }
+  .brand-tag span:not(.o2) { display: none; }
+
+  /* ---------- Type system ---------- */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 8px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  h1, h2, h3, h4, p { margin: 0; }
+
+  .display {
+    font-family: 'Inter Tight', 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 96px;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  .display em {
+    font-style: normal;
+    color: var(--ink);
+  }
+  .display .soft {
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+
+  .h-title {
+    font-family: 'Inter Tight', 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 72px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .h-section {
+    font-family: 'Inter Tight', 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 56px;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  .lead {
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    font-weight: 400;
+    max-width: 720px;
+  }
+
+  .body {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    font-weight: 400;
+  }
+
+  .small {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-mute);
+  }
+
+  /* ---------- Slide 1: Capa ---------- */
+  .cover { justify-content: center; gap: 40px; z-index: 2; }
+  .cover .display { max-width: 1500px; font-size: 84px; }
+  .rays {
+    position: absolute;
+    top: 50%;
+    right: -200px;
+    transform: translateY(-50%);
+    width: 1100px;
+    height: 1100px;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .rays svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .cover .meta {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 64px;
+    max-width: 1100px;
+    color: var(--ink-mute);
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .cover .meta strong {
+    display: block;
+    color: var(--ink);
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    text-transform: none;
+    font-weight: 500;
+    margin-top: 10px;
+  }
+  .cover .topline {
+    position: absolute;
+    top: 56px;
+    right: 96px;
+    color: var(--ink-mute);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- Slide 2: Contexto ---------- */
+  .ctx { display: grid; grid-template-columns: 1fr 0.85fr; gap: 120px; align-items: center; height: 100%; }
+  .ctx .left { padding-top: 60px; }
+  .ctx .left .h-title { margin-top: 28px; max-width: 760px; }
+  .ctx .left .lead { margin-top: 36px; }
+  .ctx .right { position: relative; height: 700px; }
+  .ctx .quote {
+    border-left: 2px solid var(--accent);
+    padding: 8px 0 8px 28px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.45;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .ctx .quote .who {
+    margin-top: 20px;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+  }
+  .ctx .right-stack {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  /* ---------- Slide 3: Hoje ---------- */
+  .today { justify-content: center; padding-bottom: 60px; }
+  .today .h-section { margin-top: 56px; max-width: 1100px; }
+  .today .lead { margin-top: 32px; }
+  .today .strip {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .today .shot {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #0c0a16;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6);
+    aspect-ratio: 4/3;
+    position: relative;
+  }
+  .today .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    opacity: 0.92;
+  }
+  .today .shot .label {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: rgba(15, 12, 25, 0.75);
+    padding: 6px 10px;
+    border-radius: 100px;
+    backdrop-filter: blur(8px);
+  }
+  .today .shot-caption {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--ink-mute);
+  }
+
+  /* ---------- Slide 4: Detalhes ---------- */
+  .details { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 80px; height: 100%; align-items: center; }
+  .details .left { padding-top: 40px; }
+  .details .h-section { margin-top: 24px; max-width: 720px; }
+  .details .lead { margin-top: 28px; max-width: 620px; }
+  .details .right { position: relative; }
+  .details .hero-frame {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 40px 90px -30px rgba(0,0,0,0.7);
+    aspect-ratio: 16/10;
+    background: #0c0a16;
+  }
+  .details .hero-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .details .notes {
+    margin-top: 32px;
+    display: grid;
+    gap: 18px;
+  }
+  .details .note {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .details .note .n {
+    width: 28px; height: 28px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 500;
+    display: grid;
+    place-items: center;
+    font-family: 'Inter', sans-serif;
+  }
+  .details .note .t {
+    color: var(--ink);
+    font-size: 19px;
+    line-height: 1.45;
+    font-weight: 400;
+  }
+  .details .note .t b {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ---------- Slide 5: Pontos ---------- */
+  .points { justify-content: center; }
+  .points .h-section { max-width: 1100px; margin-top: 56px; }
+  .points .lead { margin-top: 28px; }
+  .points .grid {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .points .card {
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 16px;
+    padding: 36px 32px;
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: background .3s;
+  }
+  .points .card .num {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .points .card h3 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-top: 16px;
+  }
+  .points .card p {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-top: 24px;
+  }
+
+  /* ---------- Slide 6/7: Direção visual ---------- */
+  .dir { display: grid; grid-template-columns: 0.78fr 1.22fr; gap: 96px; height: 100%; align-items: center; }
+  .dir .left { padding-top: 60px; }
+  .dir .h-section { margin-top: 24px; max-width: 500px; }
+  .dir .lead { margin-top: 28px; max-width: 460px; }
+  .dir .principles {
+    margin-top: 40px;
+    display: grid;
+    gap: 16px;
+  }
+  .dir .principles li {
+    list-style: none;
+    color: var(--ink);
+    font-size: 20px;
+    padding-left: 22px;
+    position: relative;
+    font-weight: 400;
+  }
+  .dir .principles li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 11px;
+    width: 8px; height: 1px;
+    background: var(--accent);
+  }
+  .dir .right { position: relative; }
+  .dir .refs {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    height: 760px;
+  }
+  .dir .ref {
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: #0c0a16;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.55);
+  }
+  .dir .ref img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .dir .ref.big { grid-row: span 2; }
+  .dir .ref-caption {
+    position: absolute;
+    bottom: -34px;
+    left: 0;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  /* ---------- Slide 8/9: Escopo ---------- */
+  .scope { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; height: 100%; align-items: center; }
+  .scope .left { padding-top: 40px; }
+  .scope .h-section { margin-top: 24px; }
+  .scope .lead { margin-top: 28px; max-width: 540px; }
+  .scope .right { position: relative; }
+  .scope .deliver {
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--card);
+    padding: 48px 44px;
+  }
+  .scope .deliver .head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .scope .deliver .head h4 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .scope .deliver .head .price {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .scope .deliver ul {
+    list-style: none;
+    padding: 24px 0 0 0;
+    margin: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .scope .deliver li {
+    font-size: 22px;
+    color: var(--ink-soft);
+    padding-left: 28px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .scope .deliver li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 10px;
+    width: 12px; height: 1px;
+    background: var(--accent);
+    opacity: 0.8;
+  }
+  .scope .note-row {
+    margin-top: 22px;
+    font-size: 13px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- Slide 10: Investimento ---------- */
+  .invest { display: flex; flex-direction: column; justify-content: center; }
+  .invest .header { padding-top: 0; }
+  .invest .h-section { margin-top: 32px; max-width: 900px; font-size: 56px; }
+  .invest .cols {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1.22fr 1fr;
+    gap: 32px;
+    align-items: center;
+    flex: 1;
+    min-height: 0;
+  }
+  .invest .col {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 32px 30px 28px;
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    transition: transform .4s ease;
+  }
+  .invest .col.featured {
+    transform: scale(1.06);
+    background:
+      radial-gradient(ellipse 90% 50% at 50% 0%, rgba(232,154,130,0.12), transparent 60%),
+      linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border-color: rgba(232,154,130,0.4);
+    box-shadow: 0 50px 100px -30px rgba(232,154,130,0.22), 0 0 0 1px rgba(232,154,130,0.15);
+    z-index: 2;
+  }
+  .invest .col .tag {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #2a1a14;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 100px;
+  }
+  .invest .col .kind {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  .invest .col .name {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    color: var(--ink);
+    margin-top: 8px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+  .invest .col .price {
+    margin-top: 14px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 50px;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .invest .col .price .pre {
+    font-size: 24px;
+    color: var(--ink-mute);
+    font-weight: 400;
+    letter-spacing: 0;
+    margin-right: 6px;
+    vertical-align: top;
+    position: relative;
+    top: 14px;
+  }
+  .invest .col .savings {
+    margin-top: 10px;
+    font-size: 15px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .invest .col .divider {
+    height: 1px;
+    background: var(--line);
+    margin: 14px 0 12px;
+  }
+  .invest .col ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: grid; gap: 10px;
+  }
+  .invest .col li {
+    font-size: 19px;
+    color: var(--ink-soft);
+    padding-left: 22px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .invest .col li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 10px; height: 1px;
+    background: var(--accent);
+    opacity: 0.7;
+  }
+
+  /* ---------- Slide 11: Cronograma ---------- */
+  .schedule { justify-content: center; }
+  .schedule .h-section { margin-top: 56px; max-width: 1100px; }
+  .schedule .lead { margin-top: 24px; }
+  .schedule .timeline {
+    margin-top: 80px;
+    position: relative;
+  }
+  .schedule .timeline::before {
+    content: '';
+    position: absolute;
+    left: 60px; right: 60px;
+    top: 12px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line-strong) 10%, var(--line-strong) 90%, transparent);
+  }
+  .schedule .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    position: relative;
+  }
+  .schedule .step {
+    padding: 0 12px;
+    position: relative;
+  }
+  .schedule .step .dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    position: relative;
+    margin-bottom: 36px;
+  }
+  .schedule .step .dot::after {
+    content: '';
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .schedule .step .stage {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  .schedule .step h4 {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    color: var(--accent);
+    margin-top: 12px;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+  .schedule .step p {
+    margin-top: 18px;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .schedule .meta-row {
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    padding: 32px 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .schedule .meta-row .item .k {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .schedule .meta-row .item .v {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 22px;
+    color: var(--ink);
+    margin-top: 8px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* ---------- Slide 12: Escopo adicional ---------- */
+  .extra { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 96px; height: 100%; align-items: center; }
+  .extra .left { padding-top: 30px; }
+  .extra .h-section { margin-top: 24px; max-width: 540px; }
+  .extra .lead { margin-top: 28px; max-width: 520px; }
+  .extra .chips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .extra .chip {
+    position: relative;
+    border: 1px solid var(--line);
+    background: var(--card);
+    padding: 28px 30px 28px 38px;
+    border-radius: 14px;
+    font-size: 20px;
+    color: var(--ink);
+    line-height: 1.35;
+    font-weight: 500;
+    overflow: hidden;
+  }
+  .extra .chip::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 18px;
+    bottom: 18px;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 0 2px 2px 0;
+  }
+  .extra .chip .k {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  /* ---------- Slide 13: Encerramento ---------- */
+  .close-slide { display: flex; flex-direction: column; justify-content: center; }
+  .close-slide .display { max-width: 1500px; font-size: 64px; }
+  .close-slide .display .accent { color: var(--accent); }
+  .close-slide .lead { margin-top: 24px; font-size: 18px; max-width: 920px; }
+  .close-slide .sign {
+    margin-top: 64px;
+    display: flex; align-items: center; gap: 0;
+  }
+  .close-slide .sign .who {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .close-slide .sign .who .logo {
+    width: 280px;
+    height: auto;
+    display: block;
+  }
+  .close-slide .sign .who .tagline {
+    font-size: 14px;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+  }
+
+  /* Decorative ray pattern for cover */
+  .ray-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.6;
+    mix-blend-mode: screen;
+  }
+</style>
+</head>
+<body>
+
+<deck-stage>
+
+  <!-- ============================================================ -->
+  <!-- 01 — CAPA -->
+  <!-- ============================================================ -->
+  <section data-screen-label="01 Capa">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Proposta Comercial · 2026</span>
+    </div>
+
+    <!-- decorative rays -->
+    <div class="rays" aria-hidden="true">
+      <svg viewBox="0 0 800 800" fill="none">
+        <defs>
+          <linearGradient id="rayGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#E89A82" stop-opacity="0"/>
+            <stop offset="0.5" stop-color="#E89A82" stop-opacity="0.35"/>
+            <stop offset="1" stop-color="#E89A82" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <g stroke="url(#rayGrad)" stroke-width="1.2">
+          <line x1="400" y1="400" x2="900" y2="0"/>
+          <line x1="400" y1="400" x2="950" y2="80"/>
+          <line x1="400" y1="400" x2="990" y2="170"/>
+          <line x1="400" y1="400" x2="1020" y2="270"/>
+          <line x1="400" y1="400" x2="1040" y2="380"/>
+          <line x1="400" y1="400" x2="1040" y2="490"/>
+          <line x1="400" y1="400" x2="1020" y2="600"/>
+          <line x1="400" y1="400" x2="990" y2="700"/>
+          <line x1="400" y1="400" x2="950" y2="790"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="frame cover">
+      <h1 class="display">
+        Uma nova<br/>
+        presença digital<br/>
+        <span class="soft">para a Dornelles &amp; Rodrigues.</span>
+      </h1>
+
+      <div class="meta">
+        <div>
+          Projeto
+          <strong>Site institucional + Identidade visual</strong>
+        </div>
+        <div>
+          Cliente
+          <strong>Dornelles &amp; Rodrigues Advogados</strong>
+        </div>
+        <div>
+          Data
+          <strong>Maio · 2026</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag">
+      <span class="o2"></span>
+      <span>Agência O2 · Direção visual e desenvolvimento</span>
+    </div>
+    <div class="pager"><strong>01</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 02 — CONTEXTO -->
+  <!-- ============================================================ -->
+  <section data-screen-label="02 Contexto">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Contexto da proposta</span>
+    </div>
+
+    <div class="frame">
+      <div class="ctx">
+        <div class="left">
+          <div class="eyebrow">Por onde começamos</div>
+          <h2 class="h-title">
+            Uma evolução,<br/>
+            <span style="color: var(--ink-soft);">não uma ruptura.</span>
+          </h2>
+          <p class="lead">
+            O site que está no ar hoje cumpriu bem o seu papel ao longo destes anos
+            — apresentou o escritório, comunicou suas áreas e gerou contato.
+            <br/><br/>
+            A proposta agora é dar o próximo passo: atualizar essa base para uma linguagem
+            mais contemporânea, sóbria e à altura da maturidade que a Dornelles &amp; Rodrigues
+            já entrega aos seus clientes na prática.
+          </p>
+        </div>
+
+        <div class="right">
+          <div class="right-stack" style="text-align: left; justify-content: center; font-weight: 400; height: 700px">
+            <div class="quote" style="height: 206px">
+              "Não se trata de trocar o layout. Trata-se de transformar a percepção digital
+              do escritório — organizar melhor o conteúdo, valorizar a trajetória e construir
+              uma presença visual compatível com a confiança que a marca representa."
+              <div class="who">— Direção criativa · Agência O2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>02</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 03 — O QUE TEMOS HOJE -->
+  <!-- ============================================================ -->
+  <section data-screen-label="03 O que temos hoje">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Diagnóstico — presença atual</span>
+    </div>
+
+    <div class="frame today">
+      <div class="eyebrow" style="margin-top: 35px;">A base existente</div>
+      <h2 class="h-section" style="margin-top: 24px;">
+        O que está no ar hoje<br/>
+        — e o que ele já entrega.
+      </h2>
+      <p class="lead" style="width: 720px">
+        Antes de propor o novo, vale reconhecer o que o site atual faz bem:
+        comunica seriedade, apresenta as áreas com clareza e cumpre seu papel institucional.
+        É a base honesta sobre a qual vamos construir.
+      </p>
+
+      <div class="strip">
+        <div>
+          <div class="shot">
+            <div class="label">Hero · Página inicial</div>
+            <img src="assets/prints/01-hero.png" alt="" />
+          </div>
+          <div class="shot-caption">Primeira impressão e mensagem de 20 anos.</div>
+        </div>
+        <div>
+          <div class="shot">
+            <div class="label">Missão, Visão e Valores</div>
+            <img src="assets/prints/03-missao.png" alt="" />
+          </div>
+          <div class="shot-caption">Posicionamento e propósito do escritório.</div>
+        </div>
+        <div>
+          <div class="shot">
+            <div class="label">Contato &amp; Footer</div>
+            <img src="assets/prints/11-contato.png" alt="" />
+          </div>
+          <div class="shot-caption">Encerramento e canais de contato.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>03</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 04 — DETALHES QUE PEDEM EVOLUÇÃO -->
+  <!-- ============================================================ -->
+  <section data-screen-label="04 Detalhes">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Observações de um olhar atento</span>
+    </div>
+
+    <div class="frame">
+      <div class="details">
+        <div class="left">
+          <div class="eyebrow">Pontos de atenção</div>
+          <h2 class="h-section">
+            Detalhes que abrem<br/>espaço para evoluir.
+          </h2>
+          <p class="lead">
+            Quando observamos a página com calma, surgem oportunidades concretas
+            de elevar a percepção do escritório — sem reescrever sua história.
+          </p>
+
+          <div class="notes">
+            <div class="note">
+              <div class="n">1</div>
+              <div class="t"><b>Hierarquia visual uniforme.</b> Títulos, parágrafos e botões compartilham pesos próximos — falta um ponto claro de respiração para guiar o olhar.</div>
+            </div>
+            <div class="note">
+              <div class="n">2</div>
+              <div class="t"><b>Linguagem visual de 2020.</b> A estética é correta para o seu tempo; hoje há espaço para um tom mais editorial e premium.</div>
+            </div>
+            <div class="note">
+              <div class="n">3</div>
+              <div class="t"><b>Imagens institucionais genéricas.</b> A página utiliza fotografias de banco comuns em sites jurídicos — uma nova versão pode trabalhar com imagens mais autorais, com personalidade própria do escritório.</div>
+            </div>
+            <div class="note">
+              <div class="n">4</div>
+              <div class="t"><b>Áreas de atuação em listas densas.</b> O conteúdo é rico, mas a apresentação atual exige leitura linear; pode ganhar escaneabilidade.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="hero-frame">
+            <img src="assets/prints/01-hero.png" alt="Hero atual" />
+          </div>
+          <div style="margin-top: 20px; display: flex; gap: 16px;">
+            <div style="flex:1;" class="hero-frame">
+              <img src="assets/prints/04-metodo.png" alt="" style="object-position: center;" />
+            </div>
+            <div style="flex:1;" class="hero-frame">
+              <img src="assets/prints/07-atendemos.png" alt="" style="object-position: center;" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>04</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 05 — PONTOS DE EVOLUÇÃO -->
+  <!-- ============================================================ -->
+  <section data-screen-label="05 Pontos de evolução">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Para onde podemos evoluir</span>
+    </div>
+
+    <div class="frame points">
+      <div class="eyebrow">Quatro frentes de atualização</div>
+      <h2 class="h-section">
+        Onde a nova versão<br/>vai trabalhar.
+      </h2>
+      <p class="lead">
+        Quatro frentes complementares que, juntas, transformam a presença do escritório.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <div>
+            <div class="num">01 · Linguagem</div>
+            <h3>Estética mais editorial e premium</h3>
+          </div>
+          <p>Tipografia com hierarquia clara, paleta refinada e uso intencional de respiro — uma leitura que comunica maturidade antes mesmo da primeira palavra.</p>
+        </div>
+        <div class="card">
+          <div>
+            <div class="num">02 · Conteúdo</div>
+            <h3>Hierarquia e escaneabilidade</h3>
+          </div>
+          <p>Reorganização de áreas de atuação, método e diferenciais para que o visitante entenda o que o escritório faz em segundos, não em parágrafos.</p>
+        </div>
+        <div class="card">
+          <div>
+            <div class="num">03 · Marca</div>
+            <h3>Sistema visual consistente</h3>
+          </div>
+          <p>Paleta, tipografia, espaçamentos e padrões de composição alinhados — uma marca que se mantém reconhecível em qualquer aplicação digital.</p>
+        </div>
+        <div class="card">
+          <div>
+            <div class="num">04 · Base</div>
+            <h3>Mais controle, menos dependência</h3>
+          </div>
+          <p>Implementação em HTML/CSS proprietários, com performance, leveza e autonomia para evoluir o site sem amarras de plugins de terceiros.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>05</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 06 — DIREÇÃO VISUAL · SITE -->
+  <!-- ============================================================ -->
+  <section data-screen-label="06 Direção · Site">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Direção visual · Site</span>
+    </div>
+
+    <div class="frame">
+      <div class="dir">
+        <div class="left">
+          <div class="eyebrow">Inspiração · Site</div>
+          <h2 class="h-section">
+            Um site que respira<br/>autoridade.
+          </h2>
+          <p class="lead">
+            A direção visual aposta em sobriedade, espaços generosos
+            e uma estética digital contemporânea — sem perder a presença
+            institucional que um escritório de advocacia precisa transmitir.
+          </p>
+          <ul class="principles">
+            <li>Paleta sóbria com azul profundo</li>
+            <li>Tipografia editorial e leitura confortável</li>
+            <li>Blocos amplos, com hierarquia bem definida</li>
+            <li>Imagem institucional usada com critério</li>
+          </ul>
+        </div>
+
+        <div class="right">
+          <div class="refs">
+            <div class="ref big"><img src="assets/refs/site-01.webp" alt="" /></div>
+            <div class="ref"><img src="assets/refs/site-02.webp" alt="" /></div>
+            <div class="ref"><img src="assets/refs/brand-03.webp" alt="" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>06</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 07 — DIREÇÃO VISUAL · MARCA -->
+  <!-- ============================================================ -->
+  <section data-screen-label="07 Direção · Marca">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Direção visual · Identidade</span>
+    </div>
+
+    <div class="frame">
+      <div class="dir">
+        <div class="left">
+          <div class="eyebrow">Inspiração · Identidade</div>
+          <h2 class="h-section">
+            Uma marca que<br/>comunica solidez<br/>no detalhe.
+          </h2>
+          <p class="lead">
+            O caminho proposto preserva a memória visual existente,
+            mas refina cada elemento: símbolo, tipografia e aplicações
+            ganham um sistema coerente, pensado para impressos, digital
+            e materiais do dia a dia do escritório.
+          </p>
+          <ul class="principles">
+            <li>Símbolo claro e versátil</li>
+            <li>Paleta sóbria, com profundidade</li>
+            <li>Tipografia institucional e elegante</li>
+            <li>Aplicações pensadas para o digital</li>
+          </ul>
+        </div>
+
+        <div class="right">
+          <div class="refs">
+            <div class="ref big"><img src="assets/refs/brand-01.webp" alt="" /></div>
+            <div class="ref"><img src="assets/refs/brand-02.webp" alt="" /></div>
+            <div class="ref"><img src="assets/refs/brand-03.webp" alt="" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>07</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 08 — ESCOPO · SITE -->
+  <!-- ============================================================ -->
+  <section data-screen-label="08 Escopo · Site">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Escopo · Novo site institucional</span>
+    </div>
+
+    <div class="frame">
+      <div class="scope">
+        <div class="left">
+          <div class="eyebrow">Frente 01 · Site</div>
+          <h2 class="h-section">
+            Novo site<br/>institucional.
+          </h2>
+          <p class="lead">
+            Redesign completo da presença digital do escritório, com foco em
+            clareza, hierarquia e percepção de valor. Um site que apresenta
+            a Dornelles &amp; Rodrigues como ela é — séria, madura e referência
+            nas áreas em que atua.
+          </p>
+          <p class="lead" style="margin-top: 32px; font-size: 18px;">
+            Implementação em HTML, CSS e JavaScript próprios — sem dependência
+            de plugins ou construtores visuais externos.
+          </p>
+        </div>
+
+        <div class="right">
+          <div class="deliver">
+            <div class="head">
+              <h4>O que está incluso</h4>
+              <div class="price">R$ 4.500</div>
+            </div>
+            <ul>
+              <li>Redesign visual completo do site institucional</li>
+              <li>Implementação responsiva em HTML / CSS / JS</li>
+              <li>Reorganização das seções existentes com nova hierarquia</li>
+              <li>Tratamento editorial das áreas de atuação</li>
+              <li>Otimização básica de performance</li>
+              <li>SEO técnico inicial (meta, sitemap, semântica)</li>
+              <li>Formulário e canais de contato</li>
+              <li>Publicação final no domínio atual</li>
+            </ul>
+            <div class="note-row">Pagamento em duas parcelas · Prazo estimado de 25 a 35 dias úteis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>08</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 09 — ESCOPO · IDENTIDADE -->
+  <!-- ============================================================ -->
+  <section data-screen-label="09 Escopo · Identidade">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Escopo · Identidade visual atualizada</span>
+    </div>
+
+    <div class="frame">
+      <div class="scope">
+        <div class="left">
+          <div class="eyebrow">Frente 02 · Identidade</div>
+          <h2 class="h-section">
+            Identidade visual<br/>atualizada.
+          </h2>
+          <p class="lead">
+            Refinamento da marca atual para que ela comunique a mesma solidez
+            que o escritório já entrega na prática. Um sistema visual coeso,
+            pensado para se manter consistente em todas as aplicações.
+          </p>
+          <p class="lead" style="margin-top: 32px; font-size: 18px;">
+            A memória visual da Dornelles &amp; Rodrigues é preservada — o que muda
+            é o nível de acabamento e consistência do sistema.
+          </p>
+        </div>
+
+        <div class="right">
+          <div class="deliver">
+            <div class="head">
+              <h4>O que está incluso</h4>
+              <div class="price">R$ 4.000</div>
+            </div>
+            <ul>
+              <li>Refinamento do símbolo e versões da marca</li>
+              <li>Paleta de cores institucional</li>
+              <li>Tipografias primária e secundária</li>
+              <li>Sistema visual de apoio (grafismos, padrões, marcadores)</li>
+              <li>Aplicações para uso digital</li>
+              <li>Mini manual de marca em PDF</li>
+              <li>Arquivos editáveis e abertos para uso futuro</li>
+            </ul>
+            <div class="note-row">Pagamento em duas parcelas · Prazo estimado de 20 a 30 dias úteis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>09</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 10 — INVESTIMENTO -->
+  <!-- ============================================================ -->
+  <section data-screen-label="10 Investimento">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Investimento</span>
+    </div>
+
+    <div class="frame invest">
+      <div class="header" style="padding: 35px 0 0 0; margin: 0">
+        <div class="eyebrow">Três caminhos possíveis</div>
+        <h2 class="h-section" style="margin-top: 20px;">Investimento.</h2>
+      </div>
+
+      <div class="cols" style="height: 720px; margin-top: 72px;">
+        <div class="col" style="padding: 52px 30px 48px">
+          <div class="kind">Frente 01</div>
+          <div class="name">Site<br/>institucional</div>
+          <div class="price"><span class="pre">R$</span>4.500</div>
+          <div class="divider"></div>
+          <ul>
+            <li>Redesign visual completo</li>
+            <li>Implementação responsiva em HTML</li>
+            <li>Reorganização das seções</li>
+            <li>SEO técnico inicial</li>
+            <li>Formulário e canais de contato</li>
+            <li>Publicação final</li>
+          </ul>
+        </div>
+
+        <div class="col featured" style="padding: 52px 30px 48px">
+          <div class="tag">Recomendado</div>
+          <div class="kind">Pacote completo</div>
+          <div class="name">Site +<br/>Identidade visual</div>
+          <div class="price"><span class="pre">R$</span>7.500</div>
+          <div class="savings">— Economia de R$ 1.000 frente à contratação separada.</div>
+          <div class="divider"></div>
+          <ul>
+            <li>Tudo do site institucional</li>
+            <li>Tudo da identidade visual atualizada</li>
+            <li>Direção visual única para marca e site</li>
+            <li>Mini manual de aplicação da marca</li>
+            <li>Maior consistência em todos os pontos de contato</li>
+            <li>Cronograma integrado entre as duas entregas</li>
+          </ul>
+        </div>
+
+        <div class="col" style="padding: 52px 30px 48px">
+          <div class="kind">Frente 02</div>
+          <div class="name">Identidade<br/>visual</div>
+          <div class="price"><span class="pre">R$</span>4.000</div>
+          <div class="divider"></div>
+          <ul>
+            <li>Refinamento da marca atual</li>
+            <li>Paleta de cores institucional</li>
+            <li>Tipografias primária e secundária</li>
+            <li>Versões da marca</li>
+            <li>Aplicações digitais</li>
+            <li>Mini manual em PDF</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>10</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 11 — CRONOGRAMA & VALIDADE -->
+  <!-- ============================================================ -->
+  <section data-screen-label="11 Cronograma">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Como caminhamos juntos</span>
+    </div>
+
+    <div class="frame schedule">
+      <div class="eyebrow">Próximos passos</div>
+      <h2 class="h-section">
+        Da assinatura ao site no ar,<br/>em quatro etapas claras.
+      </h2>
+
+      <div class="timeline">
+        <div class="steps">
+          <div class="step">
+            <div class="dot"></div>
+            <div class="stage">Etapa 01</div>
+            <h4>Assinatura<br/>do contrato</h4>
+            <p>Formalização do início do projeto, com escopo, prazos e condições alinhados de forma clara.</p>
+          </div>
+          <div class="step">
+            <div class="dot"></div>
+            <div class="stage">Etapa 02</div>
+            <h4>Confirmação<br/>de pagamento</h4>
+            <p>Primeira parcela liberada para reserva da agenda e início imediato dos trabalhos.</p>
+          </div>
+          <div class="step">
+            <div class="dot"></div>
+            <div class="stage">Etapa 03</div>
+            <h4>Briefing<br/>e materiais</h4>
+            <p>Coleta organizada de informações, textos, imagens e contexto necessários para o projeto.</p>
+          </div>
+          <div class="step">
+            <div class="dot"></div>
+            <div class="stage">Etapa 04</div>
+            <h4>Execução<br/>e entrega</h4>
+            <p>Desenvolvimento com checkpoints, aprovações intermediárias e publicação final no domínio.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="meta-row">
+        <div class="item">
+          <div class="k">Prazo estimado</div>
+          <div class="v">25 a 45 dias úteis</div>
+        </div>
+        <div class="item">
+          <div class="k">Forma de pagamento</div>
+          <div class="v">2x · 50% início + 50% entrega</div>
+        </div>
+        <div class="item">
+          <div class="k">Validade da proposta</div>
+          <div class="v">30 dias a contar desta data</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>11</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 12 — ESCOPO ADICIONAL -->
+  <!-- ============================================================ -->
+  <section data-screen-label="12 Escopo adicional">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Possibilidades de expansão</span>
+    </div>
+
+    <div class="frame">
+      <div class="extra">
+        <div class="left">
+          <div class="eyebrow">O que não está incluído</div>
+          <h2 class="h-section">
+            Espaço para crescer<br/>quando fizer sentido.
+          </h2>
+          <p class="lead">
+            Os valores apresentados consideram um projeto institucional objetivo,
+            partindo do conteúdo atual do escritório. Novos módulos, funcionalidades
+            ou expansões podem ser orçados separadamente, conforme a necessidade
+            for surgindo ao longo do tempo.
+          </p>
+        </div>
+
+        <div>
+          <div class="chips">
+            <div class="chip"><div class="k">Conteúdo</div>Blog ou área de artigos jurídicos</div>
+            <div class="chip"><div class="k">Gestão</div>CMS / painel administrativo</div>
+            <div class="chip"><div class="k">Estrutura</div>Páginas internas adicionais</div>
+            <div class="chip"><div class="k">Texto</div>Copywriting profissional completo</div>
+            <div class="chip">IMAGEM
+Sessão fotográfica institucional gerada por IA</div>
+            <div class="chip"><div class="k">Impressos</div>Papelaria e materiais físicos</div>
+            <div class="chip"><div class="k">Relacionamento</div>Newsletter e automações</div>
+            <div class="chip"><div class="k">Suporte</div>Manutenção mensal contínua</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>12</strong> / 13</div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 13 — ENCERRAMENTO -->
+  <!-- ============================================================ -->
+  <section data-screen-label="13 Encerramento">
+    <div class="corner-mark">
+      <span class="dot"></span>
+      <span class="text">Encerramento</span>
+    </div>
+
+    <div class="frame close-slide">
+      <div class="eyebrow">Para fechar</div>
+      <h2 class="display" style="margin-top: 28px;">
+        Mais do que trocar o layout —<br/>
+        <span class="soft">atualizar a percepção digital</span> do escritório.
+      </h2>
+      <p class="lead">
+        A nova presença visual valoriza a trajetória de mais de 20 anos
+        da Dornelles &amp; Rodrigues e constrói uma comunicação mais clara,
+        contemporânea e à altura da confiança que a marca já representa.
+      </p>
+
+      <div class="sign">
+        <div class="who">
+          <img class="logo" src="assets/logo-o2.png" alt="Agência O2" />
+          <div class="tagline">Direção visual · Sites institucionais · Identidade de marca</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pager"><strong>13</strong> / 13</div>
+  </section>
+
+</deck-stage>
+
+</body>
+</html>
