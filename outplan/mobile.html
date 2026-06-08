@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Proposta — Outplan · Vídeo OutBuyCenter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #191526;
+    --bg-deep: #120F1D;
+    --ink: #F4F2F8;
+    --ink-soft: #C9C3DB;
+    --ink-mute: #8A839E;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.14);
+    --accent: #E89A82;
+    --accent-soft: #E89A8230;
+    --card: rgba(255, 255, 255, 0.025);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    font-size: 16px;
+  }
+
+  /* Top bar with progress */
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(25, 21, 38, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topbar .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .topbar .brand .dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .topbar .brand .logo {
+    width: 70px;
+    height: auto;
+    display: block;
+    opacity: 0.95;
+  }
+  .topbar .counter {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--ink-mute);
+    font-family: 'Inter Tight', sans-serif;
+  }
+  .topbar .counter strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    background: var(--accent);
+    width: 0%;
+    transition: width .15s ease;
+  }
+
+  main { padding-top: 50px; }
+
+  /* Section/screen base */
+  .screen {
+    padding: 56px 24px 64px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .screen:last-child { border-bottom: none; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Inter Tight', 'Inter', sans-serif; letter-spacing: -0.02em; }
+
+  .display {
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1.08;
+    margin-bottom: 24px;
+  }
+  .display .soft { color: var(--ink-soft); font-weight: 400; display: block; }
+
+  .h-title {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .h-title .soft { color: var(--ink-soft); font-weight: 400; }
+
+  .h-section {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.12;
+    margin-bottom: 18px;
+  }
+
+  .lead {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+  .lead b, .lead strong { color: var(--ink); font-weight: 600; }
+
+  .body { font-size: 16px; color: var(--ink-soft); line-height: 1.6; }
+
+  .small { font-size: 13px; color: var(--ink-mute); letter-spacing: 0.05em; }
+
+  /* ---------- Cover ---------- */
+  .cover-screen {
+    padding: 32px 24px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-screen .eyebrow { margin-bottom: 22px; }
+  .cover-screen .display { font-size: 42px; max-width: 420px; margin-bottom: 0; }
+  .cover-screen .meta {
+    margin-top: 36px;
+    display: grid;
+    gap: 20px;
+  }
+  .cover-screen .meta .row {
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+  .cover-screen .meta .k {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .cover-screen .meta .v {
+    font-size: 16px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* rays decoration */
+  .cover-screen .rays {
+    position: absolute;
+    top: 30%;
+    right: -200px;
+    width: 500px;
+    height: 500px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* ---------- Quote block (slide 2) ---------- */
+  .quote-card {
+    border-left: 2px solid var(--accent);
+    padding: 14px 0 14px 22px;
+    margin-top: 28px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .quote-card .who {
+    margin-top: 18px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ---------- Image mosaic (slides 3 & 4) ---------- */
+  .mosaic {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .mosaic .tile {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0c0a16;
+    aspect-ratio: 1 / 1;
+  }
+  .mosaic .tile.wide {
+    grid-column: span 2;
+    aspect-ratio: 16 / 9;
+  }
+  .mosaic .tile img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+    opacity: 0.95;
+  }
+  .mosaic .tile .label {
+    position: absolute;
+    top: 10px; left: 10px;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: rgba(15, 12, 25, 0.78);
+    padding: 5px 8px;
+    border-radius: 100px;
+    backdrop-filter: blur(6px);
+  }
+
+  /* ---------- Strip of images (legacy) ---------- */
+  .strip { display: grid; gap: 20px; margin-top: 28px; }
+  .strip .shot {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0c0a16;
+    aspect-ratio: 4/3;
+    position: relative;
+  }
+  .strip .shot img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+    opacity: 0.92;
+  }
+  .strip .shot .label {
+    position: absolute;
+    top: 12px; left: 12px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: rgba(15, 12, 25, 0.78);
+    padding: 5px 9px;
+    border-radius: 100px;
+    backdrop-filter: blur(6px);
+  }
+  .strip .caption {
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-top: 10px;
+  }
+
+  /* ---------- Notes list (slide 4) ---------- */
+  .notes { margin-top: 28px; display: grid; gap: 18px; }
+  .note {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    gap: 14px;
+    align-items: start;
+  }
+  .note .n {
+    width: 26px; height: 26px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+    display: grid; place-items: center;
+    margin-top: 2px;
+  }
+  .note .t {
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.45;
+  }
+  .note .t b { font-weight: 600; }
+
+  .hero-images { margin-top: 28px; display: grid; gap: 16px; }
+  .hero-frame {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    aspect-ratio: 16/10;
+    background: #0c0a16;
+  }
+  .hero-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+
+  /* ---------- Point cards (slide 5) ---------- */
+  .points-grid { margin-top: 28px; display: grid; gap: 16px; }
+  .point-card {
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 14px;
+    padding: 24px 22px;
+  }
+  .point-card .num {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .point-card h3 {
+    font-size: 21px;
+    font-weight: 600;
+    margin-top: 10px;
+    line-height: 1.2;
+  }
+  .point-card p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-top: 14px;
+  }
+
+  /* ---------- Direction refs (slide 6/7) ---------- */
+  .refs { margin-top: 28px; display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+  .ref {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #0c0a16;
+    aspect-ratio: 4/3;
+  }
+  .ref.wide { grid-column: span 2; aspect-ratio: 16/10; }
+  .ref img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .principles { margin-top: 24px; display: grid; gap: 10px; list-style: none; }
+  .principles li {
+    color: var(--ink);
+    font-size: 15px;
+    padding-left: 18px;
+    position: relative;
+  }
+  .principles li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 10px;
+    width: 8px; height: 1px;
+    background: var(--accent);
+  }
+
+  /* ---------- Deliverables / pricing (slide 8/9) ---------- */
+  .deliver {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--card);
+    padding: 28px 24px;
+    margin-top: 24px;
+  }
+  .deliver .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .deliver .head h4 {
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .deliver .head .price {
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .deliver ul {
+    list-style: none;
+    padding: 20px 0 0;
+    display: grid;
+    gap: 12px;
+  }
+  .deliver li {
+    font-size: 15px;
+    color: var(--ink-soft);
+    padding-left: 22px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .deliver li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 10px; height: 1px;
+    background: var(--accent);
+    opacity: 0.8;
+  }
+  .deliver .note-row {
+    margin-top: 18px;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+
+  /* ---------- Investment cards (slide 10) ---------- */
+  .invest-stack { display: grid; gap: 18px; margin-top: 32px; }
+  .invest-col {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px 24px;
+    background: var(--card);
+  }
+  .invest-col.featured {
+    border-color: rgba(232,154,130,0.4);
+    background:
+      radial-gradient(ellipse 90% 50% at 50% 0%, rgba(232,154,130,0.12), transparent 60%),
+      var(--card);
+    box-shadow: 0 30px 60px -20px rgba(232,154,130,0.18);
+  }
+  .invest-col .tag {
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: var(--accent);
+    color: #2a1a14;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 100px;
+  }
+  .invest-col .kind {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  .invest-col .name {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--ink);
+    margin-top: 6px;
+    line-height: 1.15;
+  }
+  .invest-col .price {
+    margin-top: 12px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 38px;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .invest-col .price .pre {
+    font-size: 18px;
+    color: var(--ink-mute);
+    font-weight: 400;
+    margin-right: 4px;
+    vertical-align: top;
+    position: relative;
+    top: 10px;
+  }
+  .invest-col .savings {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .invest-col .divider {
+    height: 1px;
+    background: var(--line);
+    margin: 14px 0 12px;
+  }
+  .invest-col ul { list-style: none; display: grid; gap: 8px; }
+  .invest-col li {
+    font-size: 15px;
+    color: var(--ink-soft);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .invest-col li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 8px; height: 1px;
+    background: var(--accent);
+    opacity: 0.7;
+  }
+
+  /* ---------- Schedule (slide 11) ---------- */
+  .steps-stack { margin-top: 32px; display: grid; gap: 28px; position: relative; }
+  .steps-stack::before {
+    content: '';
+    position: absolute;
+    left: 11px; top: 12px; bottom: 12px;
+    width: 1px;
+    background: var(--line-strong);
+  }
+  .step-row {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 18px;
+    align-items: start;
+    position: relative;
+  }
+  .step-row .dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    position: relative;
+    margin-top: 2px;
+  }
+  .step-row .dot::after {
+    content: '';
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .step-row .stage {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  .step-row h4 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 6px;
+    line-height: 1.2;
+  }
+  .step-row p {
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .meta-rows { margin-top: 36px; display: grid; gap: 18px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .meta-rows .item .k {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .meta-rows .item .v {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 17px;
+    color: var(--ink);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  /* ---------- Extra (slide 12) ---------- */
+  .chips { margin-top: 28px; display: grid; gap: 12px; }
+  .chip {
+    position: relative;
+    border: 1px solid var(--line);
+    background: var(--card);
+    padding: 18px 20px 18px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.35;
+    font-weight: 500;
+  }
+  .chip::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 14px; bottom: 14px;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 0 2px 2px 0;
+  }
+  .chip .k {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  /* ---------- Close (slide 13) ---------- */
+  .close-section { padding: 64px 24px 100px; }
+  .close-section .display { font-size: 32px; }
+  .close-section .display .accent { color: var(--accent); }
+  .close-section .sign-logo {
+    width: 200px;
+    height: auto;
+    display: block;
+    margin-top: 48px;
+  }
+  .close-section .tagline {
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+    margin-top: 14px;
+  }
+
+  /* CTA WhatsApp button — sticky bottom */
+  .cta-wrap {
+    position: fixed;
+    bottom: 16px;
+    left: 16px; right: 16px;
+    z-index: 90;
+    pointer-events: none;
+  }
+  .cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 22px;
+    background: var(--accent);
+    color: #2a1a14;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 100px;
+    box-shadow: 0 16px 40px -10px rgba(232, 154, 130, 0.5), 0 2px 12px rgba(0,0,0,0.3);
+    pointer-events: auto;
+    transition: transform .2s ease;
+  }
+  .cta-btn:active { transform: scale(0.98); }
+  .cta-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+  body { padding-bottom: 90px; }
+
+  /* Brand footer */
+  .brand-foot {
+    text-align: center;
+    padding: 32px 20px 16px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .brand-foot .o2-logo {
+    width: 110px;
+    height: auto;
+    display: block;
+    margin: 0 auto 12px;
+    opacity: 0.7;
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="dot"></span>
+    <img class="logo" src="assets/logo-o2.png" alt="Agência O2" />
+  </div>
+  <div class="counter"><strong id="curr">01</strong> / 09</div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+
+  <!-- 01 — CAPA -->
+  <section class="screen cover-screen" data-slide="01">
+    <div class="eyebrow">Orçamento · 2026</div>
+    <h1 class="display">
+      Motion graphics<br/>
+      de 60 segundos.
+      <span class="soft">para o OutBuyCenter.</span>
+    </h1>
+
+    <div class="meta">
+      <div class="row">
+        <div class="k">Projeto</div>
+        <div class="v">Motion graphics · 60–75s</div>
+      </div>
+      <div class="row">
+        <div class="k">Cliente</div>
+        <div class="v">Outplan · OutBuyCenter</div>
+      </div>
+      <div class="row">
+        <div class="k">Data</div>
+        <div class="v">Junho · 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 — CONTEXTO -->
+  <section class="screen" data-slide="02">
+    <div class="eyebrow">Por que esse vídeo</div>
+    <h2 class="h-title">
+      Vídeo animado de 60s
+      <span class="soft">para se diferenciar do mercado Eprocurement.</span>
+    </h2>
+    <p class="lead">
+      Vídeo animado com alta retenção e conversão. A mesma peça pode ser utilizada
+      em campanhas de anúncio e em eventos presenciais.
+    </p>
+
+    <div class="quote-card">
+      "Procurement não se vende com texto. Se vende mostrando a tela funcionando
+      — e é isso que a animação faz, em menos de um minuto."
+      <div class="who">— Direção criativa · Agência O2</div>
+    </div>
+  </section>
+
+  <!-- 03 — ABORDAGEM -->
+  <section class="screen" data-slide="03">
+    <div class="eyebrow">Quatro frentes da produção</div>
+    <h2 class="h-section">Do roteiro à exportação, com método.</h2>
+    <p class="lead">
+      Quatro frentes para sair do roteiro e chegar ao vídeo pronto,
+      sem nenhuma etapa solta no caminho.
+    </p>
+
+    <div class="points-grid">
+      <div class="point-card">
+        <div class="num">01 · Narrativa</div>
+        <h3>Roteiro e locução</h3>
+        <p>Roteiro e copy persuasiva para 60 segundos — gancho, problema, solução e chamada. Locução em IA, voz em português.</p>
+      </div>
+      <div class="point-card">
+        <div class="num">02 · Direção de arte</div>
+        <h3>Style frame</h3>
+        <p>Um a dois quadros-chave no estilo final — paleta, tipografia em tela, grid e profundidade — aprovados antes de animar.</p>
+      </div>
+      <div class="point-card">
+        <div class="num">03 · Animação</div>
+        <h3>A tela em movimento</h3>
+        <p>Animação de elementos de UI conceituais do OutBuyCenter — transições, easing e ritmo sincronizados à locução e à trilha.</p>
+      </div>
+      <div class="point-card">
+        <div class="num">04 · Som & entrega</div>
+        <h3>Som e exportação</h3>
+        <p>Trilha licenciada, sound design e mixagem. Exportação em Full HD, nos formatos para mídia paga e para o telão do evento.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 — DIREÇÃO DE ESTILO -->
+  <section class="screen" data-slide="04">
+    <div class="eyebrow">Inspiração · animação SaaS</div>
+    <h2 class="h-section">Limpo, tecnológico e em movimento.</h2>
+    <p class="lead">
+      As referências mostram o tipo de <b>execução</b> que buscamos: o ritmo da animação,
+      como a interface entra na tela, a tipografia que destaca a palavra certa.
+      A peça usa a paleta institucional do OutBuyCenter — as referências são do Base44 só pela execução.
+    </p>
+    <ul class="principles">
+      <li>Paleta institucional do OutBuyCenter</li>
+      <li>Tipografia cinética que destaca a palavra-chave</li>
+      <li>Interface flutuante com profundidade e gradientes sutis</li>
+      <li>Transições fluidas — cada tela vira a próxima sem corte seco</li>
+    </ul>
+    <div class="refs">
+      <div class="ref"><img src="assets/refs/ref-01.webp" alt="Referência de estilo" /></div>
+      <div class="ref"><img src="assets/refs/ref-02.webp" alt="Referência de estilo" /></div>
+      <div class="ref"><img src="assets/refs/ref-03.webp" alt="Referência de estilo" /></div>
+      <div class="ref"><img src="assets/refs/ref-04.webp" alt="Referência de estilo" /></div>
+    </div>
+  </section>
+
+  <!-- 05 — ESCOPO -->
+  <section class="screen" data-slide="05">
+    <div class="eyebrow">Escopo · Vídeo animado</div>
+    <h2 class="h-section">Um vídeo, do roteiro ao arquivo final.</h2>
+    <p class="lead">
+      Uma animação de 60 a 75 segundos sobre o OutBuyCenter, com tudo feito
+      aqui dentro — sem nenhuma etapa terceirizada.
+    </p>
+    <p class="lead" style="font-size: 15px;">
+      Locução em IA e trilha licenciada já entram no valor. As gravações de tela
+      e a marca vêm da Outplan.
+    </p>
+
+    <div class="deliver">
+      <div class="head">
+        <h4>O que está incluso</h4>
+      </div>
+      <ul>
+        <li>Roteiro + texto de locução (com aprovação)</li>
+        <li>Locução em IA, voz em português</li>
+        <li>Direção de arte / style frame (com aprovação)</li>
+        <li>Storyboard completo (com aprovação)</li>
+        <li>Animação completa da peça</li>
+        <li>Trilha sonora licenciada + sound design (SFX)</li>
+        <li>2 rodadas de revisão</li>
+        <li>Exportação final em 16:9 (Full HD)</li>
+      </ul>
+      <div class="note-row">Material de origem fornecido pela Outplan · Prazo de 30 dias</div>
+    </div>
+  </section>
+
+  <!-- 06 — INVESTIMENTO -->
+  <section class="screen" data-slide="06">
+    <div class="eyebrow">Projeto único</div>
+    <h2 class="h-section">Investimento.</h2>
+
+    <div class="invest-stack">
+      <div class="invest-col featured">
+        <div class="tag">A proposta</div>
+        <div class="kind">Projeto fechado</div>
+        <div class="name">Vídeo animado<br/>OutBuyCenter</div>
+        <div class="price"><span class="pre">R$</span>4.500</div>
+        <div class="savings">Pagamento 50% no aceite · 50% na entrega</div>
+        <div class="divider"></div>
+        <ul>
+          <li>Animação completa de 60–75s, formato 16:9</li>
+          <li>Roteiro, direção de arte e storyboard (com aprovação)</li>
+          <li>Locução em IA + trilha e SFX</li>
+          <li>2 rodadas de revisão</li>
+          <li>Exportação final em Full HD</li>
+          <li>Prazo de 30 dias</li>
+        </ul>
+      </div>
+
+      <div class="invest-col">
+        <div class="kind">Opcional</div>
+        <div class="name">Versão vertical 9:16</div>
+        <div class="price"><span class="pre">+ R$</span>900</div>
+        <div class="savings" style="color: var(--ink-mute);">Recomendado para campanhas de anúncio</div>
+        <div class="divider"></div>
+        <ul>
+          <li>Reenquadramento e reanimação para vertical</li>
+          <li>Ideal para Reels, Stories e TikTok</li>
+          <li>Mesma locução e trilha do master</li>
+          <li>Entregue junto com o vídeo principal</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 — CRONOGRAMA -->
+  <section class="screen" data-slide="07">
+    <div class="eyebrow">Próximos passos · 30 dias</div>
+    <h2 class="h-section">Quatro fases, três pontos de aprovação.</h2>
+
+    <div class="steps-stack">
+      <div class="step-row">
+        <div class="dot"></div>
+        <div>
+          <div class="stage">Fase 01</div>
+          <h4>Roteiro & direção de arte</h4>
+          <p>Roteiro, texto de locução e o style frame no estilo final. Duas aprovações antes de animar.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="dot"></div>
+        <div>
+          <div class="stage">Fase 02</div>
+          <h4>Storyboard</h4>
+          <p>Enquadramentos e ritmo de toda a peça, cena a cena. Aprovação do roteiro visual.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="dot"></div>
+        <div>
+          <div class="stage">Fase 03</div>
+          <h4>Produção</h4>
+          <p>Locução em IA, animação, trilha sonora e efeitos.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="dot"></div>
+        <div>
+          <div class="stage">Fase 04</div>
+          <h4>Revisão e entrega</h4>
+          <p>Duas rodadas de ajuste e exportação dos masters finais. Aprovação final.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="meta-rows">
+      <div class="item">
+        <div class="k">Prazo estimado</div>
+        <div class="v">30 dias</div>
+      </div>
+      <div class="item">
+        <div class="k">Forma de pagamento</div>
+        <div class="v">50% no aceite + 50% na entrega</div>
+      </div>
+      <div class="item">
+        <div class="k">Validade da proposta</div>
+        <div class="v">30 dias a contar desta data</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 — ESCOPO ADICIONAL -->
+  <section class="screen" data-slide="08">
+    <div class="eyebrow">O que não está incluído</div>
+    <h2 class="h-section">Espaço para crescer quando fizer sentido.</h2>
+    <p class="lead">
+      O valor considera uma peça única em 16:9. À medida que a campanha evoluir,
+      estas frentes podem ser orçadas separadamente — sem pressa e sem empurrar nada agora.
+    </p>
+
+    <div class="chips">
+      <div class="chip"><div class="k">Formatos</div>Versões 9:16 e 1:1 para anúncios</div>
+      <div class="chip"><div class="k">Série</div>Novos vídeos no mesmo estilo</div>
+      <div class="chip"><div class="k">Idiomas</div>Locução e legendas em inglês/espanhol</div>
+      <div class="chip"><div class="k">Mídia paga</div>Cortes curtos de 6s e 15s</div>
+      <div class="chip"><div class="k">Criativos</div>Imagens e carrosséis feitos a partir do vídeo</div>
+      <div class="chip"><div class="k">Locução</div>Voz humana profissional</div>
+      <div class="chip"><div class="k">Produto</div>Animações curtas por funcionalidade</div>
+      <div class="chip"><div class="k">Marca</div>Vídeo institucional da Outplan</div>
+    </div>
+  </section>
+
+  <!-- 09 — ENCERRAMENTO -->
+  <section class="screen close-section" data-slide="09">
+    <div class="eyebrow">Para fechar</div>
+    <h2 class="display">
+      Animação de 60 segundos,
+      <span class="soft">pronta para anúncio e evento.</span>
+    </h2>
+    <p class="lead">
+      Trinta dias do aceite à entrega. Quando você aprovar, começamos pelo roteiro.
+    </p>
+    <img class="sign-logo" src="assets/logo-o2.png" alt="Agência O2" />
+    <div class="tagline">Motion · Animação · Vídeo para SaaS</div>
+  </section>
+
+  <div class="brand-foot">
+    <img class="o2-logo" src="assets/logo-o2.png" alt="" />
+    Agência O2 · Proposta 2026
+  </div>
+
+</main>
+
+<div class="cta-wrap">
+  <a class="cta-btn" href="https://api.whatsapp.com/send?phone=5547996461562&text=Oi%20Ota%2C%20vi%20a%20proposta%20da%20anima%C3%A7%C3%A3o%20do%20OutBuyCenter%20e%20quero%20seguir"
+     target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Fechar proposta
+  </a>
+</div>
+
+<script>
+  // Update the section counter + progress bar as the user scrolls
+  (function() {
+    var sections = document.querySelectorAll('.screen[data-slide]');
+    var counter = document.getElementById('curr');
+    var progress = document.getElementById('progress');
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var midpoint = window.scrollY + window.innerHeight * 0.35;
+      var active = sections[0];
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].offsetTop <= midpoint) active = sections[i];
+        else break;
+      }
+      counter.textContent = active.dataset.slide;
+      // progress
+      var doc = document.documentElement;
+      var max = (doc.scrollHeight - window.innerHeight) || 1;
+      var pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+      progress.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  })();
+</script>
+
+</body>
+</html>
