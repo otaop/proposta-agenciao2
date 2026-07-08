@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Proposta — Outplan · Identidade + Site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  (function() {
+    if (window.location.search.indexOf('desktop=1') >= 0) return;
+    var isMobile = window.matchMedia('(max-width: 820px)').matches
+      || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    if (isMobile) { window.location.replace('mobile.html'); }
+  })();
+</script>
+<script src="deck-stage.js"></script>
+<style>
+  :root {
+    --bg: #191526;
+    --bg-deep: #120F1D;
+    --ink: #F4F2F8;
+    --ink-soft: #C9C3DB;
+    --ink-mute: #8A839E;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.14);
+    --accent: #E89A82;
+    --accent-soft: #E89A8230;
+    --lilac: #8B7BB8;
+    --card: rgba(255, 255, 255, 0.025);
+    --card-hi: rgba(255, 255, 255, 0.045);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: var(--ink); }
+  deck-stage > section {
+    position: relative; width: 1920px; height: 1080px; overflow: hidden;
+    background: var(--bg); color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+  }
+  .nav-arrow {
+    position: fixed; top: 50%; transform: translateY(-50%); width: 64px; height: 64px;
+    border-radius: 50%; background: transparent; border: 1.5px solid var(--accent); color: var(--accent);
+    display: grid; place-items: center; cursor: pointer; z-index: 9999;
+    transition: background .2s ease, color .2s ease, transform .2s ease; padding: 0;
+  }
+  .nav-arrow:hover { background: var(--accent); color: #2a1a14; transform: translateY(-50%) scale(1.06); }
+  .nav-arrow:active { transform: translateY(-50%) scale(0.96); }
+  .nav-arrow svg { width: 24px; height: 24px; }
+  .nav-arrow.prev { left: 28px; }
+  .nav-arrow.next { right: 28px; }
+  @media (max-width: 720px) {
+    .nav-arrow { width: 48px; height: 48px; }
+    .nav-arrow.prev { left: 12px; }
+    .nav-arrow.next { right: 12px; }
+  }
+  .wa-cta {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 9999;
+    display: inline-flex; align-items: center; gap: 12px; padding: 14px 22px 14px 16px;
+    background: var(--accent); color: #2a1a14; font-family: 'Inter', sans-serif; font-size: 15px;
+    font-weight: 600; letter-spacing: -0.005em; text-decoration: none; border-radius: 100px;
+    box-shadow: 0 18px 50px -12px rgba(232, 154, 130, 0.55), 0 4px 14px rgba(0,0,0,0.25);
+    transition: transform .25s ease, box-shadow .3s ease;
+  }
+  .wa-cta:hover { transform: translateX(-50%) translateY(-2px); box-shadow: 0 24px 60px -12px rgba(232, 154, 130, 0.7), 0 4px 14px rgba(0,0,0,0.3); }
+  .wa-cta:active { transform: translateX(-50%) translateY(0); }
+  .wa-cta .wa-icon { width: 28px; height: 28px; background: #2a1a14; color: var(--accent); border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; }
+  .wa-cta .wa-icon svg { width: 16px; height: 16px; fill: currentColor; }
+  .frame { position: absolute; inset: 72px 96px; display: flex; flex-direction: column; }
+  .corner-mark { position: absolute; top: 56px; left: 96px; display: flex; align-items: center; gap: 14px; z-index: 5; }
+  .corner-mark .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 0 3px rgba(232,154,130,0.15); }
+  .corner-mark .text { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); }
+  .pager { position: absolute; bottom: 48px; right: 96px; font-family: 'Inter', sans-serif; font-size: 13px; letter-spacing: 0.16em; color: var(--ink-mute); text-transform: uppercase; }
+  .pager strong { color: var(--ink); font-weight: 500; }
+  .brand-tag { position: absolute; bottom: 48px; left: 96px; display: flex; align-items: center; gap: 16px; color: var(--ink-mute); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; }
+  .brand-tag .o2 { width: 125px; height: 26px; background: url("assets/logo-o2.png") left center / contain no-repeat; filter: brightness(1) opacity(0.9); }
+  .brand-tag span:not(.o2) { display: none; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 12px; border: 1px solid var(--line-strong); border-radius: 100px; font-size: 13px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); }
+  .eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--accent); border-radius: 50%; }
+  h1, h2, h3, h4, p { margin: 0; }
+  .display { font-family: 'Inter Tight', 'Inter', sans-serif; font-weight: 600; font-size: 96px; line-height: 1.02; letter-spacing: -0.025em; color: var(--ink); }
+  .display .soft { color: var(--ink-soft); font-weight: 400; }
+  .h-title { font-family: 'Inter Tight', 'Inter', sans-serif; font-weight: 600; font-size: 72px; line-height: 1.05; letter-spacing: -0.02em; }
+  .h-section { font-family: 'Inter Tight', 'Inter', sans-serif; font-weight: 600; font-size: 56px; line-height: 1.08; letter-spacing: -0.02em; }
+  .lead { font-size: 22px; line-height: 1.55; color: var(--ink-soft); font-weight: 400; max-width: 720px; }
+  .body { font-size: 18px; line-height: 1.6; color: var(--ink-soft); font-weight: 400; }
+  .small { font-size: 14px; line-height: 1.55; color: var(--ink-mute); }
+
+  /* Cover */
+  .cover { justify-content: center; gap: 40px; z-index: 2; }
+  .cover .display { max-width: 1500px; font-size: 84px; }
+  .rays { position: absolute; top: 50%; right: -200px; transform: translateY(-50%); width: 1100px; height: 1100px; opacity: 0.55; pointer-events: none; z-index: 1; }
+  .rays svg { width: 100%; height: 100%; display: block; }
+  .cover .meta { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 64px; max-width: 1100px; color: var(--ink-mute); font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase; }
+  .cover .meta strong { display: block; color: var(--ink); font-size: 16px; letter-spacing: 0.05em; text-transform: none; font-weight: 500; margin-top: 10px; }
+
+  /* Contexto */
+  .ctx { display: grid; grid-template-columns: 1fr 0.85fr; gap: 120px; align-items: center; height: 100%; }
+  .ctx .left { padding-top: 60px; }
+  .ctx .left .h-title { margin-top: 28px; max-width: 760px; }
+  .ctx .left .lead { margin-top: 36px; }
+  .ctx .right { position: relative; height: 700px; }
+  .ctx .quote { border-left: 2px solid var(--accent); padding: 8px 0 8px 28px; font-family: 'Inter Tight', sans-serif; font-weight: 400; font-size: 26px; line-height: 1.45; color: var(--ink); letter-spacing: -0.005em; }
+  .ctx .quote .who { margin-top: 20px; font-size: 13px; letter-spacing: 0.18em; color: var(--ink-mute); text-transform: uppercase; font-family: 'Inter', sans-serif; }
+  .ctx .right-stack { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 32px; }
+
+  /* Diagnóstico */
+  .today { justify-content: center; padding-bottom: 60px; }
+  .today .h-section { margin-top: 56px; max-width: 1100px; }
+  .today .lead { margin-top: 32px; }
+  .today .strip { margin-top: 72px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .today .shot { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #0c0a16; box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6); aspect-ratio: 4/3; position: relative; }
+  .today .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0.92; }
+  .today .shot .label { position: absolute; left: 18px; top: 18px; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); background: rgba(15, 12, 25, 0.75); padding: 6px 10px; border-radius: 100px; backdrop-filter: blur(8px); }
+  .today .shot-caption { margin-top: 16px; font-size: 14px; color: var(--ink-mute); }
+
+  /* Pontos de atenção */
+  .details { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 80px; height: 100%; align-items: center; }
+  .details .left { padding-top: 40px; }
+  .details .h-section { margin-top: 24px; max-width: 720px; }
+  .details .lead { margin-top: 28px; max-width: 620px; }
+  .details .right { position: relative; }
+  .details .hero-frame { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 40px 90px -30px rgba(0,0,0,0.7); aspect-ratio: 16/10; background: #0c0a16; }
+  .details .hero-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .details .notes { margin-top: 32px; display: grid; gap: 18px; }
+  .details .note { display: grid; grid-template-columns: 28px 1fr; gap: 18px; align-items: start; }
+  .details .note .n { width: 28px; height: 28px; border: 1px solid var(--accent); border-radius: 50%; color: var(--accent); font-size: 13px; font-weight: 500; display: grid; place-items: center; font-family: 'Inter', sans-serif; }
+  .details .note .t { color: var(--ink); font-size: 19px; line-height: 1.45; font-weight: 400; }
+  .details .note .t b { font-weight: 600; color: var(--ink); }
+
+  /* Frentes */
+  .points { justify-content: center; }
+  .points .h-section { max-width: 1100px; margin-top: 56px; }
+  .points .lead { margin-top: 28px; }
+  .points .grid { margin-top: 72px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .points .card { border: 1px solid var(--line); background: var(--card); border-radius: 16px; padding: 36px 32px; min-height: 340px; display: flex; flex-direction: column; justify-content: space-between; }
+  .points .card .num { font-family: 'Inter Tight', sans-serif; font-size: 14px; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; font-weight: 500; }
+  .points .card h3 { font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 28px; line-height: 1.15; letter-spacing: -0.015em; color: var(--ink); margin-top: 16px; }
+  .points .card p { font-size: 18px; line-height: 1.55; color: var(--ink-soft); margin-top: 24px; }
+
+  /* Direção visual · Site (network) */
+  .dir { display: grid; grid-template-columns: 0.78fr 1.22fr; gap: 96px; height: 100%; align-items: center; }
+  .dir .left { padding-top: 60px; }
+  .dir .h-section { margin-top: 24px; max-width: 520px; }
+  .dir .lead { margin-top: 28px; max-width: 480px; }
+  .dir .principles { margin-top: 40px; display: grid; gap: 16px; }
+  .dir .principles li { list-style: none; color: var(--ink); font-size: 20px; padding-left: 22px; position: relative; font-weight: 400; }
+  .dir .principles li::before { content: ''; position: absolute; left: 0; top: 11px; width: 8px; height: 1px; background: var(--accent); }
+  .dir .right { position: relative; height: 760px; }
+
+  .network { position: relative; width: 100%; height: 100%; }
+  .network svg.lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .network .node { position: absolute; border-radius: 22px; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 30px 70px -25px rgba(0,0,0,0.6); background: #0c0a16; }
+  .network .node img { width: 100%; height: 100%; object-fit: cover; }
+  .network .tag { position: absolute; left: 14px; bottom: 14px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); background: rgba(15,12,25,0.72); padding: 6px 11px; border-radius: 100px; backdrop-filter: blur(6px); }
+
+  /* Direção visual · Marca (color blocks) */
+  .blockwrap { position: relative; height: 760px; display: flex; align-items: center; justify-content: center; gap: 56px; }
+  .blockframe { position: relative; }
+  .blockframe .block { position: absolute; border-radius: 26px; }
+  .blockframe .photo { position: relative; width: 320px; height: 420px; border-radius: 20px; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 30px 70px -25px rgba(0,0,0,0.6); }
+  .blockframe .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .blockframe.a .block { width: 340px; height: 440px; background: linear-gradient(135deg, var(--accent), #C97A62); top: -22px; left: -22px; opacity: 0.9; }
+  .blockframe.b .block { width: 340px; height: 440px; background: linear-gradient(135deg, var(--lilac), #5b4d82); top: 22px; right: -22px; opacity: 0.85; }
+
+  /* Escopo */
+  .scope { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; height: 100%; align-items: center; }
+  .scope .left { padding-top: 40px; }
+  .scope .h-section { margin-top: 24px; }
+  .scope .lead { margin-top: 28px; max-width: 540px; }
+  .scope .right { position: relative; }
+  .scope .deliver { border: 1px solid var(--line); border-radius: 18px; background: var(--card); padding: 48px 44px; }
+  .scope .deliver .head { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+  .scope .deliver .head h4 { font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 22px; color: var(--ink); letter-spacing: -0.01em; }
+  .scope .deliver ul { list-style: none; padding: 24px 0 0 0; margin: 0; display: grid; gap: 14px; }
+  .scope .deliver li { font-size: 22px; color: var(--ink-soft); padding-left: 28px; position: relative; line-height: 1.45; }
+  .scope .deliver li::before { content: ''; position: absolute; left: 0; top: 10px; width: 12px; height: 1px; background: var(--accent); opacity: 0.8; }
+  .scope .note-row { margin-top: 22px; font-size: 13px; color: var(--ink-mute); letter-spacing: 0.04em; }
+
+  /* Investimento */
+  .invest { display: flex; flex-direction: column; justify-content: center; }
+  .invest .h-section { margin-top: 32px; max-width: 900px; font-size: 56px; }
+  .invest .cols { margin-top: 40px; display: grid; grid-template-columns: 1fr 1.22fr 1fr; gap: 32px; align-items: center; flex: 1; min-height: 0; }
+  .invest .col { position: relative; border: 1px solid var(--line); border-radius: 22px; padding: 32px 30px 28px; background: var(--card); display: flex; flex-direction: column; }
+  .invest .col.featured { transform: scale(1.06); background: radial-gradient(ellipse 90% 50% at 50% 0%, rgba(232,154,130,0.12), transparent 60%), linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); border-color: rgba(232,154,130,0.4); box-shadow: 0 50px 100px -30px rgba(232,154,130,0.22), 0 0 0 1px rgba(232,154,130,0.15); z-index: 2; }
+  .invest .col .tag { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #2a1a14; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600; padding: 8px 16px; border-radius: 100px; }
+  .invest .col .kind { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
+  .invest .col .name { font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 30px; color: var(--ink); margin-top: 8px; line-height: 1.1; letter-spacing: -0.015em; }
+  .invest .col .price { margin-top: 14px; font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 50px; color: var(--ink); letter-spacing: -0.02em; line-height: 1; }
+  .invest .col .price .pre { font-size: 24px; color: var(--ink-mute); font-weight: 400; letter-spacing: 0; margin-right: 6px; vertical-align: top; position: relative; top: 14px; }
+  .invest .col .savings { margin-top: 10px; font-size: 15px; color: var(--accent); letter-spacing: 0.04em; }
+  .invest .col .divider { height: 1px; background: var(--line); margin: 14px 0 12px; }
+  .invest .col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .invest .col li { font-size: 19px; color: var(--ink-soft); padding-left: 22px; position: relative; line-height: 1.45; }
+  .invest .col li::before { content: ''; position: absolute; left: 0; top: 9px; width: 10px; height: 1px; background: var(--accent); opacity: 0.7; }
+
+  /* Cronograma */
+  .schedule { justify-content: center; }
+  .schedule .h-section { margin-top: 56px; max-width: 1100px; }
+  .schedule .lead { margin-top: 24px; }
+  .schedule .timeline { margin-top: 80px; position: relative; }
+  .schedule .timeline::before { content: ''; position: absolute; left: 60px; right: 60px; top: 12px; height: 1px; background: linear-gradient(90deg, transparent, var(--line-strong) 10%, var(--line-strong) 90%, transparent); }
+  .schedule .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; position: relative; }
+  .schedule .step { padding: 0 12px; position: relative; }
+  .schedule .step .dot { width: 24px; height: 24px; border-radius: 50%; background: var(--bg); border: 1px solid var(--accent); position: relative; margin-bottom: 36px; }
+  .schedule .step .dot::after { content: ''; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .schedule .step .stage { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
+  .schedule .step h4 { font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 30px; color: var(--accent); margin-top: 12px; letter-spacing: -0.015em; line-height: 1.15; }
+  .schedule .step p { margin-top: 18px; font-size: 20px; line-height: 1.55; color: var(--ink-soft); }
+  .schedule .meta-row { margin-top: 100px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; padding: 32px 0 0; border-top: 1px solid var(--line); }
+  .schedule .meta-row .item .k { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-mute); }
+  .schedule .meta-row .item .v { font-family: 'Inter Tight', sans-serif; font-size: 22px; color: var(--ink); margin-top: 8px; font-weight: 500; letter-spacing: -0.01em; }
+
+  /* Escopo adicional */
+  .extra { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 96px; height: 100%; align-items: center; }
+  .extra .left { padding-top: 30px; }
+  .extra .h-section { margin-top: 24px; max-width: 540px; }
+  .extra .lead { margin-top: 28px; max-width: 520px; }
+  .extra .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .extra .chip { position: relative; border: 1px solid var(--line); background: var(--card); padding: 28px 30px 28px 38px; border-radius: 14px; font-size: 20px; color: var(--ink); line-height: 1.35; font-weight: 500; overflow: hidden; }
+  .extra .chip::before { content: ''; position: absolute; left: 0; top: 18px; bottom: 18px; width: 3px; background: var(--accent); border-radius: 0 2px 2px 0; }
+  .extra .chip .k { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+
+  /* Encerramento */
+  .close-slide { display: flex; flex-direction: column; justify-content: center; }
+  .close-slide .display { max-width: 1500px; font-size: 64px; }
+  .close-slide .lead { margin-top: 24px; font-size: 18px; max-width: 920px; }
+  .close-slide .sign { margin-top: 64px; display: flex; align-items: center; gap: 0; }
+  .close-slide .sign .who { display: flex; flex-direction: column; gap: 12px; }
+  .close-slide .sign .who .logo { width: 280px; height: auto; display: block; }
+  .close-slide .sign .who .tagline { font-size: 14px; color: var(--ink-mute); letter-spacing: 0.05em; }
+</style>
+</head>
+<body>
+
+<deck-stage no-rail>
+
+  <!-- 01 — CAPA -->
+  <section data-screen-label="01 Capa">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Orçamento · 2026</span></div>
+    <div class="rays" aria-hidden="true">
+      <svg viewBox="0 0 800 800" fill="none">
+        <defs><linearGradient id="rayGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#E89A82" stop-opacity="0"/>
+          <stop offset="0.5" stop-color="#E89A82" stop-opacity="0.35"/>
+          <stop offset="1" stop-color="#E89A82" stop-opacity="0"/>
+        </linearGradient></defs>
+        <g stroke="url(#rayGrad)" stroke-width="1.2">
+          <line x1="400" y1="400" x2="900" y2="0"/><line x1="400" y1="400" x2="950" y2="80"/>
+          <line x1="400" y1="400" x2="990" y2="170"/><line x1="400" y1="400" x2="1020" y2="270"/>
+          <line x1="400" y1="400" x2="1040" y2="380"/><line x1="400" y1="400" x2="1040" y2="490"/>
+          <line x1="400" y1="400" x2="1020" y2="600"/><line x1="400" y1="400" x2="990" y2="700"/>
+          <line x1="400" y1="400" x2="950" y2="790"/>
+        </g>
+      </svg>
+    </div>
+    <div class="frame cover">
+      <h1 class="display">
+        Uma marca mais humana<br/>
+        para o setor de Compras.<br/>
+        <span class="soft">Identidade + site institucional para a Outplan.</span>
+      </h1>
+      <div class="meta">
+        <div>Projeto<strong>Identidade Visual + Site Institucional</strong></div>
+        <div>Cliente<strong>Outplan Tecnologia</strong></div>
+        <div>Data<strong>Julho · 2026</strong></div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2 · Direção visual e desenvolvimento</span></div>
+    <div class="pager"><strong>01</strong> / 13</div>
+  </section>
+
+  <!-- 02 — CONTEXTO -->
+  <section data-screen-label="02 Contexto">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Por que essa mudança</span></div>
+    <div class="frame">
+      <div class="ctx">
+        <div class="left">
+          <div class="eyebrow">Por que essa mudança</div>
+          <h2 class="h-title">Compras tem gente por trás.<br/><span style="color: var(--ink-soft);">A marca ainda não mostra isso.</span></h2>
+          <p class="lead">
+            O site atual comunica com um mascote robô e ilustrações de banco de imagem — o padrão de qualquer SaaS genérico.
+            Mas o que os clientes da Outplan descrevem em depoimentos é proximidade: "verdadeiros parceiros", não só um fornecedor
+            de software. A marca pode carregar isso.
+          </p>
+        </div>
+        <div class="right">
+          <div class="right-stack" style="text-align: left; justify-content: center; height: 700px">
+            <div class="quote" style="height: 206px">
+              "Vinte anos de proximidade com quem compra não cabem num mascote de robô."
+              <div class="who">— Direção criativa · Agência O2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>02</strong> / 13</div>
+  </section>
+
+  <!-- 03 — DIAGNÓSTICO -->
+  <section data-screen-label="03 Diagnóstico">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Diagnóstico — presença atual</span></div>
+    <div class="frame today">
+      <div class="eyebrow" style="margin-top: 35px;">O que existe hoje</div>
+      <h2 class="h-section" style="margin-top: 24px;">O site atual cumpre o papel —<br/>mas comunica frio.</h2>
+      <p class="lead" style="width: 720px">
+        O site atual organiza bem o portfólio — Outplan, OutBuyCenter, OutTask e contato ficam claros, e a estrutura institucional
+        cumpre seu papel. O que falta é calor humano na forma como isso é mostrado.
+      </p>
+      <div class="strip">
+        <div>
+          <div class="shot"><div class="label">Hero · Página inicial</div><img src="assets/prints/atual-01-hero.webp" alt="" /></div>
+          <div class="shot-caption">Mascote robótico e paleta azul genérica de SaaS.</div>
+        </div>
+        <div>
+          <div class="shot"><div class="label">Seção de produtos</div><img src="assets/prints/atual-02-produtos.webp" alt="" /></div>
+          <div class="shot-caption">Ilustrações de banco de imagem, sem identidade própria.</div>
+        </div>
+        <div>
+          <div class="shot"><div class="label">Contato & Rodapé</div><img src="assets/prints/atual-03-contato.webp" alt="" /></div>
+          <div class="shot-caption">Mapa padrão do Google, sem toque de marca.</div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>03</strong> / 13</div>
+  </section>
+
+  <!-- 04 — PONTOS DE ATENÇÃO -->
+  <section data-screen-label="04 Pontos de atenção">
+    <div class="corner-mark"><span class="dot"></span><span class="text">O que a leitura atenta revela</span></div>
+    <div class="frame">
+      <div class="details">
+        <div class="left">
+          <div class="eyebrow">Pontos de atenção</div>
+          <h2 class="h-section">Quatro pontos que abrem<br/>espaço para evoluir.</h2>
+          <p class="lead">Reconhecendo o que funciona, aqui estão as oportunidades concretas de elevar a percepção da marca.</p>
+          <div class="notes">
+            <div class="note"><div class="n">1</div><div class="t"><b>Mascote robótico como rosto da marca.</b> Passa frieza tecnológica — o oposto do atendimento próximo que os próprios clientes elogiam.</div></div>
+            <div class="note"><div class="n">2</div><div class="t"><b>Ilustrações de banco de imagem.</b> Qualquer concorrente de SaaS usa os mesmos assets — não diferencia a Outplan de ninguém.</div></div>
+            <div class="note"><div class="n">3</div><div class="t"><b>Prova social pouco explorada.</b> Depoimentos fortes (Guararapes, Univali, Linx) existem, mas não aparecem com destaque na home.</div></div>
+            <div class="note"><div class="n">4</div><div class="t"><b>Especialização em Compras pouco visível.</b> O visual não reforça que a Outplan é referência no nicho há 20+ anos.</div></div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="hero-frame"><img src="assets/prints/atual-01-hero.webp" alt="" /></div>
+          <div style="margin-top: 20px; display: flex; gap: 16px;">
+            <div style="flex:1;" class="hero-frame"><img src="assets/prints/atual-02-produtos.webp" alt="" style="object-position: center;" /></div>
+            <div style="flex:1;" class="hero-frame"><img src="assets/prints/atual-03-contato.webp" alt="" style="object-position: center;" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>04</strong> / 13</div>
+  </section>
+
+  <!-- 05 — FRENTES DE EVOLUÇÃO -->
+  <section data-screen-label="05 Frentes de evolução">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Para onde podemos evoluir</span></div>
+    <div class="frame points">
+      <div class="eyebrow">Quatro frentes de evolução</div>
+      <h2 class="h-section">Onde a mudança acontece.</h2>
+      <p class="lead">Quatro frentes complementares que, juntas, transformam a presença da Outplan.</p>
+      <div class="grid">
+        <div class="card"><div><div class="num">01 · Linguagem</div><h3>Tom mais humano, sem perder o B2B</h3></div><p>Fim do mascote genérico: fotografia real que aproxima, sem infantilizar.</p></div>
+        <div class="card"><div><div class="num">02 · Conteúdo</div><h3>Portfólio com hierarquia clara</h3></div><p>Outplan como holding, com OutBuyCenter e OutTask bem posicionados, e prova social em destaque.</p></div>
+        <div class="card"><div><div class="num">03 · Marca</div><h3>Identidade repaginada</h3></div><p>Símbolo e paleta evoluem para carregar o conceito de conexão — reconhecível, mas com mais calor.</p></div>
+        <div class="card"><div><div class="num">04 · Base</div><h3>Mais controle, menos dependência</h3></div><p>HTML/CSS/JS sem dependência de plugins, com performance e autonomia.</p></div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>05</strong> / 13</div>
+  </section>
+
+  <!-- 06 — DIREÇÃO VISUAL · SITE -->
+  <section data-screen-label="06 Direção · Site">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Direção visual · Site</span></div>
+    <div class="frame">
+      <div class="dir">
+        <div class="left">
+          <div class="eyebrow">Conceito · Conexão entre pessoas</div>
+          <h2 class="h-section">Cada card,<br/>um contato real.</h2>
+          <p class="lead">Comprar é falar com gente — cotar, negociar, aprovar. O site visualiza essa rede: fotografia real, em cards conectados por linhas e dados, nunca ilustração genérica.</p>
+          <ul class="principles">
+            <li>Fotografia real de pessoas — nunca ilustração ou mascote</li>
+            <li>Cards conectados por linhas, como uma rede de contatos</li>
+            <li>Blocos de cor dando estrutura, não gradiente genérico</li>
+            <li>Hierarquia clara: Outplan → OutBuyCenter + OutTask</li>
+          </ul>
+        </div>
+        <div class="right">
+          <div class="network">
+            <svg class="lines" viewBox="0 0 800 760" fill="none">
+              <line x1="150" y1="150" x2="560" y2="200" stroke="#E89A82" stroke-width="1.5" stroke-opacity="0.45"/>
+              <line x1="150" y1="150" x2="220" y2="540" stroke="#E89A82" stroke-width="1.5" stroke-opacity="0.45"/>
+              <line x1="560" y1="200" x2="630" y2="590" stroke="#E89A82" stroke-width="1.5" stroke-opacity="0.45"/>
+              <line x1="220" y1="540" x2="630" y2="590" stroke="#E89A82" stroke-width="1.5" stroke-opacity="0.45"/>
+              <line x1="150" y1="150" x2="630" y2="590" stroke="#E89A82" stroke-width="1.5" stroke-opacity="0.25"/>
+              <circle cx="355" cy="175" r="4" fill="#E89A82"/>
+              <circle cx="185" cy="345" r="4" fill="#E89A82"/>
+              <circle cx="595" cy="395" r="4" fill="#E89A82"/>
+              <circle cx="425" cy="565" r="4" fill="#E89A82"/>
+            </svg>
+            <div class="node" style="left:40px; top:40px; width:220px; height:220px;">
+              <img src="assets/portraits/portrait-01.webp" alt="" />
+              <div class="tag">Compradora</div>
+            </div>
+            <div class="node" style="left:460px; top:100px; width:200px; height:200px;">
+              <img src="assets/portraits/portrait-05.webp" alt="" />
+              <div class="tag">Fornecedor</div>
+            </div>
+            <div class="node" style="left:120px; top:440px; width:200px; height:200px;">
+              <img src="assets/portraits/portrait-03.webp" alt="" />
+              <div class="tag">Aprovador</div>
+            </div>
+            <div class="node" style="left:520px; top:480px; width:220px; height:220px;">
+              <img src="assets/portraits/portrait-06.webp" alt="" />
+              <div class="tag">Requisitante</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>06</strong> / 13</div>
+  </section>
+
+  <!-- 07 — DIREÇÃO VISUAL · MARCA -->
+  <section data-screen-label="07 Direção · Marca">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Direção visual · Identidade</span></div>
+    <div class="frame">
+      <div class="dir">
+        <div class="left">
+          <div class="eyebrow">Conceito · Conexão entre pessoas</div>
+          <h2 class="h-section">Um símbolo<br/>para a rede de contatos.</h2>
+          <p class="lead">Não é começar do zero — é repaginar o que existe para que o símbolo carregue o conceito de conexão: a marca como o nó que liga comprador, fornecedor e aprovador.</p>
+          <ul class="principles">
+            <li>Wordmark refinado, mantendo reconhecimento</li>
+            <li>Símbolo explora motivo de nó/rede — abstrato, não literal</li>
+            <li>Paleta: azul institucional + tom humano de apoio</li>
+            <li>Sistema aplicável à holding e aos dois produtos</li>
+          </ul>
+        </div>
+        <div class="right">
+          <div class="blockwrap">
+            <div class="blockframe a">
+              <div class="block"></div>
+              <div class="photo"><img src="assets/portraits/portrait-02.webp" alt="" /></div>
+            </div>
+            <div class="blockframe b">
+              <div class="block"></div>
+              <div class="photo"><img src="assets/portraits/portrait-04.webp" alt="" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>07</strong> / 13</div>
+  </section>
+
+  <!-- 08 — ESCOPO · SITE -->
+  <section data-screen-label="08 Escopo · Site">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Escopo · Site institucional</span></div>
+    <div class="frame">
+      <div class="scope">
+        <div class="left">
+          <div class="eyebrow">Frente 01 · Site</div>
+          <h2 class="h-section">Site institucional<br/>repaginado.</h2>
+          <p class="lead">Redesign completo do site da Outplan, com o portfólio (OutBuyCenter + OutTask) organizado com clareza e prova social em destaque.</p>
+        </div>
+        <div class="right">
+          <div class="deliver">
+            <div class="head"><h4>O que está incluso</h4></div>
+            <ul>
+              <li>Redesign visual completo do site institucional</li>
+              <li>Estrutura: Home · Sobre · OutBuyCenter · OutTask · Clientes · Contato</li>
+              <li>Implementação responsiva em HTML/CSS/JS próprios</li>
+              <li>Seção de prova social com depoimentos de clientes</li>
+              <li>Formulário de contato integrado</li>
+              <li>SEO técnico inicial (meta, sitemap, semântica)</li>
+              <li>Publicação final no domínio atual</li>
+            </ul>
+            <div class="note-row">Pagamento em duas parcelas · Prazo dentro do cronograma de 35–45 dias úteis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>08</strong> / 13</div>
+  </section>
+
+  <!-- 09 — ESCOPO · IDENTIDADE -->
+  <section data-screen-label="09 Escopo · Identidade">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Escopo · Identidade visual</span></div>
+    <div class="frame">
+      <div class="scope">
+        <div class="left">
+          <div class="eyebrow">Frente 02 · Identidade</div>
+          <h2 class="h-section">Identidade visual<br/>repaginada.</h2>
+          <p class="lead">Evolução do símbolo e da paleta atuais para uma marca com mais presença humana — sem perder o reconhecimento já construído.</p>
+        </div>
+        <div class="right">
+          <div class="deliver">
+            <div class="head"><h4>O que está incluso</h4></div>
+            <ul>
+              <li>Repaginação do símbolo/wordmark atual</li>
+              <li>Nova paleta de cores (institucional + tom humano de apoio)</li>
+              <li>Tipografia primária e secundária</li>
+              <li>Aplicação para a holding e os dois produtos (OutBuyCenter, OutTask)</li>
+              <li>Mini manual de marca em PDF</li>
+              <li>Arquivos editáveis e abertos</li>
+            </ul>
+            <div class="note-row">Pagamento em duas parcelas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>09</strong> / 13</div>
+  </section>
+
+  <!-- 10 — INVESTIMENTO -->
+  <section data-screen-label="10 Investimento">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Investimento</span></div>
+    <div class="frame invest">
+      <div class="header" style="padding: 35px 0 0 0; margin: 0">
+        <div class="eyebrow">Três caminhos possíveis</div>
+        <h2 class="h-section" style="margin-top: 20px;">Investimento.</h2>
+      </div>
+      <div class="cols" style="height: 720px; margin-top: 72px;">
+        <div class="col" style="padding: 52px 30px 48px">
+          <div class="kind">Frente 01</div>
+          <div class="name">Site<br/>institucional</div>
+          <div class="price"><span class="pre">R$</span>6.500</div>
+          <div class="divider"></div>
+          <ul>
+            <li>Redesign completo</li>
+            <li>Conceito de conexão aplicado</li>
+            <li>Portfólio organizado</li>
+            <li>Prova social em destaque</li>
+            <li>SEO técnico</li>
+            <li>Publicação final</li>
+          </ul>
+        </div>
+        <div class="col featured" style="padding: 52px 30px 48px">
+          <div class="tag">Recomendado</div>
+          <div class="kind">Pacote completo</div>
+          <div class="name">Site +<br/>Identidade visual</div>
+          <div class="price"><span class="pre">R$</span>9.000</div>
+          <div class="savings">— Economia de R$ 2.500 frente à contratação separada.</div>
+          <div class="divider"></div>
+          <ul>
+            <li>Tudo do site institucional</li>
+            <li>Tudo da identidade visual</li>
+            <li>Direção única para marca e site</li>
+            <li>Mini manual de aplicação da marca</li>
+            <li>Consistência em todos os pontos de contato</li>
+            <li>Cronograma integrado entre as duas entregas</li>
+          </ul>
+        </div>
+        <div class="col" style="padding: 52px 30px 48px">
+          <div class="kind">Frente 02</div>
+          <div class="name">Identidade<br/>visual</div>
+          <div class="price"><span class="pre">R$</span>5.000</div>
+          <div class="divider"></div>
+          <ul>
+            <li>Símbolo com motivo de conexão</li>
+            <li>Paleta institucional + tom humano</li>
+            <li>Tipografias primária e secundária</li>
+            <li>Aplicação holding + produtos</li>
+            <li>Mini manual em PDF</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>10</strong> / 13</div>
+  </section>
+
+  <!-- 11 — CRONOGRAMA -->
+  <section data-screen-label="11 Cronograma">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Como caminhamos juntos</span></div>
+    <div class="frame schedule">
+      <div class="eyebrow">Próximos passos</div>
+      <h2 class="h-section">Da assinatura ao site no ar,<br/>em quatro etapas.</h2>
+      <div class="timeline">
+        <div class="steps">
+          <div class="step"><div class="dot"></div><div class="stage">Etapa 01</div><h4>Assinatura<br/>do contrato</h4><p>Formalização do escopo, prazos e condições alinhados de forma clara.</p></div>
+          <div class="step"><div class="dot"></div><div class="stage">Etapa 02</div><h4>Confirmação<br/>de pagamento</h4><p>Primeira parcela liberada para reserva da agenda e início dos trabalhos.</p></div>
+          <div class="step"><div class="dot"></div><div class="stage">Etapa 03</div><h4>Briefing<br/>e conteúdo</h4><p>Coleta de textos, depoimentos, materiais e direção de marca, com aprovação.</p></div>
+          <div class="step"><div class="dot"></div><div class="stage">Etapa 04</div><h4>Execução<br/>e entrega</h4><p>Design e desenvolvimento com checkpoints, revisão e publicação final.</p></div>
+        </div>
+      </div>
+      <div class="meta-row">
+        <div class="item"><div class="k">Prazo estimado</div><div class="v">35 a 45 dias úteis</div></div>
+        <div class="item"><div class="k">Forma de pagamento</div><div class="v">2x · 50% início + 50% entrega</div></div>
+        <div class="item"><div class="k">Validade da proposta</div><div class="v">30 dias a contar desta data</div></div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>11</strong> / 13</div>
+  </section>
+
+  <!-- 12 — ESCOPO ADICIONAL -->
+  <section data-screen-label="12 Escopo adicional">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Possibilidades de expansão</span></div>
+    <div class="frame">
+      <div class="extra">
+        <div class="left">
+          <div class="eyebrow">O que não está incluído</div>
+          <h2 class="h-section">Espaço para crescer<br/>quando fizer sentido.</h2>
+          <p class="lead">O valor considera um projeto de repaginação objetivo, a partir do conteúdo atual da Outplan. Novas frentes podem ser orçadas separadamente, conforme a necessidade for surgindo.</p>
+        </div>
+        <div>
+          <div class="chips">
+            <div class="chip"><div class="k">Marca</div>Brand book estendido além do PDF resumido</div>
+            <div class="chip"><div class="k">Impressos</div>Papelaria — cartão, assinatura de e-mail</div>
+            <div class="chip"><div class="k">Texto</div>Copywriting integral (reescrita completa)</div>
+            <div class="chip"><div class="k">Conteúdo</div>Blog ou área técnica sobre Compras</div>
+            <div class="chip"><div class="k">Gestão</div>CMS / painel administrativo</div>
+            <div class="chip"><div class="k">Imagem</div>Sessão fotográfica profissional in loco</div>
+            <div class="chip"><div class="k">Vídeo</div>Novas peças no estilo da animação já contratada</div>
+            <div class="chip"><div class="k">Suporte</div>Manutenção mensal contínua</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
+    <div class="pager"><strong>12</strong> / 13</div>
+  </section>
+
+  <!-- 13 — ENCERRAMENTO -->
+  <section data-screen-label="13 Encerramento">
+    <div class="corner-mark"><span class="dot"></span><span class="text">Encerramento</span></div>
+    <div class="frame close-slide">
+      <div class="eyebrow">Para fechar</div>
+      <h2 class="display" style="margin-top: 28px;">
+        Uma marca que parece tão próxima<br/>
+        <span class="soft">quanto o atendimento que a Outplan já entrega.</span>
+      </h2>
+      <p class="lead">Repaginar identidade e site não é recomeçar — é fazer a marca finalmente parecer com os 20 anos de proximidade que a Outplan já construiu com quem compra.</p>
+      <div class="sign">
+        <div class="who">
+          <img class="logo" src="assets/logo-o2.png" alt="Agência O2" />
+          <div class="tagline">Direção visual · Sites institucionais · Identidade de marca</div>
+        </div>
+      </div>
+    </div>
+    <div class="pager"><strong>13</strong> / 13</div>
+  </section>
+
+</deck-stage>
+
+<a class="wa-cta" href="https://api.whatsapp.com/send?phone=5547996461562&text=Oi%20Ota%2C%20vi%20a%20proposta%20de%20identidade%20%2B%20site%20da%20Outplan%20e%20quero%20seguir" target="_blank" rel="noopener">
+  <span class="wa-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </span>
+  Fechar proposta
+</a>
+
+<button class="nav-arrow prev" type="button" aria-label="Slide anterior" onclick="document.querySelector('deck-stage').prev()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+</button>
+<button class="nav-arrow next" type="button" aria-label="Próximo slide" onclick="document.querySelector('deck-stage').next()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+</button>
+
+<script>
+  (function() {
+    var stage = document.querySelector('deck-stage');
+    if (!stage) return;
+    var startX = 0, startY = 0, startT = 0, tracking = false;
+    var THRESHOLD = 50, MAX_OFF_AXIS = 80, MAX_TIME = 800;
+    window.addEventListener('touchstart', function(e) {
+      if (e.touches.length !== 1) return;
+      startX = e.touches[0].clientX; startY = e.touches[0].clientY; startT = Date.now(); tracking = true;
+    }, { passive: true });
+    window.addEventListener('touchend', function(e) {
+      if (!tracking) return; tracking = false;
+      var t = e.changedTouches[0];
+      var dx = t.clientX - startX, dy = t.clientY - startY, dt = Date.now() - startT;
+      if (dt > MAX_TIME || Math.abs(dy) > MAX_OFF_AXIS || Math.abs(dx) < THRESHOLD) return;
+      if (dx < 0) stage.next(); else stage.prev();
+    }, { passive: true });
+  })();
+</script>
+<script>
+  (function() {
+    function hideOverlay() {
+      var stage = document.querySelector('deck-stage');
+      if (!stage || !stage.shadowRoot) return false;
+      var ov = stage.shadowRoot.querySelector('.overlay');
+      if (!ov) return false;
+      ov.style.display = 'none'; return true;
+    }
+    if (!hideOverlay()) {
+      var tries = 0;
+      var iv = setInterval(function() { if (hideOverlay() || ++tries > 40) clearInterval(iv); }, 150);
+    }
+  })();
+</script>
+
+</body>
+</html>
