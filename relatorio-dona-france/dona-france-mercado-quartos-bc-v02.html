@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mercado de quartos em Balneário Camboriú — Dona France</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* =====================================================================
+   DONA FRANCE — RELATÓRIO DE MERCADO V02
+   Sistema de duas superfícies: vermelho institucional / bege neutro.
+   Superfície vermelha = pontos de virada (capa, decisão, problemas,
+   oportunidade, resumo). Superfície bege = todo slide de leitura.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. BASE DE PALCO FIXO (viewport-base.css)
+   border-box é OBRIGATÓRIO: .slide é uma caixa fixa de 1920x1080 e todo
+   layout usa padding. Sem isso o padding é SOMADO aos 1920x1080 e o
+   conteúdo é empurrado para fora do palco.
+   --------------------------------------------------------------------- */
+*,*::before,*::after{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--stage-bg,#000)}
+.deck-viewport{position:fixed;inset:0;overflow:hidden;background:var(--stage-bg,#000)}
+.deck-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;background:var(--slide-bg,#fff)}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;display:block;visibility:hidden;opacity:0;pointer-events:none;background:var(--slide-bg,#fff)}
+.slide.active,.slide.visible{visibility:visible;opacity:1;pointer-events:auto;z-index:1}
+img,video,canvas,svg{max-width:100%;max-height:100%}
+@media print{
+  html,body{width:1920px;height:auto;overflow:visible;background:#fff}
+  .deck-viewport{position:static;overflow:visible;background:#fff}
+  .deck-stage{position:static;width:auto;height:auto;transform:none!important;background:none}
+  .slide{position:relative;display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;width:1920px;height:1080px;break-after:page;page-break-after:always}
+  .slide:last-child{break-after:auto;page-break-after:auto}
+  .deck-controls,.hint,.edit-toggle,.edit-hotzone{display:none!important}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}}
+
+/* ---------------------------------------------------------------------
+   2. TEMA — altere estas variáveis para mudar o deck inteiro
+   --------------------------------------------------------------------- */
+:root{
+  --ox:#5a160b;            /* vermelho institucional — cor da marca */
+  --ox-deep:#3F0E06;
+  --ox-lift:#732214;
+  --bone:#F2EDE4;          /* bege neutro dos slides de leitura */
+  --bone-deep:#E6DFD2;
+  --bone-sink:#DCD3C3;
+  --amber:#E0A03C;         /* acento único, só na superfície vermelha */
+  --ink:#241A16;
+  --ink-soft:#5E504A;
+  --ink-faint:#93857D;
+  --on-ox:#F6F1E8;
+  --on-ox-mute:#C9A79C;
+  --hair-dark:rgba(246,241,232,.20);
+  --hair-light:rgba(36,26,22,.16);
+  --pos:#2F6B4F;           /* onde ela ganha */
+  --neg:#A33B22;           /* onde ela perde */
+  --stage-bg:#1A0A06;
+
+  --f-display:'Bricolage Grotesque',sans-serif;
+  --f-body:'Archivo',sans-serif;
+  --f-mono:'Azeret Mono',monospace;
+}
+
+/* ---------------------------------------------------------------------
+   3. SUPERFÍCIES
+   --------------------------------------------------------------------- */
+.slide{font-family:var(--f-body);padding:74px 110px 60px;display:flex;flex-direction:column}
+
+.s-ox{
+  background:
+    radial-gradient(120% 90% at 82% 8%,var(--ox-lift) 0%,transparent 58%),
+    linear-gradient(168deg,var(--ox) 0%,var(--ox-deep) 100%);
+  color:var(--on-ox);
+}
+/* malha fina, só no vermelho, mascarada para não pesar embaixo */
+.s-ox::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(to right,rgba(246,241,232,.045) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(246,241,232,.045) 1px,transparent 1px);
+  background-size:60px 60px;
+  -webkit-mask-image:radial-gradient(120% 100% at 50% 0%,#000 30%,transparent 88%);
+          mask-image:radial-gradient(120% 100% at 50% 0%,#000 30%,transparent 88%);
+}
+.s-bone{background:var(--bone);color:var(--ink)}
+
+/* ---------------------------------------------------------------------
+   4. CHROME COMPARTILHADA (trilho superior, kicker, rodapé)
+   --------------------------------------------------------------------- */
+.rail{display:flex;align-items:center;justify-content:space-between;padding-bottom:20px;position:relative;z-index:2;flex:0 0 auto}
+.s-ox .rail{border-bottom:1px solid var(--hair-dark)}
+.s-bone .rail{border-bottom:1px solid var(--hair-light)}
+.rail img{height:38px;width:auto}
+.rail-meta{font-family:var(--f-mono);font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase}
+.s-ox .rail-meta{color:var(--on-ox-mute)}
+.s-bone .rail-meta{color:var(--ink-faint)}
+
+.kicker{
+  margin-top:26px;font-family:var(--f-mono);font-size:14px;font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;display:flex;align-items:center;gap:18px;
+  position:relative;z-index:2;flex:0 0 auto;
+}
+.s-ox .kicker{color:var(--amber)}
+.s-bone .kicker{color:var(--ox)}
+.kicker::after{content:"";height:1px;flex:1;max-width:240px}
+.s-ox .kicker::after{background:var(--amber);opacity:.5}
+.s-bone .kicker::after{background:var(--ox);opacity:.35}
+
+.foot{
+  margin-top:auto;padding-top:18px;display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--f-mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;
+  position:relative;z-index:2;flex:0 0 auto;gap:30px;
+}
+.foot span:nth-child(2){flex:1;text-align:center}
+.foot span:last-child{text-align:right}
+.s-ox .foot{border-top:1px solid var(--hair-dark);color:rgba(201,167,156,.75)}
+.s-bone .foot{border-top:1px solid var(--hair-light);color:var(--ink-faint)}
+
+/* ---------------------------------------------------------------------
+   5. TIPOGRAFIA DE CONTEÚDO
+   --------------------------------------------------------------------- */
+h1{
+  margin:26px 0 0;max-width:1660px;position:relative;z-index:2;
+  font-family:var(--f-display);font-weight:700;font-size:116px;line-height:1.02;
+  letter-spacing:-.035em;color:var(--on-ox);
+}
+h1 em{font-style:normal;color:var(--amber)}
+h2{
+  margin:22px 0 0;position:relative;z-index:2;flex:0 0 auto;
+  font-family:var(--f-display);font-weight:700;font-size:60px;line-height:1.04;
+  letter-spacing:-.032em;
+}
+.s-bone h2{color:var(--ink)}
+.s-ox h2{color:var(--on-ox);font-size:78px}
+.s-ox h2 em{font-style:normal;color:var(--amber)}
+.sub{margin-top:11px;font-size:21px;line-height:1.5;max-width:1400px;position:relative;z-index:2;flex:0 0 auto}
+.s-bone .sub{color:var(--ink-soft)}
+.s-ox .sub{color:var(--on-ox);opacity:.82}
+.sub b{font-weight:600}
+.s-bone .sub b{color:var(--ox)}
+
+.standfirst{
+  margin-top:30px;max-width:1120px;position:relative;z-index:2;
+  font-size:27px;line-height:1.55;color:var(--on-ox);opacity:.80;
+}
+
+/* ---------------------------------------------------------------------
+   6. COMPONENTES
+   --------------------------------------------------------------------- */
+
+/* --- faixa de números (capa) --- */
+.figures{margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hair-dark);position:relative;z-index:2}
+.fig{padding:26px 38px 20px;border-right:1px solid var(--hair-dark)}
+.fig:first-child{padding-left:0}
+.fig:last-child{border-right:0}
+.fig-n{font-family:var(--f-display);font-weight:800;font-size:56px;line-height:1;color:var(--amber);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.fig-l{margin-top:9px;font-family:var(--f-mono);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ox-mute);line-height:1.5}
+
+/* --- tabela --- */
+.tbl{margin-top:20px;width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;position:relative;z-index:2}
+.tbl th{
+  font-family:var(--f-mono);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-faint);text-align:right;padding:0 14px 11px;border-bottom:1.5px solid var(--ink);vertical-align:bottom;
+}
+.tbl th.l,.tbl td.l{text-align:left}
+.tbl td{padding:10px 14px;font-size:22px;text-align:right;border-bottom:1px solid var(--hair-light);color:var(--ink);vertical-align:middle}
+.tbl td.season{font-family:var(--f-mono);font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ox)}
+.tbl tr.grp td{border-top:2px solid rgba(90,22,11,.30)}
+.tbl td.med{font-weight:700;color:var(--ox);font-size:24px}
+.tbl td.n{font-family:var(--f-mono);font-size:16px;color:var(--ink-faint)}
+.tbl td.sm{font-size:18px;color:var(--ink-soft);line-height:1.35}
+.tbl tr:hover td{background:rgba(90,22,11,.045)}
+.tbl.compact td{padding:8px 14px;font-size:19px}
+.tbl.compact th{font-size:11.5px;padding-bottom:9px}
+
+/* --- callout com régua vermelha --- */
+.flag{
+  margin-top:16px;border-left:3px solid var(--ox);padding:3px 0 3px 18px;max-width:1560px;
+  position:relative;z-index:2;flex:0 0 auto;
+}
+.flag span{font-size:19px;line-height:1.5;color:var(--ink-soft);display:block}
+.flag b{font-weight:700;color:var(--ox)}
+.s-ox .flag{border-left-color:var(--amber)}
+.s-ox .flag span{color:var(--on-ox);opacity:.85}
+.s-ox .flag b{color:var(--amber)}
+
+/* --- grade de cartões --- */
+.cards{margin-top:22px;display:grid;gap:16px;position:relative;z-index:2}
+.c3{grid-template-columns:repeat(3,1fr)}
+.c4{grid-template-columns:repeat(4,1fr)}
+.c2{grid-template-columns:repeat(2,1fr)}
+.card{border:1px solid var(--hair-light);border-top:3px solid var(--ox);padding:20px 22px;background:rgba(255,255,255,.42)}
+.card h3{margin:0;font-family:var(--f-display);font-weight:700;font-size:25px;letter-spacing:-.02em;color:var(--ox);line-height:1.15}
+.card p{margin:9px 0 0;font-size:18px;line-height:1.48;color:var(--ink-soft)}
+.card .num{font-family:var(--f-mono);font-size:12px;font-weight:600;letter-spacing:.18em;color:var(--ink-faint);display:block;margin-bottom:8px}
+.s-ox .card{border-color:var(--hair-dark);border-top-color:var(--amber);background:rgba(255,255,255,.06)}
+.s-ox .card h3{color:var(--amber)}
+.s-ox .card p{color:var(--on-ox);opacity:.85}
+.s-ox .card .num{color:var(--on-ox-mute)}
+
+/* --- barras de frequência --- */
+.bars{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:4px 46px;position:relative;z-index:2}
+.bar{display:grid;grid-template-columns:250px 74px 1fr 210px;align-items:center;gap:14px;padding:6px 0;border-bottom:1px solid rgba(36,26,22,.09)}
+.bar-l{font-size:18px;color:var(--ink)}
+.bar-v{font-family:var(--f-mono);font-size:15px;font-weight:600;color:var(--ox);text-align:right;font-variant-numeric:tabular-nums}
+.bar-t{height:9px;background:var(--bone-sink);position:relative;overflow:hidden}
+.bar-f{position:absolute;inset:0 auto 0 0;background:var(--ox);width:var(--w,0%)}
+.bar-s{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;text-align:right}
+.has{color:var(--pos);font-weight:600}
+.hasnt{color:var(--neg);font-weight:600}
+.neutral{color:var(--ink-faint)}
+
+/* --- duas colunas ganha/perde --- */
+.split{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:34px;position:relative;z-index:2}
+.col h3{margin:0 0 12px;font-family:var(--f-mono);font-size:14px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding-bottom:9px;border-bottom:2px solid}
+.col.win h3{color:var(--pos);border-color:var(--pos)}
+.col.lose h3{color:var(--neg);border-color:var(--neg)}
+.row{display:grid;grid-template-columns:1fr auto;gap:16px;padding:9px 0;border-bottom:1px solid rgba(36,26,22,.09);align-items:baseline}
+.row b{font-weight:600;font-size:19px;color:var(--ink)}
+.row i{font-style:normal;font-size:16px;color:var(--ink-soft);display:block;margin-top:2px}
+.row em{font-style:normal;font-family:var(--f-mono);font-size:15px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.col.win em{color:var(--pos)}
+.col.lose em{color:var(--neg)}
+
+/* --- lista numerada grande --- */
+.big-list{margin-top:24px;display:flex;flex-direction:column;gap:12px;position:relative;z-index:2}
+.bl{display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:start;padding-bottom:12px;border-bottom:1px solid var(--hair-dark)}
+.bl:last-child{border-bottom:0}
+.bl .n{font-family:var(--f-display);font-weight:800;font-size:38px;line-height:1;color:var(--amber);letter-spacing:-.03em}
+.bl b{display:block;font-size:26px;font-weight:600;color:var(--on-ox);line-height:1.28}
+.bl i{display:block;font-style:normal;margin-top:5px;font-size:19px;line-height:1.45;color:var(--on-ox);opacity:.74}
+.s-bone .bl{border-bottom-color:var(--hair-light)}
+.s-bone .bl .n{color:var(--ox)}
+.s-bone .bl b{color:var(--ink)}
+.s-bone .bl i{color:var(--ink-soft);opacity:1}
+
+/* --- fases --- */
+.phases{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative;z-index:2}
+.ph{border-top:3px solid var(--ox);padding-top:14px}
+.ph.p2{border-top-color:#B4703A}
+.ph.p3{border-top-color:var(--ink-faint)}
+.ph .tag{font-family:var(--f-mono);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ox)}
+.ph.p2 .tag{color:#B4703A}
+.ph.p3 .tag{color:var(--ink-faint)}
+.ph h3{margin:7px 0 0;font-family:var(--f-display);font-weight:700;font-size:26px;letter-spacing:-.02em;color:var(--ink);line-height:1.2}
+.ph ul{margin:11px 0 0;padding:0;list-style:none}
+.ph li{font-size:17.5px;line-height:1.42;color:var(--ink-soft);padding:5px 0 5px 17px;position:relative;border-bottom:1px solid rgba(36,26,22,.07)}
+.ph li::before{content:"";position:absolute;left:0;top:13px;width:6px;height:6px;background:var(--ox);border-radius:50%}
+.ph.p2 li::before{background:#B4703A}
+.ph.p3 li::before{background:var(--ink-faint)}
+
+/* --- destaque de número gigante --- */
+.hero-stat{display:flex;align-items:baseline;gap:26px;margin-top:22px;position:relative;z-index:2}
+.hero-stat .v{font-family:var(--f-display);font-weight:800;font-size:112px;line-height:.9;letter-spacing:-.045em;color:var(--amber);font-variant-numeric:tabular-nums}
+.hero-stat .t{font-size:23px;line-height:1.4;color:var(--on-ox);opacity:.85;max-width:900px}
+
+/* --- chips --- */
+.chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:9px;position:relative;z-index:2}
+.chip{font-family:var(--f-mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;padding:7px 13px;border:1px solid var(--hair-light);border-radius:4px;color:var(--ink-soft)}
+.chip.on{background:var(--ox);color:var(--bone);border-color:var(--ox)}
+.s-ox .chip{border-color:var(--hair-dark);color:var(--on-ox-mute)}
+
+/* --- tira de fotos --- */
+.shots{margin-top:18px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative;z-index:2}
+.shot{position:relative;height:174px;overflow:hidden;border:1px solid var(--hair-light)}
+.shot img{width:100%;height:100%;object-fit:cover;max-width:none;max-height:none;display:block}
+.shot span{position:absolute;left:0;bottom:0;background:var(--ox);color:var(--bone);font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px}
+
+/* --- caixa de decisão (slides vermelhos) --- */
+.verdict{
+  margin-top:24px;border:1px solid var(--hair-dark);border-left:4px solid var(--amber);
+  padding:22px 28px;background:rgba(255,255,255,.06);position:relative;z-index:2;
+}
+.verdict .q{font-family:var(--f-mono);font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+.verdict .a{margin-top:10px;font-family:var(--f-display);font-weight:700;font-size:44px;line-height:1.15;letter-spacing:-.028em;color:var(--on-ox)}
+
+/* ---------------------------------------------------------------------
+   7. ANIMAÇÃO — revelação escalonada no slide ativo
+   --------------------------------------------------------------------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .62s cubic-bezier(.16,1,.3,1),transform .62s cubic-bezier(.16,1,.3,1)}
+.slide.visible .reveal{opacity:1;transform:none}
+.slide.visible .reveal:nth-child(1){transition-delay:.05s}
+.slide.visible .reveal:nth-child(2){transition-delay:.13s}
+.slide.visible .reveal:nth-child(3){transition-delay:.21s}
+.slide.visible .reveal:nth-child(4){transition-delay:.29s}
+.slide.visible .reveal:nth-child(5){transition-delay:.37s}
+.slide.visible .reveal:nth-child(6){transition-delay:.45s}
+.slide.visible .reveal:nth-child(7){transition-delay:.53s}
+.slide.visible .reveal:nth-child(8){transition-delay:.61s}
+
+/* ---------------------------------------------------------------------
+   8. CHROME DE APRESENTAÇÃO (fora do palco)
+   --------------------------------------------------------------------- */
+.deck-controls{
+  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:1000;
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(246,241,232,.5);background:rgba(0,0,0,.4);padding:8px 16px;border-radius:100px;
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.deck-controls.show{opacity:1}
+.progress{position:fixed;left:0;top:0;height:2px;background:var(--amber);z-index:1001;transition:width .35s cubic-bezier(.16,1,.3,1)}
+.edit-hotzone{position:fixed;top:0;left:0;width:80px;height:80px;z-index:10000;cursor:pointer}
+.edit-toggle{
+  position:fixed;top:16px;left:16px;z-index:10001;opacity:0;pointer-events:none;transition:opacity .3s;
+  border:0;border-radius:100px;padding:9px 14px;cursor:pointer;font-size:15px;
+  background:rgba(0,0,0,.55);color:#fff;
+}
+.edit-toggle.show,.edit-toggle.active{opacity:1;pointer-events:auto}
+.edit-toggle.active{background:var(--amber);color:var(--ox)}
+[contenteditable="true"]{outline:1px dashed var(--amber);outline-offset:3px;cursor:text}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="edit-hotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Modo de edição (E)">✏️</button>
+
+<div class="deck-viewport">
+<main class="deck-stage" id="deckStage">
+
+<!-- ============================================================
+     01 — CAPA  [VERMELHO]
+     ============================================================ -->
+<section class="slide s-ox active visible">
+  <div class="rail reveal">
+    <img src="assets/logo-branco.svg" alt="Dona France">
+    <span class="rail-meta">Relatório de mercado &nbsp;·&nbsp; Julho de 2026</span>
+  </div>
+  <div class="kicker reveal" style="margin-top:52px">Locação por quarto · Balneário Camboriú</div>
+  <h1 class="reveal">O mercado hoje<br>e onde a Dona France <em>entra nele</em></h1>
+  <p class="standfirst reveal">Benchmark de preço, estrutura e infraestrutura da oferta de quartos privativos até 1&nbsp;km da Praia Central — e as adaptações necessárias para operar no Airbnb sem desmontar o negócio de excursões.</p>
+  <div class="figures reveal">
+    <div class="fig"><div class="fig-n">122</div><div class="fig-l">Anúncios únicos<br>capturados</div></div>
+    <div class="fig"><div class="fig-n">198</div><div class="fig-l">Observações<br>de busca</div></div>
+    <div class="fig"><div class="fig-n">17</div><div class="fig-l">Auditados em<br>profundidade</div></div>
+    <div class="fig"><div class="fig-n">27</div><div class="fig-l">Quartos<br>Dona France</div></div>
+  </div>
+  <div class="foot reveal"><span>Casa de Excursão Dona France</span><span>Preços apurados em 23.07.2026</span><span>01</span></div>
+</section>
+
+<!-- ============================================================
+     02 — A DECISÃO EM UMA TELA  [VERMELHO]
+     ============================================================ -->
+<section class="slide s-ox">
+  <div class="rail reveal">
+    <img src="assets/logo-branco.svg" alt="Dona France">
+    <span class="rail-meta">A decisão &nbsp;·&nbsp; 02</span>
+  </div>
+  <div class="kicker reveal">A pergunta que este relatório responde</div>
+  <h2 class="reveal">Vale abrir quartos no Airbnb?</h2>
+  <div class="verdict reveal">
+    <div class="q">Resposta curta</div>
+    <div class="a">Sim — mas na Casa 02, com 3 a 5 quartos, e só depois<br>de resolver enxoval, limpeza, trancas e Wi-Fi.</div>
+  </div>
+  <div class="big-list reveal">
+    <div class="bl"><div class="n">01</div><div><b>O básico entra antes do anúncio</b><i>Enxoval, limpeza estruturada, trancas confiáveis e Wi-Fi medido. Sem isso, o quarto não entra no calendário — nenhuma comodidade extra compensa a falta do básico.</i></div></div>
+    <div class="bl"><div class="n">02</div><div><b>A Casa 01 fica protegida durante o piloto</b><i>Ela é o motor atual de até 60 hóspedes por excursão. O teste acontece na Casa 02, que é menor, nova e representa o menor risco econômico.</i></div></div>
+    <div class="bl"><div class="n">03</div><div><b>A decisão de expandir é por margem, não por ocupação</b><i>O indicador certo é a margem incremental por data disponível — depois de taxas, limpeza, lavanderia, energia, equipe e a possível perda de uma excursão naquela data.</i></div></div>
+  </div>
+  <div class="foot reveal"><span>Casa de Excursão Dona France</span><span>Relatório de mercado · Julho de 2026</span><span>02</span></div>
+</section>
+
+<!-- ============================================================
+     03 — MÉTODO E AMOSTRAGEM  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Método e amostragem &nbsp;·&nbsp; 03</span>
+  </div>
+  <div class="kicker reveal">Como esta pesquisa foi feita</div>
+  <h2 class="reveal">O que sustenta cada número deste relatório</h2>
+  <p class="sub reveal">Três fontes independentes. Sempre que um número aparecer, ele vem com a origem — e os números sem amostragem declarada estão marcados como <b>estimativa de mercado</b>.</p>
+
+  <div class="cards c3 reveal">
+    <div class="card">
+      <span class="num">Fonte 01 — base quantitativa</span>
+      <h3>Benchmark de quartos</h3>
+      <p>Varredura do Airbnb no recorte exato do produto: quarto privativo, 2 a 6 hóspedes, até 1&nbsp;km da Praia Central. Gera preço, infraestrutura e concorrentes. <b>É a espinha dorsal deste relatório.</b></p>
+    </div>
+    <div class="card">
+      <span class="num">Fonte 02 — moldura</span>
+      <h3>Leitura macro de BC</h3>
+      <p>Panorama do mercado de temporada da cidade: saturação, sazonalidade, custos e riscos. Qualitativo, <b>sem amostragem declarada</b> — usado como contexto, nunca como número principal.</p>
+    </div>
+    <div class="card">
+      <span class="num">Fonte 03 — realidade atual</span>
+      <h3>Operação Dona France</h3>
+      <p>Estrutura, capacidade e modelo comercial das duas casas, conforme material institucional próprio. Confirma — e em alguns pontos corrige — o que os outros dois estudos supõem.</p>
+    </div>
+  </div>
+
+  <table class="tbl compact reveal" style="margin-top:22px">
+    <thead><tr><th class="l">Recorte</th><th class="l">Definição adotada</th><th class="l">Recorte</th><th class="l">Definição adotada</th></tr></thead>
+    <tbody>
+      <tr><td class="l season">Geografia</td><td class="l sm">Até 1&nbsp;km da Praia Central — Barra Norte/Pioneiros, Centro e Barra Sul</td><td class="l season">Baixa temporada</td><td class="l sm">24 a 27 de agosto de 2026</td></tr>
+      <tr><td class="l season">Produto</td><td class="l sm">Quarto privativo em casa, apartamento, pousada ou hostel</td><td class="l season">Temporada regular</td><td class="l sm">6 a 9 de novembro de 2026</td></tr>
+      <tr><td class="l season">Capacidade</td><td class="l sm">2 a 6 hóspedes — a mesma faixa dos quartos da Dona France</td><td class="l season">Alta temporada</td><td class="l sm">8 a 11 de janeiro de 2027</td></tr>
+      <tr><td class="l season">Excluídos</td><td class="l sm">Itajaí, Itapema, Praia Brava, Taquaras, Estaleiro, Camboriú e imóveis inteiros</td><td class="l season">Métricas</td><td class="l sm">Preço/noite, preço por hóspede/noite e P25 · mediana · P75</td></tr>
+    </tbody>
+  </table>
+
+  <div class="flag reveal"><span><b>Duas ressalvas que valem para o relatório inteiro.</b> Os preços são um retrato de 23.07.2026 e o Airbnb é dinâmico — taxas, descontos e disponibilidade mudam. E “não informado” em um anúncio não significa que o item não exista: significa apenas que o anfitrião não declarou.</span></div>
+  <div class="foot reveal"><span>122 anúncios únicos · 198 observações · 17 auditados</span><span>Retrato de 23.07.2026</span><span>03</span></div>
+</section>
+
+<!-- ============================================================
+     04 — MERCADO HOJE + SAZONALIDADE  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">O mercado hoje &nbsp;·&nbsp; 04</span>
+  </div>
+  <div class="kicker reveal">Contexto e sazonalidade</div>
+  <h2 class="reveal">A alta temporada paga o ano. A baixa precisa de outro produto.</h2>
+  <p class="sub reveal">O mercado de BC é maduro e disputado. O que muda o resultado não é o imóvel — é a operação e o preço certo em cada janela do ano.</p>
+
+  <div class="cards c4 reveal">
+    <div class="card"><span class="num">Estimativa de mercado</span><h3>+30%</h3><p>de crescimento na oferta de anúncios no último ano — a concorrência aumentou mais rápido que a demanda.</p></div>
+    <div class="card"><span class="num">Estimativa de mercado</span><h3>45% a 51%</h3><p>de ocupação média anual na cidade. É a régua realista — não os 80% que se imagina.</p></div>
+    <div class="card"><span class="num">Estimativa de mercado</span><h3>15% a 25%</h3><p>cobrado por agências e co-hosts sobre a receita, além de 15% a 20% de taxa de plataforma.</p></div>
+    <div class="card"><span class="num">Estimativa de mercado</span><h3>até 40%</h3><p>do faturamento bruto consumido pela operação: limpeza, lavanderia, energia e taxas.</p></div>
+  </div>
+
+  <h3 class="reveal" style="margin:24px 0 0;font-family:var(--f-display);font-weight:700;font-size:29px;letter-spacing:-.02em;color:var(--ox)">A sazonalidade, medida no produto dela — quarto para 2 hóspedes</h3>
+
+  <table class="tbl reveal" style="margin-top:12px">
+    <thead><tr><th class="l">Janela</th><th class="l">Período apurado</th><th>Mediana por quarto/noite</th><th>Mediana por hóspede/noite</th><th class="l">Variação sobre a baixa</th></tr></thead>
+    <tbody>
+      <tr><td class="l season">Baixa</td><td class="l sm">24 a 27 de agosto</td><td class="med">R$ 153</td><td>R$ 77</td><td class="l sm">—</td></tr>
+      <tr><td class="l season">Regular</td><td class="l sm">6 a 9 de novembro</td><td class="med">R$ 187</td><td>R$ 94</td><td class="l sm">+22%</td></tr>
+      <tr><td class="l season">Alta</td><td class="l sm">8 a 11 de janeiro</td><td class="med">R$ 415</td><td>R$ 208</td><td class="l sm" style="color:var(--ox);font-weight:600">+171%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="flag reveal"><span><b>Por que isso importa para a Dona France.</b> A leitura macro descreve um “inverno de caixa” entre abril e setembro, com guerra de preço e imóveis operando no zero a zero. O benchmark confirma a direção e mostra que, no produto quarto, a oscilação é ainda mais forte do que no mercado geral. É por isso que a estratégia de baixa temporada precisa ser diferente da de verão — tema retomado no slide 16.</span></div>
+  <div class="foot reveal"><span>Mediana: benchmark, n=35 (baixa) · 16 (regular) · 14 (alta)</span><span>Cartões: estimativa de mercado, sem amostragem declarada</span><span>04</span></div>
+</section>
+
+<!-- ============================================================
+     05 — FORMATOS DE ALUGUEL EM BC  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Formatos de aluguel &nbsp;·&nbsp; 05</span>
+  </div>
+  <div class="kicker reveal">O mapa do mercado</div>
+  <h2 class="reveal">Com quem a Dona France compete — e com quem não compete</h2>
+  <p class="sub reveal">A maior parte do que se lê sobre o mercado de Balneário Camboriú fala de apartamento e studio. <b>Nada disso é o produto dela.</b> Saber onde ela não está evita investir para brigar num lugar onde não precisa entrar.</p>
+
+  <table class="tbl reveal">
+    <thead><tr><th class="l">Formato</th><th class="l">Onde se concentra</th><th class="l">Quem procura</th><th class="l">Dinâmica</th><th class="l">Compete com ela?</th></tr></thead>
+    <tbody>
+      <tr><td class="l" style="font-weight:600">Studio e loft compacto</td><td class="l sm">Centro, Pioneiros, Terceira Avenida</td><td class="l sm">Corporativo, solteiros, nômade digital</td><td class="l sm">Giro rápido, 2 a 4 noites</td><td class="l sm" style="color:var(--ink-faint)">Não</td></tr>
+      <tr><td class="l" style="font-weight:600">Apartamento de alto padrão</td><td class="l sm">Avenida Atlântica e quadra mar</td><td class="l sm">Famílias numerosas, Mercosul</td><td class="l sm">Ticket alto, vacância no inverno</td><td class="l sm" style="color:var(--ink-faint)">Não</td></tr>
+      <tr><td class="l" style="font-weight:600">Casa e mansão</td><td class="l sm">Praias agrestes — Estaleiro, Taquaras</td><td class="l sm">Eventos familiares, retiros</td><td class="l sm">Feriados longos, margem alta</td><td class="l sm" style="color:var(--ink-faint)">Não</td></tr>
+      <tr class="grp"><td class="l" style="font-weight:700;color:var(--ox)">Quarto privativo</td><td class="l sm">Barra Norte, Centro e Barra Sul</td><td class="l sm">Casais, famílias de 3–4, grupos de 5–6</td><td class="l sm">Preço por quarto, giro constante</td><td class="l sm" style="color:var(--ox);font-weight:700">Sim — é aqui</td></tr>
+      <tr><td class="l" style="font-weight:600">Casa inteira para grupo</td><td class="l sm">Centro</td><td class="l sm">Excursões, igrejas, formaturas</td><td class="l sm">Reserva por grupo, casa fechada</td><td class="l sm" style="color:var(--pos);font-weight:600">Já é dela</td></tr>
+    </tbody>
+  </table>
+
+  <div class="flag reveal"><span><b>A leitura estratégica.</b> A Dona France não precisa disputar diária com studio de casal no centro, que é o segmento mais saturado e mais sensível a preço. Ela ocupa duas linhas desta tabela ao mesmo tempo — casa inteira para grupo, que já domina, e quarto privativo, onde pretende entrar. Nenhum concorrente de studio consegue fazer as duas coisas.</span></div>
+  <div class="foot reveal"><span>Tipologias: leitura macro de mercado · Linha destacada: benchmark</span><span>Relatório de mercado · Julho de 2026</span><span>05</span></div>
+</section>
+
+<!-- ============================================================
+     06 — PREÇOS POR CAPACIDADE E TEMPORADA  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Preço por quarto / noite &nbsp;·&nbsp; 06</span>
+  </div>
+  <div class="kicker reveal">O que o mercado cobra</div>
+  <h2 class="reveal">Preço por capacidade e temporada</h2>
+  <p class="sub reveal">Quarto privativo até 1&nbsp;km da Praia Central. <b>n</b> é o número de observações que sustentam cada linha — quanto menor o n, menos confiável a mediana e mais se deve trabalhar com faixa.</p>
+
+  <table class="tbl reveal">
+    <thead><tr><th class="l">Temporada</th><th class="l">Capacidade</th><th>n</th><th>P25</th><th>Mediana</th><th>P75</th><th>Mediana p/ hóspede</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td class="l season">Baixa</td><td class="l">2 hóspedes</td><td class="n">35</td><td>R$ 133</td><td class="med">R$ 153</td><td>R$ 220</td><td>R$ 77</td></tr>
+      <tr><td class="l"></td><td class="l">3–4 hóspedes</td><td class="n">10</td><td>R$ 244</td><td class="med">R$ 315</td><td>R$ 567</td><td>R$ 79</td></tr>
+      <tr><td class="l"></td><td class="l">5–6 hóspedes</td><td class="n">5</td><td>R$ 292</td><td class="med">R$ 300</td><td>R$ 383</td><td>R$ 50</td></tr>
+      <tr class="grp"><td class="l season">Regular</td><td class="l">2 hóspedes</td><td class="n">16</td><td>R$ 156</td><td class="med">R$ 187</td><td>R$ 261</td><td>R$ 94</td></tr>
+      <tr><td class="l"></td><td class="l">3–4 hóspedes</td><td class="n">10</td><td>R$ 337</td><td class="med">R$ 377</td><td>R$ 436</td><td>R$ 94</td></tr>
+      <tr><td class="l"></td><td class="l">5–6 hóspedes</td><td class="n">6</td><td>R$ 344</td><td class="med">R$ 511</td><td>R$ 641</td><td>R$ 85</td></tr>
+      <tr class="grp"><td class="l season">Alta</td><td class="l">2 hóspedes</td><td class="n">14</td><td>R$ 329</td><td class="med">R$ 415</td><td>R$ 514</td><td>R$ 208</td></tr>
+      <tr><td class="l"></td><td class="l">3–4 hóspedes</td><td class="n">13</td><td>R$ 542</td><td class="med">R$ 657</td><td>R$ 905</td><td>R$ 164</td></tr>
+      <tr><td class="l"></td><td class="l">5–6 hóspedes</td><td class="n">8</td><td>R$ 323</td><td class="med">R$ 357</td><td>R$ 896</td><td>R$ 59</td></tr>
+    </tbody>
+  </table>
+
+  <div class="flag reveal"><span><b>Atenção à linha 5–6 na alta temporada.</b> A mediana de R$ 357 aparece <i>abaixo</i> da de 3–4 hóspedes, o que parece um erro mas não é: a amostra tem apenas 8 observações e mistura quarto com beliche, pousada, casa de hóspedes e produto híbrido. O P75 de R$ 896 revela a dispersão real. <b>Para este segmento, use a faixa e teste a elasticidade — não trabalhe com a mediana.</b></span></div>
+  <div class="foot reveal"><span>Fonte: benchmark de 122 anúncios · 198 observações</span><span>Retrato de 23.07.2026 — o Airbnb é dinâmico</span><span>06</span></div>
+</section>
+
+<!-- ============================================================
+     07 — INFRAESTRUTURA MAIS COMUM  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Infraestrutura do mercado &nbsp;·&nbsp; 07</span>
+  </div>
+  <div class="kicker reveal">O que a concorrência oferece</div>
+  <h2 class="reveal">Frequência de cada item nos 17 anúncios auditados</h2>
+  <p class="sub reveal">Itens confirmados apenas quando declarados no anúncio. A coluna da direita mostra a situação da Dona France hoje — <span style="color:var(--pos);font-weight:600">verde</span> onde já tem, <span style="color:var(--neg);font-weight:600">vermelho</span> onde falta.</p>
+
+  <div class="bars reveal">
+    <div class="bar"><span class="bar-l">Wi-Fi</span><span class="bar-v">17/17 · 100%</span><span class="bar-t"><i class="bar-f" style="--w:100%"></i></span><span class="bar-s has">Tem — falta medir</span></div>
+    <div class="bar"><span class="bar-l">Banheiro privativo</span><span class="bar-v">10/17 · 59%</span><span class="bar-t"><i class="bar-f" style="--w:59%"></i></span><span class="bar-s has">27/27 quartos</span></div>
+    <div class="bar"><span class="bar-l">Cozinha ou copa</span><span class="bar-v">14/17 · 82%</span><span class="bar-t"><i class="bar-f" style="--w:82%"></i></span><span class="bar-s has">Industrial + refeitório</span></div>
+    <div class="bar"><span class="bar-l">Espaço de trabalho</span><span class="bar-v">9/17 · 53%</span><span class="bar-t"><i class="bar-f" style="--w:53%"></i></span><span class="bar-s hasnt">Não tem</span></div>
+    <div class="bar"><span class="bar-l">TV</span><span class="bar-v">14/17 · 82%</span><span class="bar-t"><i class="bar-f" style="--w:82%"></i></span><span class="bar-s has">Em todos os quartos</span></div>
+    <div class="bar"><span class="bar-l">Lavanderia</span><span class="bar-v">8/17 · 47%</span><span class="bar-t"><i class="bar-f" style="--w:47%"></i></span><span class="bar-s hasnt">Não estruturada</span></div>
+    <div class="bar"><span class="bar-l">Tranca no quarto</span><span class="bar-v">13/17 · 76%</span><span class="bar-t"><i class="bar-f" style="--w:76%"></i></span><span class="bar-s neutral">Confirmar todas</span></div>
+    <div class="bar"><span class="bar-l">Câmera externa declarada</span><span class="bar-v">5/17 · 29%</span><span class="bar-t"><i class="bar-f" style="--w:29%"></i></span><span class="bar-s neutral">Auditar — ver 11</span></div>
+    <div class="bar"><span class="bar-l">Ar-condicionado</span><span class="bar-v">12/17 · 71%</span><span class="bar-t"><i class="bar-f" style="--w:71%"></i></span><span class="bar-s has">Em todos os quartos</span></div>
+    <div class="bar"><span class="bar-l">Frigobar explícito</span><span class="bar-v">5/17 · 29%</span><span class="bar-t"><i class="bar-f" style="--w:29%"></i></span><span class="bar-s has">Em todos os quartos</span></div>
+    <div class="bar"><span class="bar-l">Estacionamento</span><span class="bar-v">11/17 · 65%</span><span class="bar-t"><i class="bar-f" style="--w:65%"></i></span><span class="bar-s hasnt">Não tem</span></div>
+    <div class="bar"><span class="bar-l">Pet friendly</span><span class="bar-v">4/17 · 24%</span><span class="bar-t"><i class="bar-f" style="--w:24%"></i></span><span class="bar-s neutral">A decidir</span></div>
+    <div class="bar"><span class="bar-l">Self check-in</span><span class="bar-v">4/17 · 24%</span><span class="bar-t"><i class="bar-f" style="--w:24%"></i></span><span class="bar-s neutral">Não — com contingência</span></div>
+    <div class="bar"><span class="bar-l">Café da manhã explícito</span><span class="bar-v">2/17 · 12%</span><span class="bar-t"><i class="bar-f" style="--w:12%"></i></span><span class="bar-s neutral">Não é requisito</span></div>
+    <div class="bar"><span class="bar-l">Enxoval divulgado</span><span class="bar-v">2/17 · 12%</span><span class="bar-t"><i class="bar-f" style="--w:12%"></i></span><span class="bar-s hasnt">Não fornece — lacuna 1</span></div>
+    <div class="bar"><span class="bar-l">Fechadura digital</span><span class="bar-v">1/17 · 6%</span><span class="bar-t"><i class="bar-f" style="--w:6%"></i></span><span class="bar-s neutral">Não é requisito</span></div>
+  </div>
+
+  <div class="flag reveal"><span><b>Enxoval é o caso mais enganoso desta lista.</b> Só 2 de 17 anúncios divulgam enxoval explicitamente — mas isso não significa que seja opcional. Significa que é tão pressuposto que ninguém anuncia. É justamente o item que a Dona France não fornece hoje, e o que mais aparece em reclamação de avaliação.</span></div>
+  <div class="foot reveal"><span>Base: 17 anúncios auditados em profundidade</span><span>Itens contados apenas quando declarados no anúncio</span><span>07</span></div>
+</section>
+
+<!-- ============================================================
+     08 — CONCORRENTES REAIS  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Concorrência direta &nbsp;·&nbsp; 08</span>
+  </div>
+  <div class="kicker reveal">Quem já disputa esse hóspede</div>
+  <h2 class="reveal">Concorrentes reais, preço de baixa temporada</h2>
+  <p class="sub reveal">Amostra dos anúncios auditados que exibiram preço para a capacidade analisada. Note as notas: <b>a régua de avaliação do segmento está em 4,9</b>.</p>
+
+  <table class="tbl compact reveal">
+    <thead><tr><th class="l">Anúncio</th><th>Cap.</th><th class="l">Proximidade</th><th class="l">Setor</th><th>R$/noite</th><th class="l">Nota</th><th class="l">Banheiro</th><th class="l">Cozinha</th></tr></thead>
+    <tbody>
+      <tr><td class="l">I10 Suíte térrea, 500&nbsp;m da praia</td><td>2</td><td class="l sm">500 m</td><td class="l sm">—</td><td class="med">R$ 110</td><td class="l sm">4,91 · 34</td><td class="l sm">Privativo</td><td class="l sm">Copa sem fogão</td></tr>
+      <tr><td class="l">Quarto pé na areia, 50&nbsp;m</td><td>2</td><td class="l sm">50 m</td><td class="l sm">—</td><td class="med">R$ 142</td><td class="l sm">4,94 · 33</td><td class="l sm" style="color:var(--neg)">Compartilhado</td><td class="l sm">Refeições rápidas</td></tr>
+      <tr><td class="l">Suíte 2 com café da manhã</td><td>2</td><td class="l sm">2 min a pé</td><td class="l sm">—</td><td class="med">R$ 144</td><td class="l sm">4,97 · 29</td><td class="l sm">Privativo</td><td class="l sm">Compartilhada</td></tr>
+      <tr><td class="l">Quarto a 5 min da praia</td><td>2</td><td class="l sm">≈ 300 m</td><td class="l sm">Sul</td><td class="med">R$ 186</td><td class="l sm">4,90 · 96</td><td class="l sm" style="color:var(--neg)">Compartilhado</td><td class="l sm">Compartilhada</td></tr>
+      <tr><td class="l">Quarto no AP da Ana</td><td>2</td><td class="l sm">400–500 m</td><td class="l sm">Central</td><td class="med">R$ 198</td><td class="l sm" style="font-weight:600">4,99 · 291</td><td class="l sm">Privativo</td><td class="l sm">Compartilhada</td></tr>
+      <tr><td class="l">Suíte privativa frente-mar</td><td>2</td><td class="l sm">Frente-mar</td><td class="l sm">Central</td><td class="med">R$ 248</td><td class="l sm" style="font-weight:600">4,99 · 91</td><td class="l sm">Privativo</td><td class="l sm">Completa</td></tr>
+      <tr><td class="l">Suíte 250&nbsp;m + hidro + ar</td><td>2</td><td class="l sm">250 m</td><td class="l sm">Central</td><td class="med">R$ 267</td><td class="l sm">Novo</td><td class="l sm">Privativo</td><td class="l sm">Não informada</td></tr>
+      <tr class="grp"><td class="l">Suíte privativa em pousada</td><td>6–8</td><td class="l sm">Provável</td><td class="l sm">Central</td><td class="med">R$ 209</td><td class="l sm">Novo</td><td class="l sm">Privativo</td><td class="l sm">Compartilhada</td></tr>
+      <tr><td class="l">2 quartos próximos à Roda Gigante</td><td>4</td><td class="l sm">Costeira</td><td class="l sm">Norte</td><td class="med">R$ 290</td><td class="l sm">5,00 · 5</td><td class="l sm">Demissuíte</td><td class="l sm">Compartilhada</td></tr>
+      <tr><td class="l">Pousada Claudia</td><td>6</td><td class="l sm">Provável</td><td class="l sm">—</td><td class="med">R$ 639</td><td class="l sm">—</td><td class="l sm">Não informado</td><td class="l sm">Compartilhada</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cards c2 reveal" style="margin-top:4px">
+    <div class="card"><span class="num">Caso-limite 01 — o concorrente mais parecido</span><h3>Quarto para até 8 hóspedes, a 200 m</h3><p>Tem teclado numérico, cozinha completa, aceita pets, câmera externa e quarto grande com beliches. <b>Não oferece enxoval.</b> É o produto mais próximo do formato de grupo — e mostra exatamente onde a Dona France ganha: padronização.</p></div>
+    <div class="card"><span class="num">Caso-limite 02 — o que derruba reputação</span><h3>Pousada Claudia</h3><p>A avaliação visível reclamava de banho, papel higiênico, lençol e limpeza. <b>Nenhuma reclamação era sobre falta de comodidade sofisticada.</b> O básico pesa mais na nota do que a quantidade de itens do anúncio.</p></div>
+  </div>
+  <div class="foot reveal"><span>Preços de baixa temporada, quando exibidos na consulta</span><span>Retrato de 23.07.2026</span><span>08</span></div>
+</section>
+
+<!-- ============================================================
+     09 — O QUE O HÓSPEDE VALORIZA  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Voz do hóspede &nbsp;·&nbsp; 09</span>
+  </div>
+  <div class="kicker reveal">O que aparece nas avaliações</div>
+  <h2 class="reveal">Os temas que o hóspede realmente comenta</h2>
+  <p class="sub reveal">Frequência de cada tema nas avaliações dos anúncios auditados. <b>Os cinco primeiros são todos operação e localização — nenhum é luxo.</b></p>
+
+  <div class="bars reveal">
+    <div class="bar"><span class="bar-l">Hospitalidade</span><span class="bar-v">76%</span><span class="bar-t"><i class="bar-f" style="--w:76%"></i></span><span class="bar-s neutral">Atendimento e acolhida</span></div>
+    <div class="bar"><span class="bar-l">Arredores</span><span class="bar-v">65%</span><span class="bar-t"><i class="bar-f" style="--w:65%"></i></span><span class="bar-s neutral">Comércio e serviços</span></div>
+    <div class="bar"><span class="bar-l">Localização</span><span class="bar-v">76%</span><span class="bar-t"><i class="bar-f" style="--w:76%"></i></span><span class="bar-s has">Vantagem — 300 m</span></div>
+    <div class="bar"><span class="bar-l">Espaço interno</span><span class="bar-v">65%</span><span class="bar-t"><i class="bar-f" style="--w:65%"></i></span><span class="bar-s has">Quartos amplos</span></div>
+    <div class="bar"><span class="bar-l">Conforto</span><span class="bar-v">76%</span><span class="bar-t"><i class="bar-f" style="--w:76%"></i></span><span class="bar-s neutral">Banho, sono, clima</span></div>
+    <div class="bar"><span class="bar-l">Exatidão do anúncio</span><span class="bar-v">65%</span><span class="bar-t"><i class="bar-f" style="--w:65%"></i></span><span class="bar-s neutral">Foto igual à realidade</span></div>
+    <div class="bar"><span class="bar-l">Praia</span><span class="bar-v">71%</span><span class="bar-t"><i class="bar-f" style="--w:71%"></i></span><span class="bar-s has">Vantagem — a pé</span></div>
+    <div class="bar"><span class="bar-l">Vista</span><span class="bar-v">24%</span><span class="bar-t"><i class="bar-f" style="--w:24%"></i></span><span class="bar-s neutral">Pouco relevante</span></div>
+    <div class="bar"><span class="bar-l">Limpeza</span><span class="bar-v">71%</span><span class="bar-t"><i class="bar-f" style="--w:71%"></i></span><span class="bar-s hasnt">Precisa virar serviço</span></div>
+    <div class="bar"><span class="bar-l">Custo-benefício</span><span class="bar-v">24%</span><span class="bar-t"><i class="bar-f" style="--w:24%"></i></span><span class="bar-s neutral">Não é o principal</span></div>
+    <div class="bar"><span class="bar-l">Check-in</span><span class="bar-v">24%</span><span class="bar-t"><i class="bar-f" style="--w:24%"></i></span><span class="bar-s neutral">Importa quando falha</span></div>
+    <div class="bar"><span class="bar-l">Qualidade do sono</span><span class="bar-v">18%</span><span class="bar-t"><i class="bar-f" style="--w:18%"></i></span><span class="bar-s neutral">Colchão e ruído</span></div>
+  </div>
+
+  <div class="flag reveal"><span><b>A conclusão prática.</b> Hospitalidade, localização e conforto empatam em 76%, seguidos de praia e limpeza em 71%. Isso significa que a nota se constrói em atendimento, endereço e operação básica — três coisas que a Dona France faz há 23 anos para grupos. <b>O que ela precisa é traduzir isso para o formato de quarto, não aprender do zero.</b> Vista aparece em apenas 24% e custo-benefício em 24%: não é preciso ter vista para o mar nem ser o mais barato.</span></div>
+  <div class="foot reveal"><span>Base: avaliações dos 17 anúncios auditados</span><span>Relatório de mercado · Julho de 2026</span><span>09</span></div>
+</section>
+
+<!-- ============================================================
+     10 — OS PROBLEMAS DO MERCADO  [VERMELHO]
+     ============================================================ -->
+<section class="slide s-ox">
+  <div class="rail reveal">
+    <img src="assets/logo-branco.svg" alt="Dona France">
+    <span class="rail-meta">Problemas do mercado &nbsp;·&nbsp; 10</span>
+  </div>
+  <div class="kicker reveal">Onde o mercado de BC machuca</div>
+  <h2 class="reveal">Os cinco problemas — e o maior deles <em>não é dela</em></h2>
+
+  <div class="big-list reveal">
+    <div class="bl"><div class="n">01</div><div><b>Inverno de caixa</b><i>Entre abril e setembro a diária despenca e muitos imóveis operam no zero a zero. Sem um produto específico para essa janela, a baixa temporada consome o lucro do verão.</i></div></div>
+    <div class="bl"><div class="n">02</div><div><b>Guerra de preço na baixa</b><i>Com a oferta crescendo cerca de 30% em um ano, a disputa se resolve por desconto — o que pressiona quem não tem diferencial estrutural.</i></div></div>
+    <div class="bl"><div class="n">03</div><div><b>Gargalo de limpeza na alta</b><i>Nas trocas de 24/12 e 02/01 faltam diaristas na cidade e o custo da faxina dispara. Ter equipe de limpeza parceira e confiável é o maior desafio logístico do verão.</i></div></div>
+    <div class="bl"><div class="n">04</div><div><b>A operação come até 40% do bruto</b><i>Plataforma de 15% a 20%, gestão de 15% a 25%, mais limpeza, lavanderia, energia e enxoval. Faturamento alto não significa lucro.</i></div></div>
+    <div class="bl"><div class="n">05</div><div><b>Risco condominial e jurídico</b><i>O STJ firmou que locação por temporada tem caráter de hospedagem e destinação comercial — condomínios residenciais podem proibir. As multas em BC costumam ser de 5 a 10 vezes a cota condominial.</i></div></div>
+  </div>
+
+  <div class="verdict reveal">
+    <div class="q">O ponto que muda tudo</div>
+    <div class="a">O problema 05 é apontado como o maior risco do mercado —<br>e a Dona France simplesmente <span style="color:var(--amber)">não o corre</span>.</div>
+  </div>
+  <div class="foot reveal"><span>Casa própria: sem convenção, sem assembleia, sem multa condominial</span><span>Problemas 01 a 05: estimativa de mercado</span><span>10</span></div>
+</section>
+
+<!-- ============================================================
+     11 — OS RISCOS QUE SÃO DELA  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Riscos próprios &nbsp;·&nbsp; 11</span>
+  </div>
+  <div class="kicker reveal">O que precisa de atenção real</div>
+  <h2 class="reveal">Os riscos que são dela — e que o panorama de mercado não cobre</h2>
+  <p class="sub reveal">Não correr o risco condominial não significa não ter risco. Operar 11 quartos como hospedagem tem exigências próprias, e três delas são <b>anteriores à publicação do anúncio</b>.</p>
+
+  <div class="cards c3 reveal">
+    <div class="card"><span class="num">Risco 01 — antes de escalar</span><h3>Segurança contra incêndio</h3><p>Projeto, licenciamento e equipamentos conforme CBMSC e o uso real da edificação: rotas, iluminação, sinalização, extintores, detectores e lotação. <b>Sensor avulso e câmera não substituem projeto técnico.</b></p></div>
+    <div class="card"><span class="num">Risco 02 — antes de publicar</span><h3>Uso e cadastro</h3><p>Consultar o município sobre ocupação e alteração de uso. Validar Cadastur e FNRH. Formalizar regras de visitantes, silêncio, menores, pets, acesso e uso da cozinha.</p></div>
+    <div class="card"><span class="num">Risco 03 — auditar hoje</span><h3>Câmeras internas</h3><p>O Airbnb <b>proíbe câmera em qualquer espaço interno</b>, inclusive áreas comuns de anúncios de quarto privativo — mesmo desligadas. Só câmeras externas, em áreas permitidas e declaradas, são aceitas.</p></div>
+    <div class="card"><span class="num">Risco 04 — comercial</span><h3>Canibalizar a excursão</h3><p>Vender 3 quartos numa data pode inviabilizar uma excursão inteira de 25 a 46 pessoas naquela mesma data. Sem janela de liberação e calendários vinculados, o quarto compete com o próprio negócio.</p></div>
+    <div class="card"><span class="num">Risco 05 — reputação</span><h3>O perfil começa do zero</h3><p>Vinte e três anos e mais de 650 grupos hospedados <b>não transferem para o Airbnb</b>. O anúncio novo entra sem avaliação, competindo com concorrentes de nota 4,99 e 291 avaliações.</p></div>
+    <div class="card"><span class="num">Risco 06 — operacional</span><h3>Avaliações dos primeiros giros</h3><p>As primeiras dez reservas definem a reputação do anúncio. Uma falha de limpeza ou de enxoval no início custa muito mais caro do que custaria depois de trinta avaliações positivas.</p></div>
+  </div>
+
+  <div class="flag reveal"><span><b>Como transformar o risco 05 em vantagem.</b> A reputação de excursão não migra sozinha, mas pode ser transferida por narrativa: o anúncio deve dizer que a casa recebe grupos há 23 anos e mostrar a estrutura real. A prova social se reconstrói rápido quando as primeiras reservas são bem operadas — por isso o piloto começa pequeno.</span></div>
+  <div class="foot reveal"><span>Fontes: política do Airbnb, CBMSC, Cadastur e operação atual</span><span>Relatório de mercado · Julho de 2026</span><span>11</span></div>
+</section>
+
+<!-- ============================================================
+     12 — RAIO-X DAS DUAS CASAS  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">A operação hoje &nbsp;·&nbsp; 12</span>
+  </div>
+  <div class="kicker reveal">Ponto de partida</div>
+  <h2 class="reveal">O que a Dona France já tem</h2>
+
+  <div class="shots reveal">
+    <div class="shot"><img src="assets/fachada.webp" alt="Fachada da casa"><span>Fachada</span></div>
+    <div class="shot"><img src="assets/quarto-grupo.webp" alt="Quarto para grupo"><span>Quarto de grupo</span></div>
+    <div class="shot"><img src="assets/banheiro-quarto.webp" alt="Banheiro privativo"><span>Banheiro privativo</span></div>
+    <div class="shot"><img src="assets/refeitorio.webp" alt="Refeitório"><span>Refeitório</span></div>
+  </div>
+
+  <table class="tbl compact reveal" style="margin-top:18px">
+    <thead><tr><th class="l">Dimensão</th><th class="l">Casa 01</th><th class="l">Casa 02</th><th class="l">Situação para o Airbnb</th></tr></thead>
+    <tbody>
+      <tr><td class="l season">Quartos</td><td class="l">16 quartos · até 60 hóspedes · 320&nbsp;m²</td><td class="l">11 quartos · até 46 hóspedes · 280&nbsp;m²</td><td class="l sm"><b style="color:var(--ox)">27 quartos e 106 hóspedes no total</b></td></tr>
+      <tr><td class="l season">Capacidade por quarto</td><td class="l">De 2 a 6 pessoas</td><td class="l">De 2 a 6 pessoas</td><td class="l sm" style="color:var(--pos)">Cobre exatamente a faixa pesquisada</td></tr>
+      <tr><td class="l season">Dentro do quarto</td><td class="l">Ar-condicionado, ventilador, frigobar, TV</td><td class="l">Ar-condicionado, ventilador, frigobar, TV</td><td class="l sm" style="color:var(--pos)">Acima da média do mercado</td></tr>
+      <tr><td class="l season">Banheiro</td><td class="l">Privativo</td><td class="l">Privativo</td><td class="l sm" style="color:var(--pos)">100% contra 59% do mercado</td></tr>
+      <tr><td class="l season">Áreas comuns</td><td class="l">Cozinha industrial, refeitório, churrasqueira</td><td class="l">Cozinha industrial, refeitório, churrasqueira</td><td class="l sm">Vira cozinha compartilhada com regras</td></tr>
+      <tr class="grp"><td class="l season">Modelo comercial</td><td class="l" colspan="2">Casa fechada · mínimo de 25 pessoas · mínimo de 2 diárias · WhatsApp, contrato e transferência</td><td class="l sm" style="color:var(--neg)">Precisa mudar por completo</td></tr>
+      <tr><td class="l season">Roupa de cama</td><td class="l" colspan="2">Não fornecida — lençol, cobertor e travesseiro são do grupo</td><td class="l sm" style="color:var(--neg)">Lacuna nº 1 para o Airbnb</td></tr>
+      <tr><td class="l season">Estacionamento</td><td class="l" colspan="2">Apenas carga e descarga em frente às casas</td><td class="l sm" style="color:var(--neg)">Precisa de parceria próxima</td></tr>
+      <tr><td class="l season">Localização</td><td class="l" colspan="2">Centro, a aproximadamente 300 m da Praia Central</td><td class="l sm" style="color:var(--pos)">Argumento comercial forte</td></tr>
+    </tbody>
+  </table>
+
+  <div class="flag reveal"><span><b>A mudança real não é de produto, é de modelo comercial.</b> Hoje ela atende <i>um</i> cliente que traz 25 a 60 pessoas, fecha por contrato e paga por transferência. No Airbnb ela passa a atender <i>vinte</i> clientes de 2 pessoas, com check-in individual, cobrança pela plataforma e avaliação pública a cada saída. A estrutura física já está pronta; o que precisa ser construído é a operação de giro.</span></div>
+  <div class="foot reveal"><span>Fonte: material institucional da Dona France</span><span>Capacidade por quarto confirmada pela cliente</span><span>12</span></div>
+</section>
+
+<!-- ============================================================
+     13 — ONDE GANHA / ONDE PERDE  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Dona France x mercado &nbsp;·&nbsp; 13</span>
+  </div>
+  <div class="kicker reveal">O confronto direto</div>
+  <h2 class="reveal">Onde ela ganha e onde ela perde</h2>
+  <p class="sub reveal">Comparação item a item contra os 17 anúncios auditados. <b>Todas as vantagens da coluna da esquerda já existem hoje e não exigem investimento para serem ativadas.</b></p>
+
+  <div class="split reveal">
+    <div class="col win">
+      <h3>Onde ela ganha — sem investir nada</h3>
+      <div class="row"><div><b>Banheiro privativo em todos os quartos</b><i>Colocar no título do anúncio e na primeira foto</i></div><em>27/27 · vs 59%</em></div>
+      <div class="row"><div><b>Frigobar em todos os quartos</b><i>Só 5 dos 17 concorrentes declaram ter</i></div><em>100% · vs 29%</em></div>
+      <div class="row"><div><b>Ar-condicionado em todos os quartos</b><i>Fazer manutenção e especificar no anúncio</i></div><em>100% · vs 71%</em></div>
+      <div class="row"><div><b>Quartos de 5 a 6 hóspedes</b><i>Estoque próprio, contra oferta pequena e irregular</i></div><em>nicho vazio</em></div>
+      <div class="row"><div><b>Cerca de 300 m da Praia Central</b><i>Medir e fotografar os trajetos a pé</i></div><em>confirmável</em></div>
+      <div class="row"><div><b>Cozinha industrial e refeitório</b><i>Nenhum quarto avulso oferece estrutura de grupo</i></div><em>exclusivo</em></div>
+    </div>
+    <div class="col lose">
+      <h3>Onde ela perde — e o que custa corrigir</h3>
+      <div class="row"><div><b>Enxoval e toalhas</b><i>Não fornece hoje; o mercado pressupõe incluído</i></div><em>R$ 30–50 mil</em></div>
+      <div class="row"><div><b>Limpeza como serviço formal</b><i>Checklist por quarto, inspeção e reposição</i></div><em>R$ 80–150/giro</em></div>
+      <div class="row"><div><b>Estacionamento</b><i>65% dos concorrentes oferecem alguma alternativa</i></div><em>parceria</em></div>
+      <div class="row"><div><b>Prova social no Airbnb</b><i>Concorrentes com 4,99 e até 291 avaliações</i></div><em>zero hoje</em></div>
+      <div class="row"><div><b>Wi-Fi medido e comprovado</b><i>Três concorrentes publicam 258, 328 e 506 Mbps</i></div><em>R$ 4–10 mil</em></div>
+      <div class="row"><div><b>Fotos e anúncio por capacidade</b><i>Um anúncio por quarto, com as camas explicadas</i></div><em>R$ 2–5 mil</em></div>
+    </div>
+  </div>
+
+  <div class="flag reveal"><span><b>A assimetria é a boa notícia.</b> As seis vantagens são estruturais e já estão construídas — foi capital investido há anos. As seis desvantagens são todas operacionais e resolvidas com enxoval, processo e fotografia. <b>É muito mais barato comprar enxoval do que construir 27 banheiros privativos.</b></span></div>
+  <div class="foot reveal"><span>Comparação contra os 17 anúncios auditados</span><span>Valores: referências de planejamento, não cotações</span><span>13</span></div>
+</section>
+
+<!-- ============================================================
+     14 — TENDÊNCIAS  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Tendências &nbsp;·&nbsp; 14</span>
+  </div>
+  <div class="kicker reveal">Para onde o mercado está indo</div>
+  <h2 class="reveal">Cinco tendências — e uma que não vale o investimento</h2>
+
+  <div class="cards c3 reveal">
+    <div class="card"><span class="num">Tendência 01</span><h3>Profissionalização hoteleira</h3><p>O hóspede de BC passou a esperar padrão de hotel: enxoval branco de alta gramatura, toalhas pesadas, cama bem montada. <b>Móvel velho e decoração improvisada resultam em quarto vazio.</b></p></div>
+    <div class="card"><span class="num">Tendência 02</span><h3>Precificação dinâmica</h3><p>Preço fixo deixa dinheiro na mesa no verão e gera vacância no inverno. O padrão do mercado migrou para preço variável por data, evento e antecedência.</p></div>
+    <div class="card"><span class="num">Tendência 03</span><h3>Locação flexível por estação</h3><p>Diária no verão, média temporada no inverno. É a resposta direta ao inverno de caixa — desenvolvida no próximo slide.</p></div>
+    <div class="card"><span class="num">Tendência 04</span><h3>Pet friendly com taxa</h3><p>Aceitar animais de pequeno porte aumenta as visualizações de forma relevante. A regra é cobrar taxa que cubra a limpeza mais pesada e restringir a quartos ou setores definidos.</p></div>
+    <div class="card"><span class="num">Tendência 05</span><h3>Kit de boas-vindas</h3><p>Cápsulas de café, água, chá e um mimo local custam pouco por reserva e têm efeito desproporcional na nota. É o melhor retorno por real investido em avaliação.</p></div>
+    <div class="card" style="border-top-color:var(--neg);background:rgba(163,59,34,.05)"><span class="num" style="color:var(--neg)">O alerta — não siga esta</span><h3 style="color:var(--neg)">Fechadura digital por quarto</h3><p>Aparece como “essencial” na leitura de mercado, mas o benchmark mostra <b>1 anúncio em 17</b> declarando teclado numérico. Não é requisito. Priorize a entrada externa e trancas confiáveis nos quartos — e adie de R$ 5 a 10 mil.</p></div>
+  </div>
+
+  <div class="flag reveal"><span><b>Como ler este slide.</b> As cinco primeiras tendências vêm da leitura macro do mercado e são estimativas sem amostragem declarada — valem como direção, não como número. O alerta da sexta caixa vem do benchmark, com base contável: <b>quando as duas fontes discordam, prevalece a que tem amostra.</b> É exatamente por isso que este relatório cruzou os dois estudos em vez de somá-los.</span></div>
+  <div class="foot reveal"><span>Tendências 01 a 05: estimativa de mercado</span><span>Alerta: benchmark, 1 de 17 anúncios auditados</span><span>14</span></div>
+</section>
+
+<!-- ============================================================
+     15 — A OPORTUNIDADE CENTRAL  [VERMELHO]
+     ============================================================ -->
+<section class="slide s-ox">
+  <div class="rail reveal">
+    <img src="assets/logo-branco.svg" alt="Dona France">
+    <span class="rail-meta">A oportunidade &nbsp;·&nbsp; 15</span>
+  </div>
+  <div class="kicker reveal">Onde exatamente está o espaço</div>
+  <h2 class="reveal" style="font-size:66px">O mercado está cheio de quarto para casal<br>e <em>vazio</em> de quarto bom para grupo</h2>
+
+  <div class="hero-stat reveal">
+    <div class="v">35</div>
+    <div class="t">observações de quarto para <b>2 hóspedes</b> na baixa temporada. É o segmento mais líquido e mais comparável — e o mais disputado por preço. Aqui ela seria mais uma entre 35, brigando por diária com studio de centro.</div>
+  </div>
+  <div class="hero-stat reveal" style="margin-top:10px">
+    <div class="v">5<span style="font-size:54px">–</span>8</div>
+    <div class="t">observações de quarto para <b>5 a 6 hóspedes</b>, por temporada. Oferta pequena, com beliche, pousada e produto híbrido — <b>qualidade irregular e nenhum padrão</b>. Aqui ela chega com banheiro privativo, ar-condicionado, frigobar, refeitório e 23 anos recebendo grupo.</div>
+  </div>
+
+  <div class="verdict reveal" style="margin-top:16px;padding:18px 28px">
+    <div class="q">O posicionamento recomendado</div>
+    <div class="a">Pousada de grupos a 300 metros da praia.</div>
+    <div class="sub" style="margin-top:10px;max-width:1560px">Quartos privativos para 2, 4 ou 6 pessoas, todos com banheiro, ar-condicionado e frigobar. Cozinha e refeitório compartilhados, suporte local, opção de casa inteira e serviço de excursão. A promessa é <b style="color:var(--amber)">simples, limpa, prática, transparente e preparada para grupo</b> — não sofisticada. <b style="color:var(--amber)">E o estoque já existe: as duas casas têm quartos de 2 até 6 pessoas.</b></div>
+  </div>
+  <div class="foot reveal"><span>Base: 198 observações distribuídas por capacidade e temporada</span><span>Relatório de mercado · Julho de 2026</span><span>15</span></div>
+</section>
+
+<!-- ============================================================
+     16 — FLEX LIVING / BAIXA TEMPORADA  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Baixa temporada &nbsp;·&nbsp; 16</span>
+  </div>
+  <div class="kicker reveal">O que fazer de abril a outubro</div>
+  <h2 class="reveal">O calendário em dois regimes</h2>
+  <p class="sub reveal">A baixa temporada do quarto coincide com a baixa temporada da excursão. Em vez de disputar diária em um mercado sem demanda, a recomendação é <b>trocar de produto</b> nessa janela.</p>
+
+  <div class="split reveal">
+    <div class="col win">
+      <h3>Novembro a março — regime de diária</h3>
+      <div class="row"><div><b>Produto</b><i>Quarto por noite no Airbnb, com preço dinâmico</i></div><em>alta e regular</em></div>
+      <div class="row"><div><b>Público</b><i>Casais, famílias de 3–4, grupos de 5–6, eventos</i></div><em>turismo</em></div>
+      <div class="row"><div><b>Estadia mínima</b><i>3 a 5 noites na alta e em datas de evento</i></div><em>3–5 noites</em></div>
+      <div class="row"><div><b>Preço de referência</b><i>Mediana de janeiro para 2 hóspedes</i></div><em>R$ 415</em></div>
+      <div class="row"><div><b>Excursão</b><i>Prioridade máxima — o quarto ocupa o que sobra</i></div><em>protegida</em></div>
+    </div>
+    <div class="col lose" style="--x:0">
+      <h3 style="color:var(--ox);border-color:var(--ox)">Abril a outubro — regime de média temporada</h3>
+      <div class="row"><div><b>Produto</b><i>Locação de 1 a 3 meses, com contrato próprio</i></div><em style="color:var(--ox)">mensal</em></div>
+      <div class="row"><div><b>Público</b><i>Trabalhador remoto, estudante, pessoa em transição</i></div><em style="color:var(--ox)">moradia</em></div>
+      <div class="row"><div><b>Por que funciona</b><i>Estanca o custo fixo nos meses sem excursão</i></div><em style="color:var(--ox)">fluxo de caixa</em></div>
+      <div class="row"><div><b>O que evita</b><i>Entrar na guerra de desconto da baixa temporada</i></div><em style="color:var(--ox)">margem</em></div>
+      <div class="row"><div><b>Preço de referência</b><i>Mediana de agosto para 2 hóspedes, por noite</i></div><em style="color:var(--ox)">R$ 153</em></div>
+    </div>
+  </div>
+
+  <div class="flag reveal"><span><b>Ressalva honesta sobre esta recomendação.</b> A locação de média temporada vem da leitura macro do mercado e <b>não foi medida pelo benchmark</b> — a pesquisa de preço cobriu apenas diárias de quarto. Antes de comprometer estoque com contratos de 1 a 3 meses, vale testar a demanda local com um ou dois quartos e comparar o resultado mensal com o que os mesmos quartos renderiam em diária. É uma hipótese forte e coerente com o calendário dela, mas ainda é uma hipótese.</span></div>
+  <div class="foot reveal"><span>Regime de diária: benchmark · Regime mensal: estimativa de mercado</span><span>Recomendação a validar antes de escalar</span><span>16</span></div>
+</section>
+
+<!-- ============================================================
+     17 — O CAMINHO RECOMENDADO  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Caminho recomendado &nbsp;·&nbsp; 17</span>
+  </div>
+  <div class="kicker reveal">Como entrar sem arriscar o que já funciona</div>
+  <h2 class="reveal">Três modelos possíveis, um recomendado</h2>
+
+  <table class="tbl reveal">
+    <thead><tr><th class="l">Modelo</th><th class="l">Receita</th><th class="l">Complexidade</th><th class="l">Risco principal</th><th class="l">Decisão</th></tr></thead>
+    <tbody>
+      <tr><td class="l" style="font-weight:600">Excursões e casa inteira</td><td class="l sm">Concentrada por grupo</td><td class="l sm">Baixa</td><td class="l sm">Ociosidade entre grupos</td><td class="l sm" style="color:var(--pos);font-weight:700">Manter como base</td></tr>
+      <tr class="grp"><td class="l" style="font-weight:700;color:var(--ox)">Quartos individuais na Casa 02</td><td class="l sm">Diversifica e monetiza datas órfãs</td><td class="l sm">Média</td><td class="l sm">Operação e avaliações iniciais</td><td class="l sm" style="color:var(--ox);font-weight:700">Recomendado</td></tr>
+      <tr><td class="l" style="font-weight:600">Operação híbrida nas duas casas</td><td class="l sm">Maior teto potencial</td><td class="l sm">Alta</td><td class="l sm">Overbooking, ruído e canibalização</td><td class="l sm" style="color:var(--neg);font-weight:700">Somente após o piloto</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="reveal" style="margin:24px 0 0;font-family:var(--f-display);font-weight:700;font-size:29px;letter-spacing:-.02em;color:var(--ox)">O desenho do piloto na Casa 02</h3>
+
+  <div class="cards c4 reveal" style="margin-top:14px">
+    <div class="card"><span class="num">Por que a Casa 02</span><h3>Menor risco</h3><p>É a casa nova, com 11 quartos e 46 hóspedes — inventário menor, aprendizado operacional mais barato e menor chance de canibalizar excursão grande.</p></div>
+    <div class="card"><span class="num">Quantos quartos</span><h3>3 a 5, no início</h3><p>Um anúncio por quarto físico, com capacidades diferentes entre si. Escalar até 11 apenas depois de 30 dias de dados e no mínimo 10 reservas medidas.</p></div>
+    <div class="card"><span class="num">Como proteger a Casa 01</span><h3>Excursão em primeiro lugar</h3><p>A Casa 01 continua focada em grupos. Só datas órfãs, com antecedência definida, são liberadas — preservando o motor atual de até 60 hóspedes.</p></div>
+    <div class="card"><span class="num">Regras que não podem falhar</span><h3>Calendários vinculados</h3><p>Nunca vender reserva simultânea sobre o mesmo estoque. Vincular o calendário da casa inteira ao dos quartos e definir janela de liberação de 30 a 45 dias.</p></div>
+  </div>
+
+  <div class="flag reveal"><span><b>Uma regra de produto que evita quase todo problema.</b> Não misturar hóspedes desconhecidos dentro do mesmo quarto. O produto é <i>quarto exclusivo para o grupo que reservou</i> — não cama em quarto compartilhado. Isso mantém a promessa simples, reduz conflito e é o que diferencia a Dona France de hostel.</span></div>
+  <div class="foot reveal"><span>Casa 02: 11 quartos · até 46 hóspedes · quartos de 2 a 6 pessoas</span><span>Relatório de mercado · Julho de 2026</span><span>17</span></div>
+</section>
+
+<!-- ============================================================
+     18 — MIX DE PRODUTO E PREÇO DE ENTRADA  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Preço de entrada &nbsp;·&nbsp; 18</span>
+  </div>
+  <div class="kicker reveal">Quanto cobrar e como estruturar</div>
+  <h2 class="reveal">Mix de produto e faixa inicial por quarto/noite</h2>
+  <p class="sub reveal">Os quartos das duas casas vão de 2 a 6 pessoas — <b>as três faixas de capacidade da pesquisa já existem no estoque dela</b>. O piloto leva uma de cada e testa os três preços ao mesmo tempo.</p>
+
+  <table class="tbl reveal">
+    <thead><tr><th class="l">Capacidade</th><th>Baixa temporada</th><th>Temporada regular</th><th>Alta temporada</th><th class="l">Posicionamento recomendado</th></tr></thead>
+    <tbody>
+      <tr><td class="l season">1 a 2 hóspedes</td><td class="med">R$ 150–190</td><td class="med">R$ 190–240</td><td class="med">R$ 390–520</td><td class="l sm">Próximo da mediana, com prêmio pelo banheiro privativo</td></tr>
+      <tr><td class="l season">3 a 4 hóspedes</td><td class="med">R$ 300–380</td><td class="med">R$ 360–450</td><td class="med">R$ 650–850</td><td class="l sm">Economia familiar frente à compra de dois quartos</td></tr>
+      <tr><td class="l season">5 a 6 hóspedes</td><td class="med">R$ 360–450</td><td class="med">R$ 500–650</td><td class="med">R$ 800–1.100</td><td class="l sm">Trabalhar em faixa — amostra pequena e heterogênea</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cards c4 reveal" style="margin-top:20px">
+    <div class="card"><span class="num">Regra 01</span><h3>Preço-base para 2</h3><p>O preço-base cobre ocupação de 2 hóspedes e precisa pagar quarto, enxoval, limpeza e o custo fixo do giro. Do 3º ao 6º hóspede, adicional progressivo.</p></div>
+    <div class="card"><span class="num">Regra 02</span><h3>Estadia mínima</h3><p>Duas noites na baixa e na regular. De 3 a 5 noites na alta e em datas de evento, para reduzir o número de giros no período mais caro de operar.</p></div>
+    <div class="card"><span class="num">Regra 03</span><h3>Datas órfãs</h3><p>Liberar 1 noite apenas perto do check-in e quando a margem compensar o giro. Fora disso, uma noite solta custa mais em limpeza do que traz em receita.</p></div>
+    <div class="card"><span class="num">Regra 04</span><h3>Desconto de lançamento</h3><p>Limitado às primeiras reservas, para gerar avaliação. Nunca posicionar o produto permanentemente como o mais barato da região.</p></div>
+  </div>
+
+  <div class="flag reveal"><span><b>Duas condições e uma pendência.</b> As faixas pressupõem enxoval, toalhas e limpeza de saída <i>incluídos</i> — sem isso o preço não se sustenta. Devem ser revistas após as primeiras 10 reservas e 30 dias de dados, comparando sempre o <b>valor líquido recebido</b>, não o total exibido ao hóspede. <b>Pendência:</b> confirmar quantos quartos de cada capacidade a Casa 02 tem, para fechar o mix exato do piloto.</span></div>
+  <div class="foot reveal"><span>Faixas derivadas dos percentis do benchmark</span><span>Revisar após 10 reservas e 30 dias</span><span>18</span></div>
+</section>
+
+<!-- ============================================================
+     19 — O QUE PRECISA MUDAR  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Plano de adaptação &nbsp;·&nbsp; 19</span>
+  </div>
+  <div class="kicker reveal">A lista de adaptações, em ordem</div>
+  <h2 class="reveal">O que precisa mudar — por impacto e esforço</h2>
+  <p class="sub reveal">A ordem não é negociável: <b>nenhum item da fase 2 compensa a falta de um item da fase 1</b>. Um quarto sem enxoval com fechadura digital continua sendo um quarto sem enxoval.</p>
+
+  <div class="phases reveal">
+    <div class="ph p1">
+      <span class="tag">Fase 1 · antes de publicar · impacto muito alto</span>
+      <h3>O que não pode faltar</h3>
+      <ul>
+        <li><b>Enxoval completo</b> — lençóis, fronhas, toalhas e protetores, com três pares operacionais por cama</li>
+        <li><b>Limpeza como serviço</b> — checklist por quarto, inspeção e reposição padronizada</li>
+        <li><b>Trancas</b> — por dentro e por fora, chave ou código exclusivo; depósito, rouparia e quadros trancados</li>
+        <li><b>Wi-Fi</b> — avaliação técnica, cobertura nos quartos e velocidade medida e publicada</li>
+        <li><b>Banho</b> — água quente e pressão testadas em cada quarto</li>
+        <li><b>Fotos reais</b> — configuração das camas, o que é privativo e o que é compartilhado</li>
+      </ul>
+    </div>
+    <div class="ph p2">
+      <span class="tag">Fase 2 · primeiros 60 dias · impacto alto</span>
+      <h3>Conversão e avaliação</h3>
+      <ul>
+        <li><b>Anúncio por capacidade</b> — um anúncio por quarto, com as camas explicadas</li>
+        <li><b>Kit de copa</b> — bandeja, copos, pratos, talheres, abridor e chaleira, aproveitando o frigobar existente</li>
+        <li><b>Conforto</b> — blackout, cabides, espelho, tomada junto à cama, mesa e luminária de leitura</li>
+        <li><b>Identificação</b> — numeração dos quartos, sinalização e guia digital por QR</li>
+        <li><b>Parceria de estacionamento</b> — acordo com garagem próxima</li>
+        <li><b>Cozinha compartilhada</b> — regras, inventário e nicho de alimentos por quarto</li>
+      </ul>
+    </div>
+    <div class="ph p3">
+      <span class="tag">Fase 3 · só depois de validar</span>
+      <h3>Pode esperar</h3>
+      <ul>
+        <li><b>Fechadura digital nos 11 quartos</b> — apenas após validar portas, baterias, códigos e contingência</li>
+        <li><b>Café da manhã</b> — começar como adicional sob encomenda, nunca como promessa inclusa</li>
+        <li><b>Câmeras externas</b> — somente áreas permitidas e declaradas</li>
+        <li><b>Sistema de gestão (PMS)</b> — avaliar quando o volume justificar</li>
+        <li><b>Serviços pagos</b> — limpeza intermediária, troca extra de enxoval, pet, lavanderia, traslado, early check-in e late checkout</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="flag reveal"><span><b>O quarto só entra no calendário depois de uma hospedagem-teste.</b> Alguém precisa dormir no quarto e verificar banho, sono, ruído, Wi-Fi, tomadas, acesso e limpeza antes de a primeira reserva paga ser aceita. É o passo mais barato do plano e o que mais evita avaliação ruim no início.</span></div>
+  <div class="foot reveal"><span>Ordem definida por matriz de impacto e esforço</span><span>Relatório de mercado · Julho de 2026</span><span>19</span></div>
+</section>
+
+<!-- ============================================================
+     20 — INVESTIMENTO  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Investimento &nbsp;·&nbsp; 20</span>
+  </div>
+  <div class="kicker reveal">Ordem de grandeza</div>
+  <h2 class="reveal">Quanto custa cada caminho</h2>
+  <p class="sub reveal">Valores são <b>referências de planejamento, não cotações</b>. Não incluem obras estruturais nem adequações determinadas por projeto técnico de incêndio.</p>
+
+  <div class="cards c3 reveal">
+    <div class="card"><span class="num">Envelope 01 — o menor teste econômico</span><h3>R$ 18 a 35 mil</h3><p><b>Soft launch com 3 a 5 quartos.</b> Enxoval para os quartos do piloto, pequenos itens de conforto, fotos, trancas e operação mínima. É o valor para descobrir se o modelo funciona antes de comprometer a casa inteira.</p></div>
+    <div class="card" style="border-top-width:5px"><span class="num">Envelope 02 — recomendado</span><h3>R$ 45 a 80 mil</h3><p><b>Casa 02 essencial e pronta para o mercado.</b> Os 11 quartos com enxoval completo, limpeza estruturada, Wi-Fi profissional, trancas, copa, sinalização e anúncios fotografados.</p></div>
+    <div class="card"><span class="num">Envelope 03 — ampliado</span><h3>R$ 80 a 140 mil</h3><p><b>Casa 02 ampliada.</b> Inclui fechaduras digitais nos 11 quartos, câmeras externas e reforço de conforto e serviços. Só se justifica depois que o piloto comprovar margem.</p></div>
+  </div>
+
+  <table class="tbl compact reveal" style="margin-top:20px">
+    <thead><tr><th class="l">Frente de investimento</th><th class="l">Referência</th><th>Casa 02 ou piloto</th><th class="l">Observação</th></tr></thead>
+    <tbody>
+      <tr><td class="l" style="font-weight:600">Enxoval para 46 hóspedes</td><td class="l sm">Três pares, toalhas, protetores e reserva</td><td class="med">R$ 30–50 mil</td><td class="l sm">Depende do mix de camas — é o maior item isolado</td></tr>
+      <tr><td class="l" style="font-weight:600">Wi-Fi profissional</td><td class="l sm">Cabeamento, pontos de acesso, instalação e testes</td><td class="med">R$ 4–10 mil</td><td class="l sm">Por casa. Mesh de varejo não substitui projeto</td></tr>
+      <tr><td class="l" style="font-weight:600">Utensílios e copa</td><td class="l sm">R$ 250 a 600 por quarto mais micro-ondas comuns</td><td class="med">R$ 3–7 mil</td><td class="l sm">Os frigobares já existem em todos os quartos</td></tr>
+      <tr><td class="l" style="font-weight:600">Fotos e anúncios</td><td class="l sm">Fotografia, tratamento e textos</td><td class="med">R$ 2–5 mil</td><td class="l sm">Um anúncio por unidade ou por tipo de quarto</td></tr>
+      <tr><td class="l" style="font-weight:600">Sinalização e guia</td><td class="l sm">Placas, numeração, QR e regras</td><td class="med">R$ 1–3 mil</td><td class="l sm">Identidade operacional simples</td></tr>
+      <tr><td class="l" style="color:var(--ink-faint)">11 fechaduras digitais</td><td class="l sm">R$ 450 a 900 instalada por porta</td><td class="med" style="color:var(--ink-faint)">R$ 5–10 mil</td><td class="l sm" style="color:var(--neg)">Fase 3 — não é requisito de mercado</td></tr>
+      <tr><td class="l" style="color:var(--ink-faint)">Câmeras externas</td><td class="l sm">4 a 8 pontos, gravador e instalação</td><td class="med" style="color:var(--ink-faint)">R$ 4–10 mil</td><td class="l sm">Somente áreas externas e declaradas</td></tr>
+      <tr class="grp"><td class="l" style="font-weight:700;color:var(--ox)">Segurança contra incêndio</td><td class="l sm">Projeto, licenciamento e equipamentos</td><td class="med">A orçar</td><td class="l sm" style="color:var(--ox);font-weight:600">Depende de análise técnica e do CBMSC</td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot reveal"><span>Referências de planejamento — exigem cotação local</span><span>Excluem obras e adequações de incêndio</span><span>20</span></div>
+</section>
+
+<!-- ============================================================
+     21 — ROADMAP 30 / 60 / 90  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Implantação &nbsp;·&nbsp; 21</span>
+  </div>
+  <div class="kicker reveal">Prazos e portões de decisão</div>
+  <h2 class="reveal">30, 60 e 90 dias — com critério de passagem</h2>
+  <p class="sub reveal">Cada etapa tem um <b>portão</b>: só se avança quando o critério é atingido. Isso impede que a operação cresça mais rápido do que a qualidade.</p>
+
+  <table class="tbl reveal">
+    <thead><tr><th class="l">Prazo</th><th class="l">Entregas</th><th class="l">Portão de decisão</th></tr></thead>
+    <tbody>
+      <tr><td class="l season">0 a 30 dias</td><td class="l sm">CBMSC, município e Cadastur. Inventário dos quartos. Seleção de 3 a 5 quartos. Enxoval, limpeza, Wi-Fi e trancas. Fotos, regras e calendários vinculados.</td><td class="l sm"><b>Publicar somente</b> após checklist de segurança aprovado e quarto-padrão validado por hospedagem-teste.</td></tr>
+      <tr><td class="l season">31 a 60 dias</td><td class="l sm">Soft launch. Preço por capacidade. Suporte por WhatsApp com prazo de resposta. Auditoria de cada giro. Parceria de estacionamento. Kit de copa e coleta de feedback.</td><td class="l sm"><b>10 reservas</b>, nota mínima de 4,8, nenhum incidente grave e limpeza entregue no prazo.</td></tr>
+      <tr><td class="l season">61 a 90 dias</td><td class="l sm">Escalar até 11 quartos. Decidir sobre fechaduras digitais. Testar café da manhã como adicional. Otimizar anúncios, fotos e preços. Avaliar sistema de gestão.</td><td class="l sm">Ocupação, diária média e <b>margem incremental</b> justificam a expansão.</td></tr>
+      <tr class="grp"><td class="l season">Após 90 dias</td><td class="l sm">Comparar o lucro por data entre excursão, casa inteira e quartos. Avaliar a extensão do modelo para a Casa 01.</td><td class="l sm">Expandir <b>sem reduzir a margem total nem a reputação</b> já construída.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="cards c4 reveal" style="margin-top:20px">
+    <div class="card"><span class="num">Painel · comercial</span><h3>O que medir</h3><p>Visualizações, conversão, diária média, ocupação, antecedência de reserva e cancelamento.</p></div>
+    <div class="card"><span class="num">Painel · operação</span><h3>O que medir</h3><p>Tempo de limpeza, incidentes, controle de chaves, chamados abertos e volume de lavanderia.</p></div>
+    <div class="card"><span class="num">Painel · qualidade</span><h3>O que medir</h3><p>Nota geral, nota de limpeza, precisão do anúncio, desempenho do Wi-Fi e reclamações.</p></div>
+    <div class="card"><span class="num">Painel · financeiro</span><h3>O que medir</h3><p>Receita líquida, custo por giro, margem por quarto e comparação direta com a receita de excursão.</p></div>
+  </div>
+
+  <div class="flag reveal"><span><b>A regra de ouro da expansão.</b> Não decidir pela ocupação isolada. O indicador certo é a <b>margem incremental por data disponível</b>, depois de taxas, limpeza, lavanderia, energia, equipe e a possível perda de uma reserva de excursão naquela data. Um quarto com 80% de ocupação que bloqueia uma excursão de 40 pessoas pode ser um mau negócio.</span></div>
+  <div class="foot reveal"><span>Cada portão é um critério de parada, não uma meta</span><span>Relatório de mercado · Julho de 2026</span><span>21</span></div>
+</section>
+
+<!-- ============================================================
+     22 — RESUMO E AS TRÊS DECISÕES  [VERMELHO]
+     ============================================================ -->
+<section class="slide s-ox">
+  <div class="rail reveal">
+    <img src="assets/logo-branco.svg" alt="Dona France">
+    <span class="rail-meta">Resumo e decisões &nbsp;·&nbsp; 22</span>
+  </div>
+  <div class="kicker reveal">O relatório em seis frases</div>
+  <h2 class="reveal">O que ficou provado</h2>
+
+  <div class="cards c3 reveal" style="margin-top:18px">
+    <div class="card"><span class="num">01</span><h3>A estrutura já existe</h3><p>A Dona France não precisa reinventar as casas. Precisa transformar a estrutura que já tem em <b>confiança percebida</b> pelo hóspede que reserva sozinho pela internet.</p></div>
+    <div class="card"><span class="num">02</span><h3>O diferencial é gratuito</h3><p>Banheiro privativo em 27 de 27 quartos, contra 59% do mercado auditado. É a maior vantagem estrutural — <b>e já está paga</b>.</p></div>
+    <div class="card"><span class="num">03</span><h3>O maior risco não é dela</h3><p>Proibição condominial, conflito de assembleia e multa de 5 a 10 vezes a cota derrubam investidores de apartamento. <b>Casa própria não corre esse risco.</b></p></div>
+    <div class="card"><span class="num">04</span><h3>O básico vem primeiro</h3><p>Enxoval, limpeza, Wi-Fi e trancas vêm antes de café da manhã, fechadura digital e qualquer tecnologia. É o que aparece nas avaliações.</p></div>
+    <div class="card"><span class="num">05</span><h3>O nicho está vazio</h3><p>Quartos de 5 a 6 hóspedes têm de 5 a 8 concorrentes por temporada, com qualidade irregular. <b>Ela já tem esse estoque nas duas casas.</b></p></div>
+    <div class="card"><span class="num">06</span><h3>Expandir só com prova</h3><p>A operação híbrida nas duas casas só deve avançar depois de comprovar margem incremental — não ocupação, não faturamento bruto.</p></div>
+  </div>
+
+  <div class="verdict reveal">
+    <div class="q">As três decisões desta reunião</div>
+    <div class="a" style="font-size:33px;line-height:1.4">
+      <span style="color:var(--amber)">01</span>&nbsp; Autorizar o piloto na Casa 02, com 3 a 5 quartos de capacidades diferentes?<br>
+      <span style="color:var(--amber)">02</span>&nbsp; Liberar o orçamento da fase 1, entre R$ 18 e 35 mil, para enxoval, limpeza, trancas e Wi-Fi?<br>
+      <span style="color:var(--amber)">03</span>&nbsp; Definir a janela de liberação das datas sem excursão, entre 30 e 45 dias de antecedência?
+    </div>
+  </div>
+  <div class="foot reveal"><span>Casa de Excursão Dona France</span><span>Relatório de mercado · Julho de 2026</span><span>22</span></div>
+</section>
+
+<!-- ============================================================
+     23 — APÊNDICE · RESSALVAS E FONTES  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Apêndice &nbsp;·&nbsp; 23</span>
+  </div>
+  <div class="kicker reveal">Apêndice A</div>
+  <h2 class="reveal">Ressalvas metodológicas e fontes</h2>
+  <p class="sub reveal">O que este relatório <b>não</b> afirma, e de onde vem cada informação.</p>
+
+  <div class="split reveal">
+    <div class="col lose">
+      <h3 style="color:var(--ox);border-color:var(--ox)">Limites desta pesquisa</h3>
+      <div class="row"><div><b>Os preços são um retrato</b><i>Apurados em 23.07.2026. O Airbnb altera resultados, descontos, taxas e disponibilidade continuamente.</i></div><em style="color:var(--ox)">data fixa</em></div>
+      <div class="row"><div><b>“Não informado” não é “inexistente”</b><i>Comodidades foram contadas apenas quando declaradas no anúncio pelo anfitrião.</i></div><em style="color:var(--ox)">subestima</em></div>
+      <div class="row"><div><b>A análise por setor é qualitativa</b><i>O Airbnb mascara o endereço antes da reserva; o mapa aproximado não sustenta média de preço por rua.</i></div><em style="color:var(--ox)">sem precisão</em></div>
+      <div class="row"><div><b>Amostras pequenas em 5–6 hóspedes</b><i>De 5 a 8 observações por temporada. Use faixa, nunca a mediana isolada.</i></div><em style="color:var(--ox)">n baixo</em></div>
+      <div class="row"><div><b>Não substitui avaliação técnica</b><i>Este estudo não substitui análise contábil, trabalhista, sanitária, municipal ou de segurança contra incêndio.</i></div><em style="color:var(--ox)">essencial</em></div>
+    </div>
+    <div class="col win">
+      <h3 style="color:var(--ink);border-color:var(--ink)">Fontes consultadas</h3>
+      <div class="row"><div><b>Benchmark de quartos privativos</b><i>Varredura do Airbnb: 122 anúncios únicos, 198 observações e 17 auditorias em profundidade</i></div><em style="color:var(--ink-soft)">quantitativo</em></div>
+      <div class="row"><div><b>Leitura macro do mercado de BC</b><i>Panorama de temporada: saturação, custos e riscos — sem amostragem declarada</i></div><em style="color:var(--ink-soft)">estimativa</em></div>
+      <div class="row"><div><b>Material institucional Dona France</b><i>Estrutura, capacidade e modelo comercial das duas casas</i></div><em style="color:var(--ink-soft)">primária</em></div>
+      <div class="row"><div><b>Políticas oficiais do Airbnb</b><i>Câmeras e gravação, fechaduras de quarto, vinculação de calendários, taxas e limpeza</i></div><em style="color:var(--ink-soft)">normativa</em></div>
+      <div class="row"><div><b>Órgãos públicos</b><i>CBMSC, Cadastur e FNRH, e Secretaria de Turismo de Balneário Camboriú</i></div><em style="color:var(--ink-soft)">normativa</em></div>
+    </div>
+  </div>
+
+  <div class="flag reveal"><span><b>Como este relatório tratou as divergências entre as fontes.</b> Onde o panorama macro e o benchmark discordaram, prevaleceu o benchmark — porque tem amostra contável. O caso mais relevante foi a fechadura digital, descrita como “essencial” pela leitura macro e presente em apenas 1 dos 17 anúncios auditados. As duas leituras foram mantidas visíveis em vez de fundidas em um número só.</span></div>
+  <div class="foot reveal"><span>Apêndice A · Ressalvas e fontes</span><span>Retrato de 23.07.2026</span><span>23</span></div>
+</section>
+
+<!-- ============================================================
+     24 — APÊNDICE · CENÁRIOS E CUSTOS RECORRENTES  [BEGE]
+     ============================================================ -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Apêndice &nbsp;·&nbsp; 24</span>
+  </div>
+  <div class="kicker reveal">Apêndice B</div>
+  <h2 class="reveal">Cenários ilustrativos e custos recorrentes</h2>
+  <p class="sub reveal" style="color:var(--neg)"><b>Atenção: os cenários abaixo não são previsão de receita.</b> São aritmética simples para dar ordem de grandeza, e excluem taxas, limpeza, lavanderia, energia, pessoal, impostos e bloqueios por excursão.</p>
+
+  <table class="tbl reveal">
+    <thead><tr><th class="l">Cenário</th><th>Quartos ativos</th><th>Diária média</th><th>Ocupação</th><th>Receita bruta mensal</th><th class="l">Leitura</th></tr></thead>
+    <tbody>
+      <tr><td class="l season">Piloto</td><td>5</td><td>R$ 230</td><td>40%</td><td class="med">R$ 13.800</td><td class="l sm">Ocupação conservadora, coerente com a média da cidade</td></tr>
+      <tr><td class="l season">Casa 02 completa</td><td>11</td><td>R$ 250</td><td>45%</td><td class="med">R$ 37.125</td><td class="l sm">Cenário central, dentro da faixa de 45% a 51% do mercado</td></tr>
+      <tr><td class="l season">Cenário otimista</td><td>11</td><td>R$ 320</td><td>55%</td><td class="med">R$ 58.080</td><td class="l sm">Exige reputação consolidada e preço dinâmico maduro</td></tr>
+    </tbody>
+  </table>
+  <div class="flag reveal" style="margin-top:12px"><span>Fórmula: quartos × diária média × 30 dias × ocupação. <b>A receita bruta não é lucro</b> — a leitura macro do mercado indica que a operação consome até 40% do faturamento.</span></div>
+
+  <h3 class="reveal" style="margin:22px 0 0;font-family:var(--f-display);font-weight:700;font-size:29px;letter-spacing:-.02em;color:var(--ox)">Custos recorrentes para simulação</h3>
+
+  <table class="tbl compact reveal" style="margin-top:12px">
+    <thead><tr><th class="l">Item</th><th class="l">Premissa</th><th class="l">Como tratar</th></tr></thead>
+    <tbody>
+      <tr><td class="l" style="font-weight:600">Limpeza por giro</td><td class="l sm">R$ 80 a 150 por quarto</td><td class="l sm">Absorver no preço ou cobrar taxa transparente ao hóspede</td></tr>
+      <tr><td class="l" style="font-weight:600">Lavanderia</td><td class="l sm">Medir por quilo e por ocupação</td><td class="l sm">Contrato local com controle de perdas do enxoval</td></tr>
+      <tr><td class="l" style="font-weight:600">Café da manhã simples</td><td class="l sm">Custo de R$ 18 a 30 por pessoa</td><td class="l sm">Venda sugerida de R$ 35 a 55 por pessoa por dia</td></tr>
+      <tr><td class="l" style="font-weight:600">Taxa de plataforma</td><td class="l sm">Varia conforme a estrutura de taxas da conta</td><td class="l sm"><b>Confirmar a taxa efetiva antes de precificar</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot reveal"><span>Apêndice B · Cenários ilustrativos — não são previsão</span><span>Casa de Excursão Dona France</span><span>24</span></div>
+</section>
+
+</main>
+</div>
+
+<div class="deck-controls" id="deckControls">
+  <span id="counter">01 / 24</span><span>·</span><span>← → navega</span><span>·</span><span>E edita</span>
+</div>
+
+<script>
+/* =====================================================================
+   CONTROLADOR DA APRESENTAÇÃO
+   ===================================================================== */
+class SlidePresentation {
+  constructor(){
+    this.slides   = Array.from(document.querySelectorAll('.slide'));
+    this.stage    = document.getElementById('deckStage');
+    this.viewport = document.querySelector('.deck-viewport');
+    this.progress = document.getElementById('progress');
+    this.counter  = document.getElementById('counter');
+    this.controls = document.getElementById('deckControls');
+    this.current  = 0;
+    this.setupStageScale();
+    this.setupKeyboardNav();
+    this.setupTouchNav();
+    this.setupWheelNav();
+    this.setupControlsAutoHide();
+    this.show(0);
+  }
+
+  /* --- Escala o palco fixo 1920x1080 para o viewport (letterbox) --- */
+  setupStageScale(){
+    let lastW = -1, lastH = -1;
+    const scale = (force) => {
+      const w = this.viewport.clientWidth  || window.innerWidth;
+      const h = this.viewport.clientHeight || window.innerHeight;
+      if(!force && w === lastW && h === lastH) return;   /* nada mudou */
+      lastW = w; lastH = h;
+      const f = Math.min(w/1920, h/1080);
+      this.stage.style.transform =
+        'translate(' + ((w-1920*f)/2) + 'px,' + ((h-1080*f)/2) + 'px) scale(' + f + ')';
+    };
+    scale(true);
+    window.addEventListener('resize', () => scale());
+    window.addEventListener('orientationchange', () => scale());
+    if(window.ResizeObserver) new ResizeObserver(() => scale()).observe(this.viewport);
+    if(document.fonts) document.fonts.ready.then(() => scale(true));
+
+    /* Rede de segurança: nem o evento resize nem o ResizeObserver disparam de
+       forma confiável em todo lugar (painéis embutidos, alguns navegadores
+       móveis ao esconder a barra de endereço, troca de monitor/projetor).
+       Um teste de 2 inteiros a cada 250 ms garante que o palco nunca fique
+       preso numa escala errada — custo desprezível. */
+    setInterval(() => scale(), 250);
+  }
+
+  setupKeyboardNav(){
+    document.addEventListener('keydown', e => {
+      if(e.target.getAttribute && e.target.getAttribute('contenteditable')) return;
+      switch(e.key){
+        case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
+          e.preventDefault(); this.next(); break;
+        case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+          e.preventDefault(); this.prev(); break;
+        case 'Home': e.preventDefault(); this.show(0); break;
+        case 'End':  e.preventDefault(); this.show(this.slides.length-1); break;
+      }
+    });
+  }
+
+  setupTouchNav(){
+    let x0=null,y0=null;
+    this.viewport.addEventListener('touchstart', e => {
+      x0=e.changedTouches[0].clientX; y0=e.changedTouches[0].clientY;
+    },{passive:true});
+    this.viewport.addEventListener('touchend', e => {
+      if(x0===null) return;
+      const dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0;
+      if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)) dx<0 ? this.next() : this.prev();
+      x0=y0=null;
+    },{passive:true});
+  }
+
+  setupWheelNav(){
+    let lock=false;
+    this.viewport.addEventListener('wheel', e => {
+      if(lock || Math.abs(e.deltaY)<24) return;
+      lock=true; e.deltaY>0 ? this.next() : this.prev();
+      setTimeout(()=>lock=false, 620);
+    },{passive:true});
+  }
+
+  /* --- a chrome aparece ao mover o mouse e some sozinha --- */
+  setupControlsAutoHide(){
+    let t=null;
+    const wake=()=>{
+      this.controls.classList.add('show');
+      clearTimeout(t);
+      t=setTimeout(()=>this.controls.classList.remove('show'), 2200);
+    };
+    document.addEventListener('mousemove', wake);
+    wake();
+  }
+
+  next(){ this.show(this.current+1); }
+  prev(){ this.show(this.current-1); }
+
+  show(i){
+    this.current = Math.max(0, Math.min(i, this.slides.length-1));
+    this.slides.forEach((s,x)=>{
+      const on = x===this.current;
+      s.classList.toggle('active', on);
+      s.classList.toggle('visible', on);
+    });
+    const pct = ((this.current+1)/this.slides.length)*100;
+    this.progress.style.width = pct + '%';
+    this.counter.textContent =
+      String(this.current+1).padStart(2,'0') + ' / ' + String(this.slides.length).padStart(2,'0');
+  }
+}
+
+/* =====================================================================
+   EDIÇÃO INLINE — hover com carência de 400ms (não usar seletor ~ do CSS:
+   pointer-events:none quebra a cadeia de hover)
+   ===================================================================== */
+class InlineEditor {
+  constructor(deck){
+    this.deck = deck;
+    this.isActive = false;
+    this.btn = document.getElementById('editToggle');
+    this.sel = 'h1, h2, h3, p, .sub, .standfirst, td, th, .bar-l, .bar-s, .fig-n, .fig-l, .card .num, .row b, .row i, .row em, .bl b, .bl i, .ph li, .verdict .a, .chip, .foot span, .rail-meta, .kicker';
+    this.restore();
+    this.wire();
+  }
+  wire(){
+    const hot = document.querySelector('.edit-hotzone');
+    let hide=null;
+    const open  = ()=>{ clearTimeout(hide); this.btn.classList.add('show'); };
+    const close = ()=>{ hide=setTimeout(()=>{ if(!this.isActive) this.btn.classList.remove('show'); },400); };
+    hot.addEventListener('mouseenter', open);
+    hot.addEventListener('mouseleave', close);
+    this.btn.addEventListener('mouseenter', ()=>clearTimeout(hide));
+    this.btn.addEventListener('mouseleave', close);
+    hot.addEventListener('click', ()=>this.toggle());
+    this.btn.addEventListener('click', e=>{ e.stopPropagation(); this.toggle(); });
+    document.addEventListener('keydown', e=>{
+      if((e.key==='e'||e.key==='E') && !(e.target.getAttribute && e.target.getAttribute('contenteditable'))) this.toggle();
+      if(e.key==='s' && (e.ctrlKey||e.metaKey) && this.isActive){ e.preventDefault(); this.save(); }
+    });
+  }
+  toggle(){
+    this.isActive = !this.isActive;
+    this.btn.classList.toggle('active', this.isActive);
+    this.btn.classList.toggle('show', true);
+    this.btn.textContent = this.isActive ? '💾' : '✏️';
+    document.querySelectorAll(this.sel).forEach(el=>{
+      if(this.isActive){
+        el.setAttribute('contenteditable','true');
+        el.addEventListener('blur', this.save.bind(this));
+      } else {
+        el.removeAttribute('contenteditable');
+      }
+    });
+    if(!this.isActive) this.save();
+  }
+  /* Guarda as edições no localStorage, indexadas por slide e posição. */
+  save(){
+    const data={};
+    this.deck.slides.forEach((s,si)=>{
+      s.querySelectorAll(this.sel).forEach((el,ei)=>{ data[si+':'+ei]=el.innerHTML; });
+    });
+    try{ localStorage.setItem('df-v02-edits', JSON.stringify(data)); }catch(e){}
+  }
+  restore(){
+    let data;
+    try{ data=JSON.parse(localStorage.getItem('df-v02-edits')||'null'); }catch(e){ return; }
+    if(!data) return;
+    this.deck.slides.forEach((s,si)=>{
+      s.querySelectorAll(this.sel).forEach((el,ei)=>{
+        const v=data[si+':'+ei];
+        if(v!=null) el.innerHTML=v;
+      });
+    });
+  }
+}
+
+const deck = new SlidePresentation();
+new InlineEditor(deck);
+</script>
+</body>
+</html>
