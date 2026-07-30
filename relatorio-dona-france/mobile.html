@@ -185,6 +185,7 @@ h2 em{font-style:normal;color:var(--ox)}
 
 /* casos-limite clicáveis */
 .xcase{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-top:3px solid var(--ox);padding:22px 20px;position:relative}
+.xcase .cover{display:block;margin:-22px -20px 16px;width:calc(100% + 40px);height:170px;object-fit:cover}
 .xcase .go{position:absolute;top:18px;right:18px;width:30px;height:30px;border:2px solid var(--ox);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:15px;color:var(--ox)}
 .xcase .num{display:block;font-family:var(--f-mono);font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:11px;padding-right:38px}
 .xcase h3{margin:0;font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.015em;color:var(--ink);line-height:1.24;padding-right:38px}
@@ -209,7 +210,9 @@ h2 em{font-style:normal;color:var(--ox)}
    ANÚNCIOS PESQUISADOS — cartões clicáveis
    --------------------------------------------------------------------- */
 .deals{margin-top:22px;display:flex;flex-direction:column;gap:12px}
-.deal{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.deal{display:flex;gap:14px;align-items:center;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.deal img{width:64px;height:64px;object-fit:cover;border-radius:8px;flex:0 0 auto}
+.deal .txt{flex:1;min-width:0}
 .deal .name{font-family:var(--f-display);font-weight:600;font-size:18.5px;color:var(--ink)}
 .deal .name::after{content:" ↗";color:var(--ox);font-family:var(--f-mono);font-weight:600}
 .deal .meta{margin-top:9px;font-size:15px;line-height:1.5;color:var(--ink-soft)}
@@ -445,15 +448,15 @@ h2 em{font-style:normal;color:var(--ox)}
     <p class="sub">Preços de baixa temporada. <b>Toque no anúncio para abrir.</b> A régua de avaliação do segmento está em 4,9.</p>
 
     <div class="deals">
-      <a class="deal" href="https://www.airbnb.com.br/rooms/1512557911593016682" target="_blank" rel="noopener"><div class="name">I10 Suíte térrea</div><div class="meta">2 hóspedes · 500 m · <b>R$ 110/noite</b> · 4,91 · 34 avaliações · Banheiro privativo</div></a>
-      <a class="deal" href="https://www.airbnb.com.br/rooms/1029147183769898672" target="_blank" rel="noopener"><div class="name">Quarto pé na areia</div><div class="meta">2 hóspedes · 50 m · <b>R$ 142/noite</b> · 4,94 · 33 avaliações · Banheiro compartilhado</div></a>
-      <a class="deal" href="https://www.airbnb.com.br/rooms/1567613902711705388" target="_blank" rel="noopener"><div class="name">Suíte 2 com café da manhã</div><div class="meta">2 hóspedes · 2 min a pé · <b>R$ 144/noite</b> · 4,97 · 29 avaliações · Banheiro privativo</div></a>
-      <a class="deal" href="https://www.airbnb.com.br/rooms/53812766" target="_blank" rel="noopener"><div class="name">Quarto a 5 min da praia</div><div class="meta">2 hóspedes · ≈ 300 m · <b>R$ 186/noite</b> · 4,90 · 96 avaliações · Banheiro compartilhado</div></a>
-      <a class="deal" href="https://www.airbnb.com.br/rooms/11416000" target="_blank" rel="noopener"><div class="name">Quarto no AP da Ana</div><div class="meta">2 hóspedes · 400–500 m · <b>R$ 198/noite</b> · 4,99 · 291 avaliações · Banheiro privativo</div></a>
-      <a class="deal" href="https://www.airbnb.com.br/rooms/39158820" target="_blank" rel="noopener"><div class="name">Suíte privativa frente-mar</div><div class="meta">2 hóspedes · frente-mar · <b>R$ 248/noite</b> · 4,99 · 91 avaliações · Banheiro privativo</div></a>
-      <a class="deal" href="https://www.airbnb.com.br/rooms/1598732356547731395" target="_blank" rel="noopener"><div class="name">Suíte 250 m com hidro</div><div class="meta">2 hóspedes · 250 m · <b>R$ 267/noite</b> · novo · Banheiro privativo</div></a>
-      <a class="deal" href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener"><div class="name">Suíte privativa em pousada</div><div class="meta">6–8 hóspedes · distância provável · <b>R$ 209/noite</b> · novo · Banheiro privativo</div></a>
-      <a class="deal" href="https://www.airbnb.com.br/rooms/1313110081182641170" target="_blank" rel="noopener"><div class="name">2 quartos na Roda Gigante</div><div class="meta">4 hóspedes · Barra Norte · <b>R$ 290/noite</b> · 5,00 · 5 avaliações · Demissuíte</div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1512557911593016682" target="_blank" rel="noopener"><img src="assets/anuncios/1512557911593016682.jpg" alt=""><div class="txt"><div class="name">I10 Suíte térrea</div><div class="meta">2 hóspedes · 500 m · <b>R$ 110/noite</b> · 4,91 · 34 avaliações · Banheiro privativo</div></div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1029147183769898672" target="_blank" rel="noopener"><img src="assets/anuncios/1029147183769898672.jpg" alt=""><div class="txt"><div class="name">Quarto pé na areia</div><div class="meta">2 hóspedes · 50 m · <b>R$ 142/noite</b> · 4,94 · 33 avaliações · Banheiro compartilhado</div></div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1567613902711705388" target="_blank" rel="noopener"><img src="assets/anuncios/1567613902711705388.jpg" alt=""><div class="txt"><div class="name">Suíte 2 com café da manhã</div><div class="meta">2 hóspedes · 2 min a pé · <b>R$ 144/noite</b> · 4,97 · 29 avaliações · Banheiro privativo</div></div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/53812766" target="_blank" rel="noopener"><img src="assets/anuncios/53812766.jpg" alt=""><div class="txt"><div class="name">Quarto a 5 min da praia</div><div class="meta">2 hóspedes · ≈ 300 m · <b>R$ 186/noite</b> · 4,90 · 96 avaliações · Banheiro compartilhado</div></div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/11416000" target="_blank" rel="noopener"><img src="assets/anuncios/11416000.jpg" alt=""><div class="txt"><div class="name">Quarto no AP da Ana</div><div class="meta">2 hóspedes · 400–500 m · <b>R$ 198/noite</b> · 4,99 · 291 avaliações · Banheiro privativo</div></div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/39158820" target="_blank" rel="noopener"><img src="assets/anuncios/39158820.jpg" alt=""><div class="txt"><div class="name">Suíte privativa frente-mar</div><div class="meta">2 hóspedes · frente-mar · <b>R$ 248/noite</b> · 4,99 · 91 avaliações · Banheiro privativo</div></div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1598732356547731395" target="_blank" rel="noopener"><img src="assets/anuncios/1598732356547731395.jpg" alt=""><div class="txt"><div class="name">Suíte 250 m com hidro</div><div class="meta">2 hóspedes · 250 m · <b>R$ 267/noite</b> · novo · Banheiro privativo</div></div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener"><img src="assets/anuncios/1679167288976731383.jpg" alt=""><div class="txt"><div class="name">Suíte privativa em pousada</div><div class="meta">6–8 hóspedes · distância provável · <b>R$ 209/noite</b> · novo · Banheiro privativo</div></div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1313110081182641170" target="_blank" rel="noopener"><img src="assets/anuncios/1313110081182641170.jpg" alt=""><div class="txt"><div class="name">2 quartos na Roda Gigante</div><div class="meta">4 hóspedes · Barra Norte · <b>R$ 290/noite</b> · 5,00 · 5 avaliações · Demissuíte</div></div></a>
     </div>
   </div>
 </section>
@@ -465,6 +468,7 @@ h2 em{font-style:normal;color:var(--ox)}
 
     <div class="cards" style="margin-top:22px">
       <a class="xcase" href="https://www.airbnb.com.br/rooms/1586361955842282637" target="_blank" rel="noopener">
+        <img class="cover" src="assets/anuncios/1586361955842282637.jpg" alt="">
         <span class="go">↗</span>
         <span class="num">Caso 01 · a maior capacidade da amostra</span>
         <h3>Quarto para até 8 hóspedes, a 200 m</h3>
@@ -480,6 +484,7 @@ h2 em{font-style:normal;color:var(--ox)}
         <p>Cabe mais gente que qualquer outro da amostra, mas <b>o hóspede leva roupa de cama, travesseiro e toalha</b> — e não há ar-condicionado. Segue sem avaliações, embora a anfitriã mantenha outros anúncios na plataforma.</p>
       </a>
       <a class="xcase" href="https://www.airbnb.com.br/rooms/1433344935585611615" target="_blank" rel="noopener">
+        <img class="cover" src="assets/anuncios/1433344935585611615.jpg" alt="">
         <span class="go">↗</span>
         <span class="num">Caso 02 · onde as reclamações se concentram</span>
         <h3>Pousada Claudia, com mais de 100 avaliações</h3>
@@ -491,6 +496,7 @@ h2 em{font-style:normal;color:var(--ox)}
         <p>Um anúncio consolidado, e as queixas recorrentes se concentram em <b>três pontos básicos</b> — nenhum deles comodidade sofisticada. Houve ainda uma reclamação de garagem causada por <b>erro de configuração do próprio anúncio</b>: informação errada também custa nota.</p>
       </a>
       <a class="xcase" href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener" style="border-top-color:var(--pos)">
+        <img class="cover" src="assets/anuncios/1679167288976731383.jpg" alt="">
         <span class="go" style="border-color:var(--pos);color:var(--pos)">↗</span>
         <span class="num" style="color:var(--pos)">Caso 03 · o padrão que o segmento alcança</span>
         <h3 style="color:var(--pos)">Suíte privativa para 7 hóspedes</h3>

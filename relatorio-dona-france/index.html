@@ -268,6 +268,10 @@ h2{
 .cards.trio .mk{font-size:16px;padding:8px 12px 8px 10px}
 .cards.trio .mk::before{width:20px;height:20px;font-size:12px}
 .cards.trio a.card .go{width:36px;height:36px;line-height:32px;font-size:18px;top:22px;right:24px}
+.cards.trio .card .head-row{display:flex;gap:18px;align-items:flex-start}
+.cards.trio .card .head-row img{width:100px;height:100px;object-fit:cover;border-radius:6px;flex:0 0 auto;border:1px solid var(--hair-light)}
+.cards.trio .card .head-row .head-text{flex:1;min-width:0}
+.cards.trio .card .head-row .num{margin-bottom:8px}
 
 /* ficha técnica — o recorte da pesquisa, em escala de leitura */
 .spec{margin-top:34px;display:flex;flex-direction:column;position:relative;z-index:2}
@@ -602,8 +606,13 @@ a.card h3{padding-right:64px}
   <div class="cards c3 trio reveal" style="margin-top:auto;margin-bottom:auto">
     <a class="card" href="https://www.airbnb.com.br/rooms/1586361955842282637" target="_blank" rel="noopener">
       <span class="go">↗</span>
-      <span class="num">Caso 01 · a maior capacidade da amostra</span>
-      <h3>Quarto para até 8 hóspedes, a 200 m</h3>
+      <div class="head-row">
+        <img src="assets/anuncios/1586361955842282637.jpg" alt="">
+        <div class="head-text">
+          <span class="num">Caso 01 · a maior capacidade da amostra</span>
+          <h3>Quarto para até 8 hóspedes, a 200 m</h3>
+        </div>
+      </div>
       <div class="marks">
         <span class="mk yes">Teclado numérico</span>
         <span class="mk yes">Cozinha completa</span>
@@ -617,8 +626,13 @@ a.card h3{padding-right:64px}
     </a>
     <a class="card" href="https://www.airbnb.com.br/rooms/1433344935585611615" target="_blank" rel="noopener">
       <span class="go">↗</span>
-      <span class="num">Caso 02 · onde as reclamações se concentram</span>
-      <h3>Pousada Claudia, com mais de 100 avaliações</h3>
+      <div class="head-row">
+        <img src="assets/anuncios/1433344935585611615.jpg" alt="">
+        <div class="head-text">
+          <span class="num">Caso 02 · onde as reclamações se concentram</span>
+          <h3>Pousada Claudia, com mais de 100 avaliações</h3>
+        </div>
+      </div>
       <div class="marks">
         <span class="mk no">Chuveiro</span>
         <span class="mk no">Qualidade do lençol</span>
@@ -628,8 +642,13 @@ a.card h3{padding-right:64px}
     </a>
     <a class="card" href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener" style="border-top-color:var(--pos)">
       <span class="go">↗</span>
-      <span class="num" style="color:var(--pos)">Caso 03 · o padrão que o segmento alcança</span>
-      <h3 style="color:var(--pos)">Suíte privativa para 7 hóspedes</h3>
+      <div class="head-row">
+        <img src="assets/anuncios/1679167288976731383.jpg" alt="">
+        <div class="head-text">
+          <span class="num" style="color:var(--pos)">Caso 03 · o padrão que o segmento alcança</span>
+          <h3 style="color:var(--pos)">Suíte privativa para 7 hóspedes</h3>
+        </div>
+      </div>
       <div class="marks">
         <span class="mk yes">Banheiro privativo no quarto</span>
         <span class="mk yes">Sete camas</span>
