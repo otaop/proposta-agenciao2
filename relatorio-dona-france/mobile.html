@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Pesquisa de mercado — Locação de quartos em Balneário Camboriú</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* =====================================================================
+   PESQUISA DE MERCADO — VERSÃO MOBILE
+   Não é o palco 1920x1080 encolhido: é o mesmo conteúdo e a mesma
+   identidade (oxblood/bone, Bricolage/Archivo/Azeret Mono) reconstruídos
+   como página de leitura vertical, com componentes próprios por tipo
+   de dado (barras, cartões, listas) em vez de tabelas apertadas.
+   21 telas, na mesma ordem e numeração do relatório de desktop.
+   ===================================================================== */
+
+:root{
+  --ox:#5a160b; --ox-deep:#3F0E06; --ox-lift:#732214;
+  --bone:#F2EDE4; --bone-sink:#DFD6C6;
+  --amber:#E0A03C;
+  --ink:#241A16; --ink-soft:#5E504A; --ink-faint:#93857D;
+  --on-ox:#F6F1E8; --on-ox-mute:#C9A79C;
+  --line:rgba(36,26,22,.14); --line-ox:rgba(246,241,232,.18);
+  --pos:#2F6B4F; --neg:#A33B22;
+  --f-display:'Bricolage Grotesque',sans-serif;
+  --f-body:'Archivo',sans-serif;
+  --f-mono:'Azeret Mono',monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bone);color:var(--ink);
+  font-family:var(--f-body);line-height:1.55;font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+a{-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+img{max-width:100%;display:block}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important}}
+
+/* ---------------------------------------------------------------------
+   TOPBAR — marca, contador, barra de progresso
+   --------------------------------------------------------------------- */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(26,10,6,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-ox);
+  padding:14px 20px;display:flex;align-items:center;justify-content:space-between;
+}
+.topbar img{height:24px;width:auto}
+.topbar .counter{font-family:var(--f-mono);font-size:13px;letter-spacing:.14em;color:var(--on-ox-mute)}
+.topbar .counter strong{color:var(--on-ox);font-weight:600}
+.progress{position:absolute;left:0;bottom:0;height:2px;width:0%;background:var(--amber);transition:width .15s ease}
+main{padding-top:56px}
+
+/* ---------------------------------------------------------------------
+   BASE DE TELA
+   --------------------------------------------------------------------- */
+.screen{padding:52px 22px 56px}
+.wrap{max-width:620px;margin:0 auto}
+.screen.ox{
+  background:
+    radial-gradient(120% 70% at 85% 0%,var(--ox-lift) 0%,transparent 60%),
+    linear-gradient(170deg,var(--ox) 0%,var(--ox-deep) 100%);
+  color:var(--on-ox);
+}
+.screen.ox .wrap{position:relative;z-index:2}
+
+.kicker{
+  margin-top:24px;display:flex;align-items:center;gap:10px;
+  font-family:var(--f-mono);font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ox);
+}
+.screen.ox .kicker{color:var(--amber)}
+.kicker::after{content:"";height:1px;flex:1;max-width:60px;background:currentColor;opacity:.4}
+
+h1{
+  margin:16px 0 0;font-family:var(--f-display);font-weight:700;
+  font-size:clamp(34px,9.5vw,46px);line-height:1.08;letter-spacing:-.025em;color:var(--on-ox);
+}
+h1 em{font-style:normal;color:var(--amber)}
+h2{
+  margin:12px 0 0;font-family:var(--f-display);font-weight:700;
+  font-size:clamp(27px,7.6vw,34px);line-height:1.16;letter-spacing:-.022em;color:var(--ink);
+}
+.screen.ox h2{color:var(--on-ox)}
+h2 em{font-style:normal;color:var(--ox)}
+.screen.ox h2 em{color:var(--amber)}
+
+.standfirst,.sub{margin-top:14px;font-size:17.5px;line-height:1.58;color:var(--ink-soft)}
+.screen.ox .standfirst{color:var(--on-ox);opacity:.85}
+.standfirst b,.sub b{font-weight:600;color:var(--ox)}
+.screen.ox .standfirst b{color:var(--amber)}
+
+.foot{
+  margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);
+  display:flex;justify-content:space-between;gap:14px;
+}
+.screen.ox .foot{border-top-color:var(--line-ox);color:var(--on-ox-mute)}
+
+/* ---------------------------------------------------------------------
+   ESTATÍSTICA EMPILHADA (substitui .track do desktop)
+   --------------------------------------------------------------------- */
+.stats{margin-top:26px;display:flex;flex-direction:column}
+.stat{padding:16px 0;border-top:1px solid var(--line)}
+.screen.ox .stat{border-top-color:var(--line-ox)}
+.stat .k{font-family:var(--f-mono);font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.screen.ox .stat .k{color:var(--on-ox-mute)}
+.stat .v{margin-top:7px;font-family:var(--f-display);font-weight:800;font-size:clamp(38px,11vw,50px);line-height:1;letter-spacing:-.03em;color:var(--ox);font-variant-numeric:tabular-nums}
+.screen.ox .stat .v{color:var(--amber)}
+.stat .d{margin-top:7px;font-size:16px;line-height:1.45;color:var(--ink-soft)}
+.screen.ox .stat .d{color:var(--on-ox);opacity:.75}
+
+/* ---------------------------------------------------------------------
+   NÚMERO GIGANTE (mega)
+   --------------------------------------------------------------------- */
+.mega{margin-top:24px;display:flex;flex-direction:column;gap:12px}
+.mega .v{font-family:var(--f-display);font-weight:800;font-size:clamp(64px,22vw,96px);line-height:.9;letter-spacing:-.04em;color:var(--ox);font-variant-numeric:tabular-nums}
+.screen.ox .mega .v{color:var(--amber)}
+.mega .t{font-size:17.5px;line-height:1.52;color:var(--ink-soft)}
+.screen.ox .mega .t{color:var(--on-ox);opacity:.85}
+.mega .t b{font-weight:700;color:var(--ox)}
+.screen.ox .mega .t b{color:var(--amber)}
+
+/* ---------------------------------------------------------------------
+   BLOCOS DE PREÇO POR TEMPORADA (substitui .matrix do desktop)
+   --------------------------------------------------------------------- */
+.season{margin-top:24px}
+.season+.season{margin-top:20px}
+.season .head{font-family:var(--f-mono);font-size:13.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ox);padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.season.hi .head{color:var(--ox)}
+.season .row{display:flex;justify-content:space-between;align-items:baseline;padding:13px 0;border-bottom:1px dashed var(--line)}
+.season .row .cap{font-size:16.5px;color:var(--ink-soft)}
+.season .row .val{font-family:var(--f-display);font-weight:700;font-size:24px;color:var(--ink);font-variant-numeric:tabular-nums}
+.season.hi .row .val{color:var(--ox)}
+.season .row.range{flex-direction:column;align-items:flex-start;gap:6px;background:rgba(90,22,11,.05);margin:0 -14px;padding:14px;border-bottom:1px dashed var(--line)}
+.season .row.range .val{font-size:28px;color:var(--ox);white-space:nowrap}
+.season .row.range .note{font-size:14.5px;color:var(--ink-soft)}
+
+/* tira de destaque — Réveillon */
+.strip{margin-top:22px;border-top:2px solid var(--ox);padding-top:16px}
+.strip .l{font-family:var(--f-mono);font-size:13.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ox)}
+.strip .vals{margin-top:10px;display:flex;gap:28px;flex-wrap:wrap}
+.strip .vals b{font-family:var(--f-display);font-weight:800;font-size:28px;color:var(--ox);font-variant-numeric:tabular-nums}
+.strip .vals span{display:block;font-size:14.5px;color:var(--ink-faint);margin-top:2px}
+
+/* ---------------------------------------------------------------------
+   BARRAS — rótulo/valor em cima, trilha embaixo (mobile-first)
+   Reaproveitada também para o gráfico de 12 meses (.peak = mês de pico,
+   valor maior e em destaque, sem precisar de rolagem horizontal).
+   --------------------------------------------------------------------- */
+.bars{margin-top:26px}
+.bar{padding:15px 0;border-bottom:1px solid var(--line)}
+.bar:last-child{border-bottom:0}
+.bar .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:9px}
+.bar .lbl{font-size:17px;color:var(--ink);font-weight:500}
+.bar .val{font-family:var(--f-mono);font-size:15.5px;font-weight:600;color:var(--ox);white-space:nowrap;font-variant-numeric:tabular-nums}
+.bar .track{height:20px;background:var(--bone-sink);border-radius:5px;overflow:hidden}
+.bar .fill{height:100%;background:var(--ox);width:var(--w,0%)}
+.bar.mute .fill{background:var(--ink-faint)}
+.bar.mute .val{color:var(--ink-faint)}
+.bar.mute .lbl{color:var(--ink-soft)}
+.bar.peak .lbl{font-weight:700;color:var(--ox)}
+.bar.peak .val{font-size:19px;font-weight:800;font-family:var(--f-display)}
+
+/* ---------------------------------------------------------------------
+   COMPARAÇÃO EM TRÊS NÚMEROS (Ago / Jan / Variação)
+   --------------------------------------------------------------------- */
+.cmp{margin-top:22px;display:flex;flex-direction:column;gap:14px}
+.cmp-row{border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.cmp-row .lbl{font-size:15.5px;color:var(--ink-soft);margin-bottom:13px}
+.cmp-row .nums{display:flex;justify-content:space-between;gap:10px}
+.cmp-row .num{display:flex;flex-direction:column;align-items:center;flex:1}
+.cmp-row .num .k{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
+.cmp-row .num .v{margin-top:6px;font-family:var(--f-display);font-weight:700;font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums}
+.cmp-row .num.hl .v{color:var(--ox)}
+
+/* ---------------------------------------------------------------------
+   CARTÕES
+   --------------------------------------------------------------------- */
+.cards{margin-top:24px;display:flex;flex-direction:column;gap:16px}
+.card{border:1px solid var(--line);border-top:3px solid var(--ox);border-radius:2px;padding:22px 20px;background:rgba(255,255,255,.4)}
+.card .num{display:block;font-family:var(--f-mono);font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:11px}
+.card h3{margin:0;font-family:var(--f-display);font-weight:700;font-size:23px;letter-spacing:-.015em;color:var(--ox);line-height:1.2}
+.card p{margin:13px 0 0;font-size:16.5px;line-height:1.52;color:var(--ink-soft)}
+.card p b{color:var(--ink);font-weight:600}
+
+/* casos-limite clicáveis */
+.xcase{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-top:3px solid var(--ox);padding:22px 20px;position:relative}
+.xcase .go{position:absolute;top:18px;right:18px;width:30px;height:30px;border:2px solid var(--ox);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:15px;color:var(--ox)}
+.xcase .num{display:block;font-family:var(--f-mono);font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:11px;padding-right:38px}
+.xcase h3{margin:0;font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.015em;color:var(--ink);line-height:1.24;padding-right:38px}
+.xcase .marks{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+.xcase .mk{display:inline-flex;align-items:center;gap:6px;font-size:14.5px;padding:7px 11px 7px 9px;border-radius:7px;border:1px solid var(--line);color:var(--ink-soft);background:rgba(255,255,255,.5)}
+.xcase .mk::before{width:17px;height:17px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:10.5px;font-weight:700}
+.xcase .mk.yes::before{content:"✓";background:rgba(47,107,79,.16);color:var(--pos)}
+.xcase .mk.no::before{content:"✕";background:rgba(163,59,34,.16);color:var(--neg)}
+.xcase .mk.no{color:var(--neg);border-color:rgba(163,59,34,.3)}
+.xcase p{margin:14px 0 0;font-size:16px;line-height:1.52;color:var(--ink-soft)}
+.xcase p b{color:var(--ink);font-weight:600}
+
+/* ---------------------------------------------------------------------
+   FICHA TÉCNICA (spec) — método
+   --------------------------------------------------------------------- */
+.spec{margin-top:24px;display:flex;flex-direction:column}
+.sp{padding:14px 0;border-top:1px solid var(--line)}
+.sp b{display:block;font-family:var(--f-display);font-weight:700;font-size:15.5px;letter-spacing:.01em;color:var(--ox)}
+.sp span{display:block;margin-top:6px;font-size:16px;line-height:1.48;color:var(--ink-soft)}
+
+/* ---------------------------------------------------------------------
+   ANÚNCIOS PESQUISADOS — cartões clicáveis
+   --------------------------------------------------------------------- */
+.deals{margin-top:22px;display:flex;flex-direction:column;gap:12px}
+.deal{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.deal .name{font-family:var(--f-display);font-weight:600;font-size:18.5px;color:var(--ink)}
+.deal .name::after{content:" ↗";color:var(--ox);font-family:var(--f-mono);font-weight:600}
+.deal .meta{margin-top:9px;font-size:15px;line-height:1.5;color:var(--ink-soft)}
+.deal .meta b{color:var(--ox);font-weight:700}
+
+/* ---------------------------------------------------------------------
+   FORMATOS — lista com marcador lateral
+   --------------------------------------------------------------------- */
+.fmts{margin-top:22px;display:flex;flex-direction:column;gap:16px}
+.fmt{border-left:3px solid var(--line);padding-left:14px}
+.fmt.hi{border-left-color:var(--ox)}
+.fmt h4{margin:0;font-family:var(--f-display);font-weight:700;font-size:19px;color:var(--ink)}
+.fmt.hi h4{color:var(--ox)}
+.fmt .row{margin-top:9px;font-size:15px;line-height:1.52;color:var(--ink-soft)}
+.fmt .row b{color:var(--ink-faint);font-weight:600}
+
+/* composição empilhada */
+.stack{margin-top:22px}
+.stack-bar{display:flex;height:44px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.stack-seg{display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:15px;font-weight:600;color:var(--bone)}
+.stack-key{margin-top:14px;display:flex;flex-direction:column;gap:9px}
+.sk{display:flex;align-items:center;gap:10px;font-size:16px;color:var(--ink-soft)}
+.sk i{width:14px;height:14px;flex:0 0 auto;border-radius:3px;display:block}
+
+/* ---------------------------------------------------------------------
+   LISTA NUMERADA (conclusão, itens)
+   --------------------------------------------------------------------- */
+.list{margin-top:22px;display:flex;flex-direction:column}
+.it{padding:16px 0;border-top:1px solid var(--line)}
+.screen.ox .it{border-top-color:var(--line-ox)}
+.it .n{font-family:var(--f-display);font-weight:800;font-size:28px;color:var(--ox);line-height:1}
+.screen.ox .it .n{color:var(--amber)}
+.it b{display:block;margin-top:9px;font-size:19.5px;font-weight:600;color:var(--ink);line-height:1.3}
+.screen.ox .it b{color:var(--on-ox)}
+.it i{display:block;font-style:normal;margin-top:9px;font-size:16px;line-height:1.52;color:var(--ink-soft)}
+.screen.ox .it i{color:var(--on-ox);opacity:.78}
+.it i b{display:inline;font-size:inherit;font-weight:700;color:var(--ox)}
+.screen.ox .it i b{color:var(--amber)}
+
+/* ---------------------------------------------------------------------
+   CALLOUT E VEREDITO
+   --------------------------------------------------------------------- */
+.flag{margin-top:26px;border-left:4px solid var(--ox);padding:4px 0 4px 16px}
+.screen.ox .flag{border-left-color:var(--amber)}
+.flag span{font-size:16.5px;line-height:1.56;color:var(--ink-soft)}
+.screen.ox .flag span{color:var(--on-ox);opacity:.88}
+.flag b{font-weight:700;color:var(--ox)}
+.screen.ox .flag b{color:var(--amber)}
+
+.verdict{margin-top:26px;border:1px solid var(--line-ox);border-left:4px solid var(--amber);padding:22px 20px;background:rgba(255,255,255,.06)}
+.verdict .q{font-family:var(--f-mono);font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+.verdict .a{margin-top:12px;font-family:var(--f-display);font-weight:700;font-size:25px;line-height:1.26;letter-spacing:-.015em;color:var(--on-ox)}
+
+/* ---------------------------------------------------------------------
+   APÊNDICES — cartões de percentil e fontes, lista de links
+   --------------------------------------------------------------------- */
+.pcards{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.pc{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.pc.hi{background:rgba(90,22,11,.05);border-color:rgba(90,22,11,.25)}
+.pc .head{display:flex;justify-content:space-between;align-items:baseline}
+.pc .cap{font-size:16.5px;font-weight:600;color:var(--ink)}
+.pc .nn{font-family:var(--f-mono);font-size:13px;color:var(--ink-faint)}
+.pc .quad{margin-top:11px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+/* em telas muito estreitas, 4 colunas espremem valores como "R$ 1.172" — usa 2x2 */
+@media (max-width:400px){.pc .quad{grid-template-columns:repeat(2,1fr);row-gap:12px}}
+.pc .q .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint)}
+.pc .q .v{margin-top:4px;font-family:var(--f-display);font-weight:700;font-size:16.5px;color:var(--ink)}
+.pc.hi .q .v{color:var(--ox)}
+.pc .note{margin-top:9px;font-size:14px;color:var(--ink-soft)}
+
+.linklist{margin-top:22px;display:flex;flex-direction:column}
+.lnk{padding:15px 0;border-top:1px solid var(--line)}
+.lnk a{display:block;text-decoration:none;color:inherit}
+.lnk .idx{font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--ox)}
+.lnk b{display:block;margin-top:5px;font-size:17px;font-weight:600;color:var(--ink);line-height:1.32}
+.lnk b::after{content:" ↗";color:var(--ox);font-family:var(--f-mono);font-weight:600}
+.lnk .u{display:block;margin-top:4px;font-family:var(--f-mono);font-size:12.5px;color:var(--ink-faint);word-break:break-all}
+
+.srcs{margin-top:22px;display:flex;flex-direction:column;gap:20px}
+.src{border-top:2px solid var(--ox);padding-top:13px}
+.src h4{margin:0;font-family:var(--f-display);font-weight:700;font-size:19px}
+.src h4 a{color:var(--ox);text-decoration:none}
+.src h4 a::after{content:" ↗"}
+.src .row{margin-top:9px;font-size:15px;line-height:1.52;color:var(--ink-soft)}
+.src .row b{color:var(--ink-faint);font-weight:600}
+
+/* ---------------------------------------------------------------------
+   RODAPÉ FINAL
+   --------------------------------------------------------------------- */
+.endnote{padding:40px 22px 64px;text-align:center;background:var(--bone)}
+.endnote .brand{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+.endnote a{display:inline-block;margin-top:14px;font-family:var(--f-mono);font-size:13.5px;letter-spacing:.06em;color:var(--ox);text-decoration:none;border-bottom:1px solid rgba(90,22,11,.35)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <img src="assets/logo-branco.svg" alt="Dona France">
+  <div class="counter"><strong id="curr">01</strong> / 21</div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+
+<!-- 01 — CAPA -->
+<section class="screen ox" data-slide="01">
+  <div class="wrap">
+    <div class="kicker" style="margin-top:0">Locação por quarto · Balneário Camboriú</div>
+    <h1>Pesquisa de mercado de <em>quartos</em> em BC</h1>
+    <p class="standfirst">Preço, infraestrutura, concorrência e tendências da oferta de quartos privativos até 1&nbsp;km da Praia Central.</p>
+    <div class="stats">
+      <div class="stat"><div class="k">Anúncios únicos</div><div class="v">122</div></div>
+      <div class="stat"><div class="k">Observações</div><div class="v">198</div></div>
+      <div class="stat"><div class="k">Analisados um a um</div><div class="v">17</div></div>
+      <div class="stat"><div class="k">Janelas de temporada</div><div class="v">3</div></div>
+    </div>
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>01</span></div>
+  </div>
+</section>
+
+<!-- 02 — MÉTODO -->
+<section class="screen" data-slide="02">
+  <div class="wrap">
+    <div class="kicker">O recorte da pesquisa</div>
+    <h2>O que foi medido</h2>
+    <div class="spec">
+      <div class="sp"><b>Geografia</b><span>Até 1&nbsp;km da Praia Central — Barra Norte, Pioneiros, Centro e Barra Sul</span></div>
+      <div class="sp"><b>Produto</b><span>Quarto privativo em casa, apartamento, pousada ou hostel</span></div>
+      <div class="sp"><b>Capacidade</b><span>De 2 a 6 hóspedes</span></div>
+      <div class="sp"><b>Três janelas</b><span>Baixa: 24–27 de agosto · Regular: 6–9 de novembro · Alta: 8–11 de janeiro</span></div>
+      <div class="sp"><b>Excluídos</b><span>Itajaí, Itapema, Praia Brava, Taquaras, Estaleiro, Camboriú e imóveis inteiros</span></div>
+    </div>
+    <div class="cards">
+      <div class="card"><span class="num" style="color:var(--ox)">Camada de oferta</span><h3 style="color:var(--ink)">122 anúncios pesquisados</h3></div>
+      <div class="card" style="border-top-color:var(--pos)"><span class="num" style="color:var(--pos)">Camada de demanda</span><h3 style="color:var(--pos)">5 anos de Google Trends, AirDNA e dados oficiais</h3></div>
+    </div>
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>02</span></div>
+  </div>
+</section>
+
+<!-- 03 — SAZONALIDADE -->
+<section class="screen" data-slide="03">
+  <div class="wrap">
+    <div class="kicker">Resultado 01</div>
+    <h2>A diária de janeiro é quase três vezes a de agosto</h2>
+    <div class="mega">
+      <div class="v">+171%</div>
+      <div class="t">é quanto sobe a mediana da diária de um quarto para <b>2 hóspedes</b> entre a baixa e a alta temporada.</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="k">Baixa · agosto</div><div class="v">R$ 153</div><div class="d">R$ 77 por hóspede/noite</div></div>
+      <div class="stat"><div class="k">Regular · novembro</div><div class="v">R$ 187</div><div class="d">R$ 94 por hóspede/noite</div></div>
+      <div class="stat"><div class="k">Alta · janeiro</div><div class="v">R$ 415</div><div class="d">R$ 208 por hóspede/noite</div></div>
+    </div>
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>03</span></div>
+  </div>
+</section>
+
+<!-- 04 — PREÇO POR CAPACIDADE -->
+<section class="screen" data-slide="04">
+  <div class="wrap">
+    <div class="kicker">Resultado 02</div>
+    <h2>Quanto o mercado cobra por quarto/noite</h2>
+    <p class="sub">Mediana por quarto/noite, em cada capacidade e temporada.</p>
+
+    <div class="season">
+      <div class="head">Baixa</div>
+      <div class="row"><span class="cap">2 hóspedes</span><span class="val">R$ 153</span></div>
+      <div class="row"><span class="cap">3 a 4 hóspedes</span><span class="val">R$ 315</span></div>
+      <div class="row"><span class="cap">5 a 6 hóspedes</span><span class="val">R$ 300</span></div>
+    </div>
+    <div class="season">
+      <div class="head">Regular</div>
+      <div class="row"><span class="cap">2 hóspedes</span><span class="val">R$ 187</span></div>
+      <div class="row"><span class="cap">3 a 4 hóspedes</span><span class="val">R$ 377</span></div>
+      <div class="row"><span class="cap">5 a 6 hóspedes</span><span class="val">R$ 511</span></div>
+    </div>
+    <div class="season hi">
+      <div class="head">Alta</div>
+      <div class="row"><span class="cap">2 hóspedes</span><span class="val">R$ 415</span></div>
+      <div class="row"><span class="cap">3 a 4 hóspedes</span><span class="val">R$ 657</span></div>
+      <div class="row range"><span class="cap">5 a 6 hóspedes</span><span class="val">R$ 351–1.172</span><span class="note">mediana R$ 731 · n = 7</span></div>
+    </div>
+
+    <div class="strip">
+      <div class="l">Réveillon</div>
+      <div class="vals">
+        <div><b>R$ 1.423</b><span>5 hóspedes</span></div>
+        <div><b>R$ 1.511</b><span>6 hóspedes</span></div>
+      </div>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>04</span></div>
+  </div>
+</section>
+
+<!-- 05 — A PROCURA AO LONGO DO ANO -->
+<section class="screen" data-slide="05">
+  <div class="wrap">
+    <div class="kicker">Resultado 03</div>
+    <h2>Quando as pessoas procuram Balneário Camboriú</h2>
+    <p class="sub">Interesse de busca no Google, média dos últimos 5 anos. <b>Índice de 0 a 100 — não é volume de reservas nem taxa de ocupação.</b></p>
+
+    <div class="bars">
+      <div class="bar mute"><div class="top"><span class="lbl">Agosto</span><span class="val">55</span></div><div class="track"><div class="fill" style="--w:55%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Setembro</span><span class="val">59</span></div><div class="track"><div class="fill" style="--w:59%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Outubro</span><span class="val">62</span></div><div class="track"><div class="fill" style="--w:62%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Novembro</span><span class="val">62</span></div><div class="track"><div class="fill" style="--w:62%"></div></div></div>
+      <div class="bar peak"><div class="top"><span class="lbl">Dezembro</span><span class="val">100</span></div><div class="track"><div class="fill" style="--w:100%"></div></div></div>
+      <div class="bar peak"><div class="top"><span class="lbl">Janeiro</span><span class="val">89</span></div><div class="track"><div class="fill" style="--w:89%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Fevereiro</span><span class="val">65</span></div><div class="track"><div class="fill" style="--w:65%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Março</span><span class="val">56</span></div><div class="track"><div class="fill" style="--w:56%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Abril</span><span class="val">54</span></div><div class="track"><div class="fill" style="--w:54%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Maio</span><span class="val">48</span></div><div class="track"><div class="fill" style="--w:48%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Junho</span><span class="val">49</span></div><div class="track"><div class="fill" style="--w:49%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Julho</span><span class="val">60</span></div><div class="track"><div class="fill" style="--w:60%"></div></div></div>
+    </div>
+
+    <div class="flag"><span>Dezembro tem <b>2,1× o interesse de maio</b>. E a procura está estável no ano: julho de 2026 ficou <b>2,1% acima</b> de julho de 2025.</span></div>
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>05</span></div>
+  </div>
+</section>
+
+<!-- 06 — PREÇO x PROCURA -->
+<section class="screen" data-slide="06">
+  <div class="wrap">
+    <div class="kicker">Resultado 04</div>
+    <h2>O preço sobe muito mais que a procura</h2>
+    <p class="sub">Cruzando o preço medido nos anúncios com o interesse de busca, entre a baixa e a alta temporada.</p>
+
+    <div class="mega">
+      <div class="v">+62%</div>
+      <div class="t">é tudo o que a <b>procura</b> cresce entre agosto e janeiro. No mesmo período, a diária sobe <b>+171%</b>.</div>
+    </div>
+
+    <div class="cmp">
+      <div class="cmp-row">
+        <div class="lbl">Mediana da diária — quarto para 2 hóspedes</div>
+        <div class="nums">
+          <div class="num"><span class="k">Agosto</span><span class="v">R$ 153</span></div>
+          <div class="num"><span class="k">Janeiro</span><span class="v">R$ 415</span></div>
+          <div class="num hl"><span class="k">Variação</span><span class="v">+171%</span></div>
+        </div>
+      </div>
+      <div class="cmp-row">
+        <div class="lbl">Índice de procura no Google</div>
+        <div class="nums">
+          <div class="num"><span class="k">Agosto</span><span class="v">55</span></div>
+          <div class="num"><span class="k">Janeiro</span><span class="v">89</span></div>
+          <div class="num"><span class="k">Variação</span><span class="v">+62%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>06</span></div>
+  </div>
+</section>
+
+<!-- 07 — COMO AS PESSOAS PROCURAM -->
+<section class="screen" data-slide="07">
+  <div class="wrap">
+    <div class="kicker">Resultado 05</div>
+    <h2>O que as pessoas digitam quando procuram onde ficar</h2>
+    <p class="sub">Comparação de cinco termos no Google, Brasil, últimos 5 anos. Índice relativo dentro do mesmo grupo.</p>
+
+    <div class="bars">
+      <div class="bar"><div class="top"><span class="lbl">hotel Balneário Camboriú</span><span class="val">34</span></div><div class="track"><div class="fill" style="--w:100%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">casa Balneário Camboriú</span><span class="val">7</span></div><div class="track"><div class="fill" style="--w:20.6%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">pousada Balneário Camboriú</span><span class="val">4</span></div><div class="track"><div class="fill" style="--w:11.8%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Airbnb Balneário Camboriú</span><span class="val">2</span></div><div class="track"><div class="fill" style="--w:5.9%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">quarto Balneário Camboriú</span><span class="val">0</span></div><div class="track"><div class="fill" style="--w:0%"></div></div></div>
+    </div>
+
+    <div class="flag"><span><b>Ninguém procura “quarto em Balneário Camboriú” no Google</b> — o termo ficou abaixo do limiar de volume, e “Airbnb BC” pontua 2 contra 34 de “hotel BC”. Isso não significa que não exista demanda por quarto: significa que <b>esse produto é descoberto dentro da plataforma</b>, na busca do próprio Airbnb. O esforço rende em título, fotos e avaliações — não em aparecer no buscador.</span></div>
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>07</span></div>
+  </div>
+</section>
+
+<!-- 08 — TAMANHO E OCUPAÇÃO -->
+<section class="screen" data-slide="08">
+  <div class="wrap">
+    <div class="kicker">Resultado 06</div>
+    <h2>O tamanho do mercado e a ocupação real</h2>
+
+    <div class="stats">
+      <div class="stat"><div class="k">Anúncios ativos</div><div class="v">10.303</div><div class="d">de curta duração no município</div></div>
+      <div class="stat"><div class="k">Ocupação média</div><div class="v">45%</div><div class="d">média do ano, todos os tipos</div></div>
+      <div class="stat"><div class="k">Diária média</div><div class="v">R$ 541</div><div class="d">todos os tipos de imóvel · convertido a R$ 5,30 por dólar</div></div>
+      <div class="stat"><div class="k">Por diária disponível</div><div class="v">R$ 233</div><div class="d">o que sobra depois da vacância</div></div>
+    </div>
+
+    <div class="cards">
+      <div class="card"><span class="num">Ocupação oficial em feriado</span><h3>Acima de 90%</h3><p>No Carnaval de 2025 a ocupação hoteleira passou de 90%, com mais de 70 mil pessoas nas atrações. Na Páscoa com Tiradentes ficou perto de 90%. <b>Dado oficial da Secretaria de Turismo — de hotelaria, não de Airbnb.</b></p></div>
+      <div class="card" style="border-top-color:var(--neg)"><span class="num">A distância entre os dois números</span><h3 style="color:var(--neg)">45% no ano, 90% no feriado</h3><p>A média anual de 45% e os picos acima de 90% descrevem o mesmo mercado. <b>O ano inteiro não se paga com a média</b> — ele se paga nas datas de pressão.</p></div>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>08</span></div>
+  </div>
+</section>
+
+<!-- 09 — INFRAESTRUTURA PADRÃO -->
+<section class="screen" data-slide="09">
+  <div class="wrap">
+    <div class="kicker">Resultado 03</div>
+    <h2>O que é padrão no mercado</h2>
+    <p class="sub">Itens presentes em <b>mais da metade</b> dos 17 anúncios analisados.</p>
+
+    <div class="bars">
+      <div class="bar"><div class="top"><span class="lbl">Wi-Fi</span><span class="val">17/17 · 100%</span></div><div class="track"><div class="fill" style="--w:100%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Cozinha ou copa</span><span class="val">14/17 · 82%</span></div><div class="track"><div class="fill" style="--w:82%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">TV</span><span class="val">14/17 · 82%</span></div><div class="track"><div class="fill" style="--w:82%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Tranca no quarto</span><span class="val">13/17 · 76%</span></div><div class="track"><div class="fill" style="--w:76%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Roupa de cama e toalha</span><span class="val">13/17 · 76%</span></div><div class="track"><div class="fill" style="--w:76%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Ar-condicionado</span><span class="val">12/17 · 71%</span></div><div class="track"><div class="fill" style="--w:71%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Estacionamento</span><span class="val">11/17 · 65%</span></div><div class="track"><div class="fill" style="--w:65%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Banheiro privativo</span><span class="val">10/17 · 59%</span></div><div class="track"><div class="fill" style="--w:59%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Espaço de trabalho</span><span class="val">9/17 · 53%</span></div><div class="track"><div class="fill" style="--w:53%"></div></div></div>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>09</span></div>
+  </div>
+</section>
+
+<!-- 10 — INFRAESTRUTURA RARA -->
+<section class="screen" data-slide="10">
+  <div class="wrap">
+    <div class="kicker">E o que é raro</div>
+    <h2>O que quase ninguém oferece</h2>
+    <p class="sub">Itens presentes em <b>menos da metade</b> da amostra.</p>
+
+    <div class="bars">
+      <div class="bar mute"><div class="top"><span class="lbl">Lavanderia</span><span class="val">8/17 · 47%</span></div><div class="track"><div class="fill" style="--w:47%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Câmera externa declarada</span><span class="val">5/17 · 29%</span></div><div class="track"><div class="fill" style="--w:29%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Frigobar explícito</span><span class="val">5/17 · 29%</span></div><div class="track"><div class="fill" style="--w:29%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Pet friendly</span><span class="val">4/17 · 24%</span></div><div class="track"><div class="fill" style="--w:24%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Self check-in</span><span class="val">4/17 · 24%</span></div><div class="track"><div class="fill" style="--w:24%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Café da manhã explícito</span><span class="val">2/17 · 12%</span></div><div class="track"><div class="fill" style="--w:12%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Fechadura digital</span><span class="val">1/17 · 6%</span></div><div class="track"><div class="fill" style="--w:6%"></div></div></div>
+    </div>
+
+    <div class="flag"><span><b>Nada nesta lista é obrigatório para alugar.</b> Café da manhã aparece em 2 anúncios de 17 e fechadura digital em 1. São itens de diferenciação, não de entrada — o mercado funciona sem eles.</span></div>
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>10</span></div>
+  </div>
+</section>
+
+<!-- 11 — OS ANÚNCIOS PESQUISADOS -->
+<section class="screen" data-slide="11">
+  <div class="wrap">
+    <div class="kicker">Resultado 04</div>
+    <h2>Quem disputa esse hóspede</h2>
+    <p class="sub">Preços de baixa temporada. <b>Toque no anúncio para abrir.</b> A régua de avaliação do segmento está em 4,9.</p>
+
+    <div class="deals">
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1512557911593016682" target="_blank" rel="noopener"><div class="name">I10 Suíte térrea</div><div class="meta">2 hóspedes · 500 m · <b>R$ 110/noite</b> · 4,91 · 34 avaliações · Banheiro privativo</div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1029147183769898672" target="_blank" rel="noopener"><div class="name">Quarto pé na areia</div><div class="meta">2 hóspedes · 50 m · <b>R$ 142/noite</b> · 4,94 · 33 avaliações · Banheiro compartilhado</div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1567613902711705388" target="_blank" rel="noopener"><div class="name">Suíte 2 com café da manhã</div><div class="meta">2 hóspedes · 2 min a pé · <b>R$ 144/noite</b> · 4,97 · 29 avaliações · Banheiro privativo</div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/53812766" target="_blank" rel="noopener"><div class="name">Quarto a 5 min da praia</div><div class="meta">2 hóspedes · ≈ 300 m · <b>R$ 186/noite</b> · 4,90 · 96 avaliações · Banheiro compartilhado</div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/11416000" target="_blank" rel="noopener"><div class="name">Quarto no AP da Ana</div><div class="meta">2 hóspedes · 400–500 m · <b>R$ 198/noite</b> · 4,99 · 291 avaliações · Banheiro privativo</div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/39158820" target="_blank" rel="noopener"><div class="name">Suíte privativa frente-mar</div><div class="meta">2 hóspedes · frente-mar · <b>R$ 248/noite</b> · 4,99 · 91 avaliações · Banheiro privativo</div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1598732356547731395" target="_blank" rel="noopener"><div class="name">Suíte 250 m com hidro</div><div class="meta">2 hóspedes · 250 m · <b>R$ 267/noite</b> · novo · Banheiro privativo</div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener"><div class="name">Suíte privativa em pousada</div><div class="meta">6–8 hóspedes · distância provável · <b>R$ 209/noite</b> · novo · Banheiro privativo</div></a>
+      <a class="deal" href="https://www.airbnb.com.br/rooms/1313110081182641170" target="_blank" rel="noopener"><div class="name">2 quartos na Roda Gigante</div><div class="meta">4 hóspedes · Barra Norte · <b>R$ 290/noite</b> · 5,00 · 5 avaliações · Demissuíte</div></a>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>11</span></div>
+  </div>
+</section>
+
+<!-- 12 — CASOS-LIMITE -->
+<section class="screen" data-slide="12">
+  <div class="wrap">
+    <div class="kicker">Casos que explicam o segmento</div>
+    <h2>Três anúncios que ensinam mais que a média</h2>
+
+    <div class="cards" style="margin-top:22px">
+      <a class="xcase" href="https://www.airbnb.com.br/rooms/1586361955842282637" target="_blank" rel="noopener">
+        <span class="go">↗</span>
+        <span class="num">Caso 01 · a maior capacidade da amostra</span>
+        <h3>Quarto para até 8 hóspedes, a 200 m</h3>
+        <div class="marks">
+          <span class="mk yes">Teclado numérico</span>
+          <span class="mk yes">Cozinha completa</span>
+          <span class="mk yes">Aceita pets</span>
+          <span class="mk yes">Beliches</span>
+          <span class="mk no">Ar-condicionado</span>
+          <span class="mk no">Roupa de cama e toalha</span>
+          <span class="mk no">Avaliações</span>
+        </div>
+        <p>Cabe mais gente que qualquer outro da amostra, mas <b>o hóspede leva roupa de cama, travesseiro e toalha</b> — e não há ar-condicionado. Segue sem avaliações, embora a anfitriã mantenha outros anúncios na plataforma.</p>
+      </a>
+      <a class="xcase" href="https://www.airbnb.com.br/rooms/1433344935585611615" target="_blank" rel="noopener">
+        <span class="go">↗</span>
+        <span class="num">Caso 02 · onde as reclamações se concentram</span>
+        <h3>Pousada Claudia, com mais de 100 avaliações</h3>
+        <div class="marks">
+          <span class="mk no">Chuveiro</span>
+          <span class="mk no">Qualidade do lençol</span>
+          <span class="mk no">Limpeza</span>
+        </div>
+        <p>Um anúncio consolidado, e as queixas recorrentes se concentram em <b>três pontos básicos</b> — nenhum deles comodidade sofisticada. Houve ainda uma reclamação de garagem causada por <b>erro de configuração do próprio anúncio</b>: informação errada também custa nota.</p>
+      </a>
+      <a class="xcase" href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener" style="border-top-color:var(--pos)">
+        <span class="go" style="border-color:var(--pos);color:var(--pos)">↗</span>
+        <span class="num" style="color:var(--pos)">Caso 03 · o padrão que o segmento alcança</span>
+        <h3 style="color:var(--pos)">Suíte privativa para 7 hóspedes</h3>
+        <div class="marks">
+          <span class="mk yes">Banheiro privativo no quarto</span>
+          <span class="mk yes">Sete camas</span>
+          <span class="mk yes">Cozinha compartilhada</span>
+          <span class="mk no">Avaliações</span>
+        </div>
+        <p>Quarto exclusivo de grupo com banheiro no próprio quarto — <b>o formato mais padronizado da amostra</b>. Mesmo sem nenhuma avaliação, praticou <b>R$ 1.393 por noite</b> na alta temporada: o topo da faixa observada.</p>
+      </a>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>12</span></div>
+  </div>
+</section>
+
+<!-- 13 — O QUE O HÓSPEDE VALORIZA -->
+<section class="screen" data-slide="13">
+  <div class="wrap">
+    <div class="kicker">Resultado 05</div>
+    <h2>O que o hóspede realmente comenta</h2>
+    <p class="sub">Frequência de cada tema nas avaliações. <b>Os cinco primeiros são operação e endereço — nenhum é luxo.</b></p>
+
+    <div class="bars">
+      <div class="bar"><div class="top"><span class="lbl">Hospitalidade</span><span class="val">76%</span></div><div class="track"><div class="fill" style="--w:76%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Localização</span><span class="val">76%</span></div><div class="track"><div class="fill" style="--w:76%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Conforto</span><span class="val">76%</span></div><div class="track"><div class="fill" style="--w:76%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Praia</span><span class="val">71%</span></div><div class="track"><div class="fill" style="--w:71%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Limpeza</span><span class="val">71%</span></div><div class="track"><div class="fill" style="--w:71%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Arredores</span><span class="val">65%</span></div><div class="track"><div class="fill" style="--w:65%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Espaço interno</span><span class="val">65%</span></div><div class="track"><div class="fill" style="--w:65%"></div></div></div>
+      <div class="bar"><div class="top"><span class="lbl">Exatidão do anúncio</span><span class="val">65%</span></div><div class="track"><div class="fill" style="--w:65%"></div></div></div>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>13</span></div>
+  </div>
+</section>
+
+<!-- 14 — O QUE QUASE NÃO IMPORTA -->
+<section class="screen" data-slide="14">
+  <div class="wrap">
+    <div class="kicker">E o que ele quase não menciona</div>
+    <h2>Quatro temas que quase não aparecem</h2>
+
+    <div class="bars">
+      <div class="bar mute"><div class="top"><span class="lbl">Vista</span><span class="val">24%</span></div><div class="track"><div class="fill" style="--w:24%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Custo-benefício</span><span class="val">24%</span></div><div class="track"><div class="fill" style="--w:24%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Check-in</span><span class="val">24%</span></div><div class="track"><div class="fill" style="--w:24%"></div></div></div>
+      <div class="bar mute"><div class="top"><span class="lbl">Qualidade do sono</span><span class="val">18%</span></div><div class="track"><div class="fill" style="--w:18%"></div></div></div>
+    </div>
+
+    <div class="flag"><span><b>A leitura dos dois resultados juntos.</b> Hospitalidade, localização, conforto, praia e limpeza somam de 71% a 76% das menções. Vista e preço baixo ficam em 24%. <b>A nota se constrói em atendimento, endereço e operação</b> — não em ter vista para o mar nem em ser o mais barato.</span></div>
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>14</span></div>
+  </div>
+</section>
+
+<!-- 15 — FORMATOS -->
+<section class="screen" data-slide="15">
+  <div class="wrap">
+    <div class="kicker">Resultado 06</div>
+    <h2>Os formatos de aluguel na cidade</h2>
+    <p class="sub">Balneário Camboriú opera <b>cinco produtos distintos</b>, com públicos e dinâmicas que quase não se cruzam.</p>
+
+    <div class="fmts">
+      <div class="fmt">
+        <h4>Studio e loft compacto</h4>
+        <div class="row"><b>Onde:</b> Centro, Pioneiros, Terceira Avenida</div>
+        <div class="row"><b>Quem procura:</b> Corporativo e nômade digital</div>
+        <div class="row"><b>Dinâmica:</b> Giro rápido, 2 a 4 noites</div>
+      </div>
+      <div class="fmt">
+        <h4>Apartamento de alto padrão</h4>
+        <div class="row"><b>Onde:</b> Avenida Atlântica e quadra mar</div>
+        <div class="row"><b>Quem procura:</b> Famílias numerosas, Mercosul</div>
+        <div class="row"><b>Dinâmica:</b> Ticket alto, vacância no inverno</div>
+      </div>
+      <div class="fmt">
+        <h4>Casa e mansão</h4>
+        <div class="row"><b>Onde:</b> Praias agrestes, Estaleiro e Taquaras</div>
+        <div class="row"><b>Quem procura:</b> Eventos familiares e retiros</div>
+        <div class="row"><b>Dinâmica:</b> Feriados longos, margem alta</div>
+      </div>
+      <div class="fmt hi">
+        <h4>Quarto privativo</h4>
+        <div class="row"><b>Onde:</b> Barra Norte, Centro e Barra Sul</div>
+        <div class="row"><b>Quem procura:</b> Casais, famílias e grupos de 5–6</div>
+        <div class="row"><b>Dinâmica:</b> Preço por quarto, giro constante</div>
+      </div>
+      <div class="fmt">
+        <h4>Casa inteira para grupo</h4>
+        <div class="row"><b>Onde:</b> Centro</div>
+        <div class="row"><b>Quem procura:</b> Excursões, igrejas e formaturas</div>
+        <div class="row"><b>Dinâmica:</b> Reserva por grupo, casa fechada</div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <p class="sub" style="margin-top:0">Dentro do formato pesquisado, esta é a <b>composição da oferta por capacidade</b> — 117 observações com preço exibido:</p>
+      <div class="stack-bar">
+        <div class="stack-seg" style="width:55.6%;background:var(--ox)">56%</div>
+        <div class="stack-seg" style="width:28.2%;background:#8C3A24">28%</div>
+        <div class="stack-seg" style="width:16.2%;background:#B4703A">16%</div>
+      </div>
+      <div class="stack-key">
+        <span class="sk"><i style="background:var(--ox)"></i>Quarto para 2 hóspedes</span>
+        <span class="sk"><i style="background:#8C3A24"></i>Para 3 a 4 hóspedes</span>
+        <span class="sk"><i style="background:#B4703A"></i>Para 5 a 6 hóspedes</span>
+      </div>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>15</span></div>
+  </div>
+</section>
+
+<!-- 16 — O ALERTA DA FECHADURA -->
+<section class="screen" data-slide="16">
+  <div class="wrap">
+    <div class="kicker">O que dizem por aí × o que os anúncios mostram</div>
+    <h2>Fechadura digital: quase ninguém tem</h2>
+    <div class="mega">
+      <div class="v">1 / 17</div>
+      <div class="t">É só isso: <b>um anúncio em dezessete</b> tem fechadura digital ou teclado numérico. Costuma-se dizer que é item obrigatório para alugar bem — mas <b>os outros dezesseis alugam sem ela</b>.</div>
+    </div>
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>16</span></div>
+  </div>
+</section>
+
+<!-- 17 — CONCLUSÃO -->
+<section class="screen ox" data-slide="17">
+  <div class="wrap">
+    <div class="kicker">O que a pesquisa mostra</div>
+    <h2>Conclusão</h2>
+    <div class="list">
+      <div class="it"><div class="n">01</div><b>O mercado é maduro e a margem vem da operação</b><i>10.303 anúncios ativos na cidade e <b>45% de ocupação média</b>, segundo o AirDNA. Com até 40% do bruto consumido pela operação, não existe renda passiva fácil aqui.</i></div>
+      <div class="it"><div class="n">02</div><b>O que constrói reputação é o básico</b><i>Hospitalidade, localização, conforto, praia e limpeza somam de 71% a 76% das menções. Vista e preço baixo, 24%. Num anúncio com mais de 100 avaliações, as queixas recorrentes são chuveiro, lençol e limpeza — nenhuma sobre comodidade sofisticada.</i></div>
+      <div class="it"><div class="n">03</div><b>A oferta se concentra no quarto de casal</b><i>Mais da metade das observações com preço — 56% — são quartos para 2 hóspedes. Só <b>16% atendem grupos de 5 a 6 pessoas</b>, e nesse trecho a oferta mistura beliche, pousada e produto híbrido, sem padrão.</i></div>
+      <div class="it"><div class="n">04</div><b>Nem toda tendência se confirma nos dados</b><i>Fechadura digital é vendida como “essencial”, mas está em 1 de 17 anúncios. Já roupa de cama, que parece detalhe, é <b>padrão em 13 dos 17</b>.</i></div>
+    </div>
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>17</span></div>
+  </div>
+</section>
+
+<!-- 18 — A OPORTUNIDADE -->
+<section class="screen ox" data-slide="18">
+  <div class="wrap">
+    <div class="kicker">Onde está o espaço</div>
+    <h2>Cheio de quarto para casal. <em>Vazio</em> de quarto bom para grupo.</h2>
+
+    <div class="stats">
+      <div class="stat"><div class="k">Quarto para 2 hóspedes</div><div class="v">35</div><div class="d">observações na baixa temporada. Segmento líquido, comparável — e o mais disputado por preço.</div></div>
+      <div class="stat"><div class="k">Quarto para 5 a 6</div><div class="v">7</div><div class="d">concorrentes diretos na alta temporada. A busca por comparáveis não chegou a 20 por falta de oferta qualificada.</div></div>
+      <div class="stat"><div class="k">Diferença de preço/noite</div><div class="v">2,7×</div><div class="d">entre a mediana de 2 hóspedes e a de 5–6 na temporada regular.</div></div>
+    </div>
+
+    <div class="verdict">
+      <div class="q">A leitura para a Dona France</div>
+      <div class="a">O vácuo está no quarto padronizado para grupo — exatamente o produto que ela já sabe operar.</div>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>18</span></div>
+  </div>
+</section>
+
+<!-- 19 — APÊNDICE A · PERCENTIS -->
+<section class="screen" data-slide="19">
+  <div class="wrap">
+    <div class="kicker">Apêndice A</div>
+    <h2>Faixa de preço completa</h2>
+
+    <div class="season" style="margin-top:22px">
+      <div class="head">Baixa</div>
+      <div class="pcards">
+        <div class="pc"><div class="head"><span class="cap">2 hóspedes</span><span class="nn">n = 35</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 133</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 153</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 220</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 77</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">3–4 hóspedes</span><span class="nn">n = 10</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 244</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 315</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 567</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 79</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">5–6 hóspedes</span><span class="nn">n = 5</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 292</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 300</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 383</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 50</div></div></div></div>
+      </div>
+    </div>
+
+    <div class="season" style="margin-top:26px">
+      <div class="head">Regular</div>
+      <div class="pcards">
+        <div class="pc"><div class="head"><span class="cap">2 hóspedes</span><span class="nn">n = 16</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 156</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 187</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 261</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 94</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">3–4 hóspedes</span><span class="nn">n = 10</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 337</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 377</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 436</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 94</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">5–6 hóspedes</span><span class="nn">n = 6</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 344</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 511</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 641</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 85</div></div></div></div>
+      </div>
+    </div>
+
+    <div class="season hi" style="margin-top:26px">
+      <div class="head">Alta</div>
+      <div class="pcards">
+        <div class="pc"><div class="head"><span class="cap">2 hóspedes</span><span class="nn">n = 14</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 329</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 415</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 514</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 208</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">3–4 hóspedes</span><span class="nn">n = 13</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 542</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 657</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 905</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 164</div></div></div></div>
+        <div class="pc hi"><div class="head"><span class="cap">5–6 hóspedes</span><span class="nn">n = 7</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 351</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 731</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 1.172</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 122</div></div></div></div>
+      </div>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>19</span></div>
+  </div>
+</section>
+
+<!-- 20 — APÊNDICE B · OS 17 ANÚNCIOS -->
+<section class="screen" data-slide="20">
+  <div class="wrap">
+    <div class="kicker">Apêndice B</div>
+    <h2>Os 17 anúncios analisados um a um</h2>
+
+    <div class="linklist">
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1512557911593016682" target="_blank" rel="noopener"><span class="idx">01</span><b>I10 Suíte térrea, 500 m da praia</b><span class="u">airbnb.com.br/rooms/1512557911593016682</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/11416000" target="_blank" rel="noopener"><span class="idx">02</span><b>Quarto no AP da Ana</b><span class="u">airbnb.com.br/rooms/11416000</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/53812766" target="_blank" rel="noopener"><span class="idx">03</span><b>Quarto a 5 min da praia</b><span class="u">airbnb.com.br/rooms/53812766</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/39158820" target="_blank" rel="noopener"><span class="idx">04</span><b>Suíte privativa frente-mar</b><span class="u">airbnb.com.br/rooms/39158820</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1029147183769898672" target="_blank" rel="noopener"><span class="idx">05</span><b>Quarto pé na areia, 50 m</b><span class="u">airbnb.com.br/rooms/1029147183769898672</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1598732356547731395" target="_blank" rel="noopener"><span class="idx">06</span><b>Suíte 250 m + hidro + ar</b><span class="u">airbnb.com.br/rooms/1598732356547731395</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/45143664" target="_blank" rel="noopener"><span class="idx">07</span><b>Quarto a duas quadras</b><span class="u">airbnb.com.br/rooms/45143664</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1025551974363237815" target="_blank" rel="noopener"><span class="idx">08</span><b>Suíte pé na areia e café</b><span class="u">airbnb.com.br/rooms/1025551974363237815</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1567613902711705388" target="_blank" rel="noopener"><span class="idx">09</span><b>Suíte 2 com café da manhã</b><span class="u">airbnb.com.br/rooms/1567613902711705388</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1706095319687371829" target="_blank" rel="noopener"><span class="idx">10</span><b>Av. Brasil, 1 quadra</b><span class="u">airbnb.com.br/rooms/1706095319687371829</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1541235" target="_blank" rel="noopener"><span class="idx">11</span><b>Quarto para 4 pessoas</b><span class="u">airbnb.com.br/rooms/1541235</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1010077120172127817" target="_blank" rel="noopener"><span class="idx">12</span><b>Pousada Lugar Seguro, quádruplo</b><span class="u">airbnb.com.br/rooms/1010077120172127817</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1566281573311163154" target="_blank" rel="noopener"><span class="idx">13</span><b>Apartamento/suíte a 100 m</b><span class="u">airbnb.com.br/rooms/1566281573311163154</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1313110081182641170" target="_blank" rel="noopener"><span class="idx">14</span><b>2 quartos próximos à Roda Gigante</b><span class="u">airbnb.com.br/rooms/1313110081182641170</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1433344935585611615" target="_blank" rel="noopener"><span class="idx">15</span><b>Pousada Claudia</b><span class="u">airbnb.com.br/rooms/1433344935585611615</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1586361955842282637" target="_blank" rel="noopener"><span class="idx">16</span><b>Quarto privado, 200 m</b><span class="u">airbnb.com.br/rooms/1586361955842282637</span></a></div>
+      <div class="lnk"><a href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener"><span class="idx">17</span><b>Suíte privativa em pousada</b><span class="u">airbnb.com.br/rooms/1679167288976731383</span></a></div>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>20</span></div>
+  </div>
+</section>
+
+<!-- 21 — APÊNDICE C · FONTES DE DEMANDA -->
+<section class="screen" data-slide="21">
+  <div class="wrap">
+    <div class="kicker">Apêndice C</div>
+    <h2>Fontes de demanda e seus limites</h2>
+
+    <div class="srcs">
+      <div class="src">
+        <h4><a href="https://trends.google.com/trends/" target="_blank" rel="noopener">Google Trends</a></h4>
+        <div class="row"><b>Fornece:</b> Sazonalidade da procura e mix de termos</div>
+        <div class="row"><b>Natureza:</b> Índice 0–100</div>
+        <div class="row"><b>Limite:</b> Não fornece busca absoluta. Zero significa volume abaixo do limiar, não ausência de demanda</div>
+      </div>
+      <div class="src">
+        <h4><a href="https://www.airdna.co/vacation-rental-data/app/br/santa-catarina/balneario-camboriu/overview" target="_blank" rel="noopener">AirDNA</a></h4>
+        <div class="row"><b>Fornece:</b> Anúncios ativos, ocupação, ADR e RevPAR</div>
+        <div class="row"><b>Natureza:</b> Estimativa de plataforma</div>
+        <div class="row"><b>Limite:</b> Modelo proprietário. Cobre a cidade inteira e todos os tipos, não a faixa de 1 km</div>
+      </div>
+      <div class="src">
+        <h4><a href="https://www.secturbc.com.br/turismo/pt-br/noticia/balneario-camboriu-tem-ocupacao-hoteleira-perto-dos-90perc-para-o-feriadao" target="_blank" rel="noopener">Secretaria de Turismo de BC</a></h4>
+        <div class="row"><b>Fornece:</b> Ocupação em feriados e público de eventos</div>
+        <div class="row"><b>Natureza:</b> Oficial observado</div>
+        <div class="row"><b>Limite:</b> Mede hotelaria, não locação por temporada</div>
+      </div>
+    </div>
+
+    <div class="foot"><span>Casa de Excursão Dona France</span><span>21</span></div>
+  </div>
+</section>
+
+</main>
+
+<div class="endnote">
+  <div class="brand">Casa de Excursão Dona France · Preços apurados - Julho de 2026</div>
+  <a href="index.html?desktop=1">Ver versão para computador →</a>
+</div>
+
+<script>
+  // Atualiza o contador de tela e a barra de progresso conforme o scroll
+  (function() {
+    var sections = document.querySelectorAll('.screen[data-slide]');
+    var counter = document.getElementById('curr');
+    var progress = document.getElementById('progress');
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var midpoint = window.scrollY + window.innerHeight * 0.3;
+      var active = sections[0];
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].offsetTop <= midpoint) active = sections[i];
+        else break;
+      }
+      counter.textContent = active.dataset.slide;
+      var doc = document.documentElement;
+      var max = (doc.scrollHeight - window.innerHeight) || 1;
+      var pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+      progress.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  })();
+</script>
+
+</body>
+</html>
