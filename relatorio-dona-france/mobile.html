@@ -124,8 +124,8 @@ h2 em{font-style:normal;color:var(--ox)}
    BLOCOS DE PREÇO POR TEMPORADA (substitui .matrix do desktop)
    --------------------------------------------------------------------- */
 .season{margin-top:24px}
-.season+.season{margin-top:20px}
-.season .head{font-family:var(--f-mono);font-size:13.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ox);padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.season+.season{margin-top:42px}
+.season .head{font-family:var(--f-display);font-weight:800;font-size:23px;letter-spacing:-.015em;color:var(--ox);padding-bottom:11px;border-bottom:2px solid var(--ox)}
 .season.hi .head{color:var(--ox)}
 .season .row{display:flex;justify-content:space-between;align-items:baseline;padding:13px 0;border-bottom:1px dashed var(--line)}
 .season .row .cap{font-size:16.5px;color:var(--ink-soft)}
@@ -136,8 +136,8 @@ h2 em{font-style:normal;color:var(--ox)}
 .season .row.range .note{font-size:14.5px;color:var(--ink-soft)}
 
 /* tira de destaque — Réveillon */
-.strip{margin-top:22px;border-top:2px solid var(--ox);padding-top:16px}
-.strip .l{font-family:var(--f-mono);font-size:13.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ox)}
+.strip{margin-top:38px;border-top:2px solid var(--ox);padding-top:18px}
+.strip .l{font-family:var(--f-display);font-weight:800;font-size:23px;letter-spacing:-.015em;color:var(--ox)}
 .strip .vals{margin-top:10px;display:flex;gap:28px;flex-wrap:wrap}
 .strip .vals b{font-family:var(--f-display);font-weight:800;font-size:28px;color:var(--ox);font-variant-numeric:tabular-nums}
 .strip .vals span{display:block;font-size:14.5px;color:var(--ink-faint);margin-top:2px}
@@ -166,7 +166,7 @@ h2 em{font-style:normal;color:var(--ox)}
    --------------------------------------------------------------------- */
 .cmp{margin-top:22px;display:flex;flex-direction:column;gap:14px}
 .cmp-row{border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-.cmp-row .lbl{font-size:15.5px;color:var(--ink-soft);margin-bottom:13px}
+.cmp-row .lbl{font-family:var(--f-display);font-weight:800;font-size:19px;letter-spacing:-.01em;color:var(--ox);margin-bottom:15px}
 .cmp-row .nums{display:flex;justify-content:space-between;gap:10px}
 .cmp-row .num{display:flex;flex-direction:column;align-items:center;flex:1}
 .cmp-row .num .k{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
@@ -218,11 +218,10 @@ h2 em{font-style:normal;color:var(--ox)}
 /* ---------------------------------------------------------------------
    FORMATOS — lista com marcador lateral
    --------------------------------------------------------------------- */
-.fmts{margin-top:22px;display:flex;flex-direction:column;gap:16px}
+.fmts{margin-top:22px;display:flex;flex-direction:column;gap:30px}
 .fmt{border-left:3px solid var(--line);padding-left:14px}
 .fmt.hi{border-left-color:var(--ox)}
-.fmt h4{margin:0;font-family:var(--f-display);font-weight:700;font-size:19px;color:var(--ink)}
-.fmt.hi h4{color:var(--ox)}
+.fmt h4{margin:0;font-family:var(--f-display);font-weight:700;font-size:21px;color:var(--ox)}
 .fmt .row{margin-top:9px;font-size:15px;line-height:1.52;color:var(--ink-soft)}
 .fmt .row b{color:var(--ink-faint);font-weight:600}
 
@@ -275,8 +274,9 @@ h2 em{font-style:normal;color:var(--ox)}
 .pc .quad{margin-top:11px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 /* em telas muito estreitas, 4 colunas espremem valores como "R$ 1.172" — usa 2x2 */
 @media (max-width:400px){.pc .quad{grid-template-columns:repeat(2,1fr);row-gap:12px}}
-.pc .q .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint)}
-.pc .q .v{margin-top:4px;font-family:var(--f-display);font-weight:700;font-size:16.5px;color:var(--ink)}
+.pc .q .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint)}
+.pc .q .v{margin-top:5px;font-family:var(--f-display);font-weight:800;font-size:19.5px;color:var(--ink)}
+.pc .q.lead .v{color:var(--ox)}
 .pc.hi .q .v{color:var(--ox)}
 .pc .note{margin-top:9px;font-size:14px;color:var(--ink-soft)}
 
@@ -318,7 +318,7 @@ h2 em{font-style:normal;color:var(--ox)}
 <section class="screen ox" data-slide="01">
   <div class="wrap">
     <div class="kicker" style="margin-top:0">Locação por quarto · Balneário Camboriú</div>
-    <h1>Pesquisa de mercado de <em>quartos</em> em BC</h1>
+    <h1>Pesquisa de mercado de <em>quartos</em> em BC — Airbnb</h1>
     <p class="standfirst">Preço, infraestrutura, concorrência e tendências da oferta de quartos privativos até 1&nbsp;km da Praia Central.</p>
     <div class="stats">
       <div class="stat"><div class="k">Anúncios únicos</div><div class="v">122</div></div>
@@ -740,28 +740,35 @@ h2 em{font-style:normal;color:var(--ox)}
     <div class="season" style="margin-top:22px">
       <div class="head">Baixa</div>
       <div class="pcards">
-        <div class="pc"><div class="head"><span class="cap">2 hóspedes</span><span class="nn">n = 35</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 133</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 153</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 220</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 77</div></div></div></div>
-        <div class="pc"><div class="head"><span class="cap">3–4 hóspedes</span><span class="nn">n = 10</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 244</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 315</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 567</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 79</div></div></div></div>
-        <div class="pc"><div class="head"><span class="cap">5–6 hóspedes</span><span class="nn">n = 5</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 292</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 300</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 383</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 50</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">2 hóspedes</span><span class="nn">n = 35</span></div><div class="quad"><div class="q lead"><div class="k">Mediana</div><div class="v">R$ 153</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 77</div></div><div class="q"><div class="k">P25</div><div class="v">R$ 133</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 220</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">3–4 hóspedes</span><span class="nn">n = 10</span></div><div class="quad"><div class="q lead"><div class="k">Mediana</div><div class="v">R$ 315</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 79</div></div><div class="q"><div class="k">P25</div><div class="v">R$ 244</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 567</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">5–6 hóspedes</span><span class="nn">n = 5</span></div><div class="quad"><div class="q lead"><div class="k">Mediana</div><div class="v">R$ 300</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 50</div></div><div class="q"><div class="k">P25</div><div class="v">R$ 292</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 383</div></div></div></div>
       </div>
     </div>
 
     <div class="season" style="margin-top:26px">
       <div class="head">Regular</div>
       <div class="pcards">
-        <div class="pc"><div class="head"><span class="cap">2 hóspedes</span><span class="nn">n = 16</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 156</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 187</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 261</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 94</div></div></div></div>
-        <div class="pc"><div class="head"><span class="cap">3–4 hóspedes</span><span class="nn">n = 10</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 337</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 377</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 436</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 94</div></div></div></div>
-        <div class="pc"><div class="head"><span class="cap">5–6 hóspedes</span><span class="nn">n = 6</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 344</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 511</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 641</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 85</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">2 hóspedes</span><span class="nn">n = 16</span></div><div class="quad"><div class="q lead"><div class="k">Mediana</div><div class="v">R$ 187</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 94</div></div><div class="q"><div class="k">P25</div><div class="v">R$ 156</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 261</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">3–4 hóspedes</span><span class="nn">n = 10</span></div><div class="quad"><div class="q lead"><div class="k">Mediana</div><div class="v">R$ 377</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 94</div></div><div class="q"><div class="k">P25</div><div class="v">R$ 337</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 436</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">5–6 hóspedes</span><span class="nn">n = 6</span></div><div class="quad"><div class="q lead"><div class="k">Mediana</div><div class="v">R$ 511</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 85</div></div><div class="q"><div class="k">P25</div><div class="v">R$ 344</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 641</div></div></div></div>
       </div>
     </div>
 
     <div class="season hi" style="margin-top:26px">
       <div class="head">Alta</div>
       <div class="pcards">
-        <div class="pc"><div class="head"><span class="cap">2 hóspedes</span><span class="nn">n = 14</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 329</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 415</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 514</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 208</div></div></div></div>
-        <div class="pc"><div class="head"><span class="cap">3–4 hóspedes</span><span class="nn">n = 13</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 542</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 657</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 905</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 164</div></div></div></div>
-        <div class="pc hi"><div class="head"><span class="cap">5–6 hóspedes</span><span class="nn">n = 7</span></div><div class="quad"><div class="q"><div class="k">P25</div><div class="v">R$ 351</div></div><div class="q"><div class="k">Mediana</div><div class="v">R$ 731</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 1.172</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 122</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">2 hóspedes</span><span class="nn">n = 14</span></div><div class="quad"><div class="q lead"><div class="k">Mediana</div><div class="v">R$ 415</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 208</div></div><div class="q"><div class="k">P25</div><div class="v">R$ 329</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 514</div></div></div></div>
+        <div class="pc"><div class="head"><span class="cap">3–4 hóspedes</span><span class="nn">n = 13</span></div><div class="quad"><div class="q lead"><div class="k">Mediana</div><div class="v">R$ 657</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 164</div></div><div class="q"><div class="k">P25</div><div class="v">R$ 542</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 905</div></div></div></div>
+        <div class="pc hi"><div class="head"><span class="cap">5–6 hóspedes</span><span class="nn">n = 7</span></div><div class="quad"><div class="q lead"><div class="k">Mediana</div><div class="v">R$ 731</div></div><div class="q"><div class="k">Hóspede</div><div class="v">R$ 122</div></div><div class="q"><div class="k">P25</div><div class="v">R$ 351</div></div><div class="q"><div class="k">P75</div><div class="v">R$ 1.172</div></div></div></div>
       </div>
+    </div>
+
+    <div class="kicker" style="margin-top:36px">Glossário</div>
+    <div class="spec" style="margin-top:12px">
+      <div class="sp"><b>Mediana</b><span>O valor central da amostra — metade dos anúncios custa mais, metade custa menos.</span></div>
+      <div class="sp"><b>P25</b><span>25% dos anúncios custam menos que este valor — é o piso da faixa.</span></div>
+      <div class="sp"><b>P75</b><span>75% dos anúncios custam menos que este valor — é o teto da faixa.</span></div>
     </div>
   </div>
 </section>
