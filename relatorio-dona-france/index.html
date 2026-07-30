@@ -260,18 +260,15 @@ h2{
 .cards.hero .card p{font-size:23px;margin-top:20px}
 
 /* variante de três cartões: escala reduzida para caber lado a lado */
-.cards.trio .card{padding:30px 32px}
+.cards.trio .card{padding:24px 30px}
 .cards.trio .card .num{font-size:13.5px;letter-spacing:.14em;margin-bottom:14px}
 .cards.trio .card h3{font-size:34px;line-height:1.14;padding-right:52px}
-.cards.trio .card p{font-size:20px;margin-top:18px;line-height:1.46}
-.cards.trio .marks{margin-top:18px;gap:8px}
-.cards.trio .mk{font-size:16px;padding:8px 12px 8px 10px}
+.cards.trio .card p{font-size:20px;margin-top:12px;line-height:1.46}
+.cards.trio .marks{margin-top:12px;gap:8px}
+.cards.trio .mk{font-size:16px;padding:6px 12px 6px 10px}
 .cards.trio .mk::before{width:20px;height:20px;font-size:12px}
 .cards.trio a.card .go{width:36px;height:36px;line-height:32px;font-size:18px;top:22px;right:24px}
-.cards.trio .card .head-row{display:flex;gap:18px;align-items:flex-start}
-.cards.trio .card .head-row img{width:100px;height:100px;object-fit:cover;border-radius:6px;flex:0 0 auto;border:1px solid var(--hair-light)}
-.cards.trio .card .head-row .head-text{flex:1;min-width:0}
-.cards.trio .card .head-row .num{margin-bottom:8px}
+.cards.trio .card .cover{display:block;margin:-24px -30px 14px;width:calc(100% + 60px);max-width:none;max-height:none;height:86px;object-fit:cover}
 
 /* ficha técnica — o recorte da pesquisa, em escala de leitura */
 .spec{margin-top:34px;display:flex;flex-direction:column;position:relative;z-index:2}
@@ -296,6 +293,8 @@ h2{
 .tbl a{color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(90,22,11,.35);padding-bottom:2px}
 .tbl a:hover{color:var(--ox);border-bottom-color:var(--ox)}
 /* ícone de link em destaque, no vermelho da identidade */
+.tbl .thumb-row{display:flex;align-items:center;gap:14px}
+.tbl .thumb-row img{width:46px;height:26px;object-fit:cover;border-radius:4px;flex:0 0 auto}
 .tbl a::after{
   content:"↗";display:inline-block;margin-left:11px;vertical-align:middle;
   width:28px;height:28px;line-height:25px;text-align:center;
@@ -355,9 +354,9 @@ a.card h3{padding-right:64px}
 
 /* --- lista de links do apêndice --- */
 .links{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:0 60px;position:relative;z-index:2}
-.lk{display:grid;grid-template-columns:38px 42px 1fr;gap:14px;padding:10px 0;border-bottom:1px solid rgba(36,26,22,.08);align-items:center}
-.lk .i{font-family:var(--f-mono);font-size:14px;font-weight:600;color:var(--ox)}
-.lk img{width:42px;height:42px;object-fit:cover;border-radius:5px}
+.lk{display:grid;grid-template-columns:38px 196px 1fr;gap:14px;padding:10px 0;border-bottom:1px solid rgba(36,26,22,.08);align-items:flex-start}
+.lk .i{font-family:var(--f-mono);font-size:14px;font-weight:600;color:var(--ox);padding-top:4px}
+.lk img{width:196px;height:110px;object-fit:cover;border-radius:6px}
 /* o bloco inteiro é clicável: título e URL */
 .lk a{display:block;text-decoration:none;color:inherit}
 .lk a b{display:block;font-size:20px;font-weight:600;color:var(--ink);line-height:1.25;transition:color .2s}
@@ -581,15 +580,15 @@ a.card h3{padding-right:64px}
   <table class="tbl reveal">
     <thead><tr><th class="l">Anúncio</th><th>Cap.</th><th class="l">Distância</th><th>R$/noite</th><th class="l">Nota</th><th class="l">Banheiro</th></tr></thead>
     <tbody>
-      <tr><td class="l"><a href="https://www.airbnb.com.br/rooms/1512557911593016682" target="_blank" rel="noopener">I10 Suíte térrea</a></td><td>2</td><td class="l sm">500 m</td><td class="med">R$ 110</td><td class="l sm">4,91 · 34</td><td class="l sm">Privativo</td></tr>
-      <tr><td class="l"><a href="https://www.airbnb.com.br/rooms/1029147183769898672" target="_blank" rel="noopener">Quarto pé na areia</a></td><td>2</td><td class="l sm">50 m</td><td class="med">R$ 142</td><td class="l sm">4,94 · 33</td><td class="l sm" style="color:var(--neg)">Compartilhado</td></tr>
-      <tr><td class="l"><a href="https://www.airbnb.com.br/rooms/1567613902711705388" target="_blank" rel="noopener">Suíte 2 com café da manhã</a></td><td>2</td><td class="l sm">2 min a pé</td><td class="med">R$ 144</td><td class="l sm">4,97 · 29</td><td class="l sm">Privativo</td></tr>
-      <tr><td class="l"><a href="https://www.airbnb.com.br/rooms/53812766" target="_blank" rel="noopener">Quarto a 5 min da praia</a></td><td>2</td><td class="l sm">≈ 300 m</td><td class="med">R$ 186</td><td class="l sm">4,90 · 96</td><td class="l sm" style="color:var(--neg)">Compartilhado</td></tr>
-      <tr><td class="l"><a href="https://www.airbnb.com.br/rooms/11416000" target="_blank" rel="noopener">Quarto no AP da Ana</a></td><td>2</td><td class="l sm">400–500 m</td><td class="med">R$ 198</td><td class="l sm" style="font-weight:600">4,99 · 291</td><td class="l sm">Privativo</td></tr>
-      <tr><td class="l"><a href="https://www.airbnb.com.br/rooms/39158820" target="_blank" rel="noopener">Suíte privativa frente-mar</a></td><td>2</td><td class="l sm">Frente-mar</td><td class="med">R$ 248</td><td class="l sm" style="font-weight:600">4,99 · 91</td><td class="l sm">Privativo</td></tr>
-      <tr><td class="l"><a href="https://www.airbnb.com.br/rooms/1598732356547731395" target="_blank" rel="noopener">Suíte 250 m com hidro</a></td><td>2</td><td class="l sm">250 m</td><td class="med">R$ 267</td><td class="l sm">Novo</td><td class="l sm">Privativo</td></tr>
-      <tr><td class="l"><a href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener">Suíte privativa em pousada</a></td><td>6–8</td><td class="l sm">Provável</td><td class="med">R$ 209</td><td class="l sm">Novo</td><td class="l sm">Privativo</td></tr>
-      <tr><td class="l"><a href="https://www.airbnb.com.br/rooms/1313110081182641170" target="_blank" rel="noopener">2 quartos na Roda Gigante</a></td><td>4</td><td class="l sm">Barra Norte</td><td class="med">R$ 290</td><td class="l sm">5,00 · 5</td><td class="l sm">Demissuíte</td></tr>
+      <tr><td class="l"><div class="thumb-row"><img src="assets/anuncios/1512557911593016682.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1512557911593016682" target="_blank" rel="noopener">I10 Suíte térrea</a></div></td><td>2</td><td class="l sm">500 m</td><td class="med">R$ 110</td><td class="l sm">4,91 · 34</td><td class="l sm">Privativo</td></tr>
+      <tr><td class="l"><div class="thumb-row"><img src="assets/anuncios/1029147183769898672.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1029147183769898672" target="_blank" rel="noopener">Quarto pé na areia</a></div></td><td>2</td><td class="l sm">50 m</td><td class="med">R$ 142</td><td class="l sm">4,94 · 33</td><td class="l sm" style="color:var(--neg)">Compartilhado</td></tr>
+      <tr><td class="l"><div class="thumb-row"><img src="assets/anuncios/1567613902711705388.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1567613902711705388" target="_blank" rel="noopener">Suíte 2 com café da manhã</a></div></td><td>2</td><td class="l sm">2 min a pé</td><td class="med">R$ 144</td><td class="l sm">4,97 · 29</td><td class="l sm">Privativo</td></tr>
+      <tr><td class="l"><div class="thumb-row"><img src="assets/anuncios/53812766.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/53812766" target="_blank" rel="noopener">Quarto a 5 min da praia</a></div></td><td>2</td><td class="l sm">≈ 300 m</td><td class="med">R$ 186</td><td class="l sm">4,90 · 96</td><td class="l sm" style="color:var(--neg)">Compartilhado</td></tr>
+      <tr><td class="l"><div class="thumb-row"><img src="assets/anuncios/11416000.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/11416000" target="_blank" rel="noopener">Quarto no AP da Ana</a></div></td><td>2</td><td class="l sm">400–500 m</td><td class="med">R$ 198</td><td class="l sm" style="font-weight:600">4,99 · 291</td><td class="l sm">Privativo</td></tr>
+      <tr><td class="l"><div class="thumb-row"><img src="assets/anuncios/39158820.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/39158820" target="_blank" rel="noopener">Suíte privativa frente-mar</a></div></td><td>2</td><td class="l sm">Frente-mar</td><td class="med">R$ 248</td><td class="l sm" style="font-weight:600">4,99 · 91</td><td class="l sm">Privativo</td></tr>
+      <tr><td class="l"><div class="thumb-row"><img src="assets/anuncios/1598732356547731395.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1598732356547731395" target="_blank" rel="noopener">Suíte 250 m com hidro</a></div></td><td>2</td><td class="l sm">250 m</td><td class="med">R$ 267</td><td class="l sm">Novo</td><td class="l sm">Privativo</td></tr>
+      <tr><td class="l"><div class="thumb-row"><img src="assets/anuncios/1679167288976731383.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener">Suíte privativa em pousada</a></div></td><td>6–8</td><td class="l sm">Provável</td><td class="med">R$ 209</td><td class="l sm">Novo</td><td class="l sm">Privativo</td></tr>
+      <tr><td class="l"><div class="thumb-row"><img src="assets/anuncios/1313110081182641170.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1313110081182641170" target="_blank" rel="noopener">2 quartos na Roda Gigante</a></div></td><td>4</td><td class="l sm">Barra Norte</td><td class="med">R$ 290</td><td class="l sm">5,00 · 5</td><td class="l sm">Demissuíte</td></tr>
     </tbody>
   </table>
 
@@ -606,14 +605,10 @@ a.card h3{padding-right:64px}
 
   <div class="cards c3 trio reveal" style="margin-top:auto;margin-bottom:auto">
     <a class="card" href="https://www.airbnb.com.br/rooms/1586361955842282637" target="_blank" rel="noopener">
+      <img class="cover" src="assets/anuncios/1586361955842282637.jpg" alt="">
       <span class="go">↗</span>
-      <div class="head-row">
-        <img src="assets/anuncios/1586361955842282637.jpg" alt="">
-        <div class="head-text">
-          <span class="num">Caso 01 · a maior capacidade da amostra</span>
-          <h3>Quarto para até 8 hóspedes, a 200 m</h3>
-        </div>
-      </div>
+      <span class="num">Caso 01 · a maior capacidade da amostra</span>
+      <h3>Quarto para até 8 hóspedes, a 200 m</h3>
       <div class="marks">
         <span class="mk yes">Teclado numérico</span>
         <span class="mk yes">Cozinha completa</span>
@@ -626,14 +621,10 @@ a.card h3{padding-right:64px}
       <p>Cabe mais gente que qualquer outro da amostra, mas <b style="color:var(--neg)">o hóspede leva roupa de cama, travesseiro e toalha</b> — e não há ar-condicionado. Segue sem avaliações, embora a anfitriã mantenha outros anúncios na plataforma.</p>
     </a>
     <a class="card" href="https://www.airbnb.com.br/rooms/1433344935585611615" target="_blank" rel="noopener">
+      <img class="cover" src="assets/anuncios/1433344935585611615.jpg" alt="">
       <span class="go">↗</span>
-      <div class="head-row">
-        <img src="assets/anuncios/1433344935585611615.jpg" alt="">
-        <div class="head-text">
-          <span class="num">Caso 02 · onde as reclamações se concentram</span>
-          <h3>Pousada Claudia, com mais de 100 avaliações</h3>
-        </div>
-      </div>
+      <span class="num">Caso 02 · onde as reclamações se concentram</span>
+      <h3>Pousada Claudia, com mais de 100 avaliações</h3>
       <div class="marks">
         <span class="mk no">Chuveiro</span>
         <span class="mk no">Qualidade do lençol</span>
@@ -642,14 +633,10 @@ a.card h3{padding-right:64px}
       <p>Um anúncio consolidado, e as queixas recorrentes se concentram em <b>três pontos básicos</b> — nenhum deles comodidade sofisticada. Houve ainda uma reclamação de garagem causada por <b>erro de configuração do próprio anúncio</b>: informação errada também custa nota.</p>
     </a>
     <a class="card" href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener" style="border-top-color:var(--pos)">
+      <img class="cover" src="assets/anuncios/1679167288976731383.jpg" alt="">
       <span class="go">↗</span>
-      <div class="head-row">
-        <img src="assets/anuncios/1679167288976731383.jpg" alt="">
-        <div class="head-text">
-          <span class="num" style="color:var(--pos)">Caso 03 · o padrão que o segmento alcança</span>
-          <h3 style="color:var(--pos)">Suíte privativa para 7 hóspedes</h3>
-        </div>
-      </div>
+      <span class="num" style="color:var(--pos)">Caso 03 · o padrão que o segmento alcança</span>
+      <h3 style="color:var(--pos)">Suíte privativa para 7 hóspedes</h3>
       <div class="marks">
         <span class="mk yes">Banheiro privativo no quarto</span>
         <span class="mk yes">Sete camas</span>
@@ -926,43 +913,57 @@ a.card h3{padding-right:64px}
 
   <div class="foot reveal"><span>Casa de Excursão Dona France</span><span>Preços apurados - Julho de 2026</span><span>19</span></div>
 </section>
-<!-- ==================== 20 · APÊNDICE B · OS 17 ANÚNCIOS ==================== -->
+<!-- ==================== 20 · APÊNDICE B (1/2) · OS 17 ANÚNCIOS ==================== -->
 <section class="slide s-bone">
   <div class="rail reveal">
     <img src="assets/logo-vinho.svg" alt="Dona France">
     <span class="rail-meta">Apêndice B &nbsp;·&nbsp; 20</span>
   </div>
-  <div class="kicker reveal">Apêndice B</div>
+  <div class="kicker reveal">Apêndice B · 1 de 2</div>
   <h2 class="reveal">Os 17 anúncios analisados um a um</h2>
 
   <div class="links reveal">
     <div class="lk"><span class="i">01</span><img src="assets/anuncios/1512557911593016682.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1512557911593016682" target="_blank" rel="noopener"><b>I10 Suíte térrea, 500 m da praia</b><span class="u">airbnb.com.br/rooms/1512557911593016682</span></a></div>
-    <div class="lk"><span class="i">10</span><img src="assets/anuncios/1706095319687371829.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1706095319687371829" target="_blank" rel="noopener"><b>Av. Brasil, 1 quadra</b><span class="u">airbnb.com.br/rooms/1706095319687371829</span></a></div>
     <div class="lk"><span class="i">02</span><img src="assets/anuncios/11416000.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/11416000" target="_blank" rel="noopener"><b>Quarto no AP da Ana</b><span class="u">airbnb.com.br/rooms/11416000</span></a></div>
-    <div class="lk"><span class="i">11</span><img src="assets/anuncios/1541235.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1541235" target="_blank" rel="noopener"><b>Quarto para 4 pessoas</b><span class="u">airbnb.com.br/rooms/1541235</span></a></div>
     <div class="lk"><span class="i">03</span><img src="assets/anuncios/53812766.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/53812766" target="_blank" rel="noopener"><b>Quarto a 5 min da praia</b><span class="u">airbnb.com.br/rooms/53812766</span></a></div>
-    <div class="lk"><span class="i">12</span><img src="assets/anuncios/1010077120172127817.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1010077120172127817" target="_blank" rel="noopener"><b>Pousada Lugar Seguro, quádruplo</b><span class="u">airbnb.com.br/rooms/1010077120172127817</span></a></div>
     <div class="lk"><span class="i">04</span><img src="assets/anuncios/39158820.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/39158820" target="_blank" rel="noopener"><b>Suíte privativa frente-mar</b><span class="u">airbnb.com.br/rooms/39158820</span></a></div>
-    <div class="lk"><span class="i">13</span><img src="assets/anuncios/1566281573311163154.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1566281573311163154" target="_blank" rel="noopener"><b>Apartamento/suíte a 100 m</b><span class="u">airbnb.com.br/rooms/1566281573311163154</span></a></div>
     <div class="lk"><span class="i">05</span><img src="assets/anuncios/1029147183769898672.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1029147183769898672" target="_blank" rel="noopener"><b>Quarto pé na areia, 50 m</b><span class="u">airbnb.com.br/rooms/1029147183769898672</span></a></div>
-    <div class="lk"><span class="i">14</span><img src="assets/anuncios/1313110081182641170.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1313110081182641170" target="_blank" rel="noopener"><b>2 quartos próximos à Roda Gigante</b><span class="u">airbnb.com.br/rooms/1313110081182641170</span></a></div>
     <div class="lk"><span class="i">06</span><img src="assets/anuncios/1598732356547731395.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1598732356547731395" target="_blank" rel="noopener"><b>Suíte 250 m + hidro + ar</b><span class="u">airbnb.com.br/rooms/1598732356547731395</span></a></div>
-    <div class="lk"><span class="i">15</span><img src="assets/anuncios/1433344935585611615.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1433344935585611615" target="_blank" rel="noopener"><b>Pousada Claudia</b><span class="u">airbnb.com.br/rooms/1433344935585611615</span></a></div>
     <div class="lk"><span class="i">07</span><img src="assets/anuncios/45143664.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/45143664" target="_blank" rel="noopener"><b>Quarto a duas quadras</b><span class="u">airbnb.com.br/rooms/45143664</span></a></div>
-    <div class="lk"><span class="i">16</span><img src="assets/anuncios/1586361955842282637.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1586361955842282637" target="_blank" rel="noopener"><b>Quarto privado, 200 m</b><span class="u">airbnb.com.br/rooms/1586361955842282637</span></a></div>
     <div class="lk"><span class="i">08</span><img src="assets/anuncios/1025551974363237815.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1025551974363237815" target="_blank" rel="noopener"><b>Suíte pé na areia e café</b><span class="u">airbnb.com.br/rooms/1025551974363237815</span></a></div>
-    <div class="lk"><span class="i">17</span><img src="assets/anuncios/1679167288976731383.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener"><b>Suíte privativa em pousada</b><span class="u">airbnb.com.br/rooms/1679167288976731383</span></a></div>
     <div class="lk"><span class="i">09</span><img src="assets/anuncios/1567613902711705388.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1567613902711705388" target="_blank" rel="noopener"><b>Suíte 2 com café da manhã</b><span class="u">airbnb.com.br/rooms/1567613902711705388</span></a></div>
     <div class="lk"></div>
   </div>
 
   <div class="foot reveal"><span>Casa de Excursão Dona France</span><span>Preços apurados - Julho de 2026</span><span>20</span></div>
 </section>
-<!-- ==================== 21 · APÊNDICE C · FONTES DE DEMANDA ==================== -->
+<!-- ==================== 21 · APÊNDICE B (2/2) · OS 17 ANÚNCIOS ==================== -->
 <section class="slide s-bone">
   <div class="rail reveal">
     <img src="assets/logo-vinho.svg" alt="Dona France">
-    <span class="rail-meta">Apêndice C &nbsp;·&nbsp; 21</span>
+    <span class="rail-meta">Apêndice B &nbsp;·&nbsp; 21</span>
+  </div>
+  <div class="kicker reveal">Apêndice B · 2 de 2</div>
+  <h2 class="reveal">Os 17 anúncios analisados um a um</h2>
+
+  <div class="links reveal">
+    <div class="lk"><span class="i">10</span><img src="assets/anuncios/1706095319687371829.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1706095319687371829" target="_blank" rel="noopener"><b>Av. Brasil, 1 quadra</b><span class="u">airbnb.com.br/rooms/1706095319687371829</span></a></div>
+    <div class="lk"><span class="i">11</span><img src="assets/anuncios/1541235.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1541235" target="_blank" rel="noopener"><b>Quarto para 4 pessoas</b><span class="u">airbnb.com.br/rooms/1541235</span></a></div>
+    <div class="lk"><span class="i">12</span><img src="assets/anuncios/1010077120172127817.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1010077120172127817" target="_blank" rel="noopener"><b>Pousada Lugar Seguro, quádruplo</b><span class="u">airbnb.com.br/rooms/1010077120172127817</span></a></div>
+    <div class="lk"><span class="i">13</span><img src="assets/anuncios/1566281573311163154.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1566281573311163154" target="_blank" rel="noopener"><b>Apartamento/suíte a 100 m</b><span class="u">airbnb.com.br/rooms/1566281573311163154</span></a></div>
+    <div class="lk"><span class="i">14</span><img src="assets/anuncios/1313110081182641170.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1313110081182641170" target="_blank" rel="noopener"><b>2 quartos próximos à Roda Gigante</b><span class="u">airbnb.com.br/rooms/1313110081182641170</span></a></div>
+    <div class="lk"><span class="i">15</span><img src="assets/anuncios/1433344935585611615.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1433344935585611615" target="_blank" rel="noopener"><b>Pousada Claudia</b><span class="u">airbnb.com.br/rooms/1433344935585611615</span></a></div>
+    <div class="lk"><span class="i">16</span><img src="assets/anuncios/1586361955842282637.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1586361955842282637" target="_blank" rel="noopener"><b>Quarto privado, 200 m</b><span class="u">airbnb.com.br/rooms/1586361955842282637</span></a></div>
+    <div class="lk"><span class="i">17</span><img src="assets/anuncios/1679167288976731383.jpg" alt=""><a href="https://www.airbnb.com.br/rooms/1679167288976731383" target="_blank" rel="noopener"><b>Suíte privativa em pousada</b><span class="u">airbnb.com.br/rooms/1679167288976731383</span></a></div>
+  </div>
+
+  <div class="foot reveal"><span>Casa de Excursão Dona France</span><span>Preços apurados - Julho de 2026</span><span>21</span></div>
+</section>
+<!-- ==================== 22 · APÊNDICE C · FONTES DE DEMANDA ==================== -->
+<section class="slide s-bone">
+  <div class="rail reveal">
+    <img src="assets/logo-vinho.svg" alt="Dona France">
+    <span class="rail-meta">Apêndice C &nbsp;·&nbsp; 22</span>
   </div>
   <div class="kicker reveal">Apêndice C</div>
   <h2 class="reveal">Fontes de demanda e seus limites</h2>
@@ -991,14 +992,14 @@ a.card h3{padding-right:64px}
     </tbody>
   </table>
 
-  <div class="foot reveal"><span>Casa de Excursão Dona France</span><span>Preços apurados - Julho de 2026</span><span>21</span></div>
+  <div class="foot reveal"><span>Casa de Excursão Dona France</span><span>Preços apurados - Julho de 2026</span><span>22</span></div>
 </section>
 
 </main>
 </div>
 
 <div class="deck-controls" id="deckControls">
-  <span id="counter">01 / 21</span><span>·</span><span>← → navega</span><span>·</span><span>E edita</span>
+  <span id="counter">01 / 22</span><span>·</span><span>← → navega</span><span>·</span><span>E edita</span>
 </div>
 
 <script>
