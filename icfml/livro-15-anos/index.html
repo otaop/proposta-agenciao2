@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Proposta — ICFML · Livro comemorativo 15 anos</title>
 <meta name="description" content="Proposta comercial da Agência O2 para a produção editorial e diagramação do livro comemorativo de 15 anos do ICFML." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,7 +13,9 @@
   (function() {
     var params = new URLSearchParams(window.location.search);
     if (params.get('desktop') === '1') return;
-    if (!window.matchMedia('(max-width: 820px)').matches) return;
+    var narrowViewport = window.matchMedia('(max-width: 820px)').matches;
+    var mobileDevice = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    if (!narrowViewport && !mobileDevice) return;
     params.delete('desktop');
     var query = params.toString();
     window.location.replace('mobile.html' + (query ? '?' + query : '') + window.location.hash);
