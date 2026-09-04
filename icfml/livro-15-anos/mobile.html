@@ -175,16 +175,16 @@
   .cover-screen .display { max-width: 470px; margin-bottom: 0; }
   .cover-screen .cover-title {
     display: block;
-    white-space: nowrap;
-    font-size: clamp(25px, 7.5vw, 34px);
-    line-height: 1;
-    letter-spacing: -0.045em;
+    max-width: 360px;
+    font-size: clamp(34px, 10vw, 42px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
   }
   .cover-screen .display .soft {
     max-width: 470px;
-    margin-top: 12px;
-    font-size: clamp(34px, 10vw, 42px);
-    line-height: 1.08;
+    margin-top: 16px;
+    font-size: clamp(21px, 6vw, 25px);
+    line-height: 1.18;
   }
   .cover-screen .meta {
     margin-top: 36px;
@@ -206,26 +206,6 @@
     font-size: 16px;
     color: var(--ink);
     font-weight: 500;
-  }
-
-  /* ---------- Quote block (slide 2) ---------- */
-  .quote-card {
-    border-left: 2px solid var(--accent);
-    padding: 14px 0 14px 22px;
-    margin-top: 28px;
-    font-family: 'Inter Tight', sans-serif;
-    font-weight: 400;
-    font-size: 19px;
-    line-height: 1.45;
-    color: var(--ink);
-  }
-  .quote-card .who {
-    margin-top: 18px;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    color: var(--ink-mute);
-    text-transform: uppercase;
-    font-family: 'Inter', sans-serif;
   }
 
   /* ---------- Image mosaic (slides 3 & 4) ---------- */
@@ -850,8 +830,8 @@
       line-height: 1.35;
       letter-spacing: 0.16em;
     }
-    .cover-screen .cover-title { font-size: clamp(25px, 7.8vw, 28px); }
-    .cover-screen .display .soft { font-size: clamp(33px, 10.2vw, 37px); }
+    .cover-screen .cover-title { font-size: clamp(32px, 9.5vw, 35px); }
+    .cover-screen .display .soft { font-size: clamp(20px, 5.8vw, 22px); }
     .cover-year {
       right: -24px;
       top: 106px;
@@ -882,7 +862,7 @@
     <span class="dot"></span>
     <img class="logo" src="assets/logo-o2.png" alt="Agência O2" />
   </div>
-  <div class="counter"><strong id="curr">01</strong> / 09</div>
+  <div class="counter"><strong id="curr">01</strong> / 08</div>
   <div class="progress" id="progress"></div>
 </header>
 
@@ -893,8 +873,8 @@
     <div class="eyebrow">Proposta comercial · 2026</div>
     <div class="cover-year" aria-hidden="true">15</div>
     <h1 class="display">
-      <span class="cover-title">Quinze anos de trajetória.</span>
-      <span class="soft">Uma publicação à altura dessa história.</span>
+      <span class="cover-title">Livro comemorativo de 15 anos do ICFML.</span>
+      <span class="soft">Produção editorial e diagramação completa.</span>
     </h1>
 
     <div class="meta">
@@ -913,29 +893,8 @@
     </div>
   </section>
 
-  <!-- 02 — CONTEXTO -->
+  <!-- 02 — ESCALA EDITORIAL -->
   <section class="screen" data-slide="02">
-    <div class="eyebrow">O ponto de partida</div>
-    <h2 class="h-title">
-      Uma trajetória já construída.
-      <span class="soft">Agora, um livro para reuni-la e fazê-la permanecer.</span>
-    </h2>
-    <p class="lead">
-      O ICFML chega aos 15 anos com uma trajetória construída entre Portugal,
-      Brasil e África — e com um plano editorial já bem definido. A oportunidade
-      agora é reunir vozes, marcos e imagens em um livro coeso, capaz de preservar
-      essa memória e tornar visível o alcance desse percurso.
-    </p>
-
-    <div class="quote-card">
-      “Mais do que marcar uma data, este livro pode reunir as pessoas, os marcos
-      e os territórios que deram forma aos 15 anos do ICFML.”
-      <div class="who">— Direção editorial · Agência O2</div>
-    </div>
-  </section>
-
-  <!-- 03 — ESCALA EDITORIAL -->
-  <section class="screen" data-slide="03">
     <div class="eyebrow">O livro em números</div>
     <h2 class="h-section">Uma narrativa extensa. Um único sistema editorial.</h2>
     <p class="lead">
@@ -967,8 +926,8 @@
     </div>
   </section>
 
-  <!-- 04 — ABORDAGEM EDITORIAL -->
-  <section class="screen" data-slide="04">
+  <!-- 03 — ABORDAGEM EDITORIAL -->
+  <section class="screen" data-slide="03">
     <div class="eyebrow">Direção editorial</div>
     <h2 class="h-section">O mockup orienta. O sistema sustenta.</h2>
     <p class="lead">
@@ -998,8 +957,8 @@
     <div class="ref-caption">Referências · ritmo, hierarquia, cor e composição</div>
   </section>
 
-  <!-- 05 — ESCOPO -->
-  <section class="screen" data-slide="05">
+  <!-- 04 — ESCOPO -->
+  <section class="screen" data-slide="04">
     <div class="eyebrow">Escopo · Livro comemorativo</div>
     <h2 class="h-section">Da grelha editorial ao arquivo final.</h2>
     <p class="lead">
@@ -1029,8 +988,8 @@
     </div>
   </section>
 
-  <!-- 06 — INVESTIMENTO -->
-  <section class="screen" data-slide="06">
+  <!-- 05 — INVESTIMENTO -->
+  <section class="screen" data-slide="05">
     <div class="eyebrow">Projeto completo</div>
     <h2 class="h-section">Investimento e condições.</h2>
 
@@ -1075,8 +1034,8 @@
     </div>
   </section>
 
-  <!-- 07 — CRONOGRAMA -->
-  <section class="screen" data-slide="07">
+  <!-- 06 — CRONOGRAMA -->
+  <section class="screen" data-slide="06">
     <div class="eyebrow">Fluxo de trabalho · 8 a 10 semanas</div>
     <h2 class="h-section">Quatro fases, com aprovações por marcos.</h2>
 
@@ -1131,8 +1090,8 @@
     </div>
   </section>
 
-  <!-- 08 — LIMITES DO ESCOPO -->
-  <section class="screen" data-slide="08">
+  <!-- 07 — LIMITES DO ESCOPO -->
+  <section class="screen" data-slide="07">
     <div class="eyebrow">Limites do escopo</div>
     <h2 class="h-section">Clareza agora. Tranquilidade durante a produção.</h2>
     <p class="lead">
@@ -1154,8 +1113,8 @@
     </div>
   </section>
 
-  <!-- 09 — ENCERRAMENTO -->
-  <section class="screen close-section" data-slide="09">
+  <!-- 08 — ENCERRAMENTO -->
+  <section class="screen close-section" data-slide="08">
     <div class="eyebrow">Para fechar</div>
     <h2 class="display">
       Quinze anos de memória,

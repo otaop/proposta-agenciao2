@@ -269,6 +269,14 @@
   /* ---------- Slide 1: Capa ---------- */
   .cover { justify-content: center; gap: 40px; z-index: 2; }
   .cover .display { max-width: 1500px; font-size: 84px; }
+  .cover .display .soft {
+    display: block;
+    max-width: 1000px;
+    margin-top: 22px;
+    font-size: 46px;
+    line-height: 1.14;
+    letter-spacing: -0.015em;
+  }
   .cover .meta {
     margin-top: 24px;
     display: grid;
@@ -297,39 +305,6 @@
     font-size: 13px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-  }
-
-  /* ---------- Slide 2: Contexto ---------- */
-  .ctx { display: grid; grid-template-columns: 1fr 0.85fr; gap: 120px; align-items: center; height: 100%; }
-  .ctx .left { padding-top: 60px; }
-  .ctx .left .h-title { margin-top: 28px; max-width: 760px; }
-  .ctx .left .lead { margin-top: 36px; }
-  .ctx .right { position: relative; height: 700px; }
-  .ctx .quote {
-    border-left: 2px solid var(--accent);
-    padding: 8px 0 8px 28px;
-    font-family: 'Inter Tight', sans-serif;
-    font-weight: 400;
-    font-size: 26px;
-    line-height: 1.45;
-    color: var(--ink);
-    letter-spacing: -0.005em;
-  }
-  .ctx .quote .who {
-    margin-top: 20px;
-    font-size: 13px;
-    letter-spacing: 0.18em;
-    color: var(--ink-mute);
-    text-transform: uppercase;
-    font-family: 'Inter', sans-serif;
-  }
-  .ctx .right-stack {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 32px;
   }
 
   /* ---------- Slide 3: Hoje ---------- */
@@ -1061,8 +1036,8 @@
 
     <div class="frame cover">
       <h1 class="display">
-        Quinze anos de trajetória.<br/>
-        <span class="soft">Uma publicação à altura dessa história.</span>
+        Livro comemorativo de 15 anos do ICFML.
+        <span class="soft">Produção editorial e diagramação completa.</span>
       </h1>
 
       <div class="meta">
@@ -1085,56 +1060,14 @@
       <span class="o2"></span>
       <span>Agência O2 · Design editorial</span>
     </div>
-    <div class="pager"><strong>01</strong> / 09</div>
+    <div class="pager"><strong>01</strong> / 08</div>
   </section>
 
 
   <!-- ============================================================ -->
-  <!-- 02 — CONTEXTO -->
+  <!-- 02 — ESCALA EDITORIAL -->
   <!-- ============================================================ -->
-  <section data-screen-label="02 Contexto">
-    <div class="corner-mark">
-      <span class="dot"></span>
-      <span class="text">Contexto da proposta</span>
-    </div>
-
-    <div class="frame">
-      <div class="ctx">
-        <div class="left">
-          <div class="eyebrow">O ponto de partida</div>
-          <h2 class="h-title" style="font-size: 64px; max-width: 820px;">
-            Uma trajetória já construída.<br/>
-            <span style="color: var(--ink-soft);">Agora, um livro para reuni-la<br/>e fazê-la permanecer.</span>
-          </h2>
-          <p class="lead">
-            O ICFML chega aos 15 anos com uma trajetória construída entre Portugal,
-            Brasil e África — e com um plano editorial já bem definido. A oportunidade
-            agora é reunir vozes, marcos e imagens em um livro coeso, capaz de preservar
-            essa memória e tornar visível o alcance desse percurso.
-          </p>
-        </div>
-
-        <div class="right">
-          <div class="right-stack" style="text-align: left; justify-content: center; font-weight: 400; height: 700px">
-            <div class="quote" style="height: 206px">
-              “Mais do que marcar uma data, este livro pode reunir as pessoas, os marcos
-              e os territórios que deram forma aos 15 anos do ICFML.”
-              <div class="who">— Direção editorial · Agência O2</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
-    <div class="pager"><strong>02</strong> / 09</div>
-  </section>
-
-
-  <!-- ============================================================ -->
-  <!-- 03 — ESCALA EDITORIAL -->
-  <!-- ============================================================ -->
-  <section data-screen-label="03 Escala editorial">
+  <section data-screen-label="02 Escala editorial">
     <div class="corner-mark">
       <span class="dot"></span>
       <span class="text">Dimensão do projeto</span>
@@ -1183,14 +1116,14 @@
     </div>
 
     <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
-    <div class="pager"><strong>03</strong> / 09</div>
+    <div class="pager"><strong>02</strong> / 08</div>
   </section>
 
 
   <!-- ============================================================ -->
-  <!-- 04 — ABORDAGEM EDITORIAL -->
+  <!-- 03 — ABORDAGEM EDITORIAL -->
   <!-- ============================================================ -->
-  <section data-screen-label="04 Abordagem editorial">
+  <section data-screen-label="03 Abordagem editorial">
     <div class="corner-mark">
       <span class="dot"></span>
       <span class="text">Como conduzimos o design</span>
@@ -1237,14 +1170,14 @@
     </div>
 
     <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
-    <div class="pager"><strong>04</strong> / 09</div>
+    <div class="pager"><strong>03</strong> / 08</div>
   </section>
 
 
   <!-- ============================================================ -->
-  <!-- 05 — O QUE ESTÁ INCLUSO -->
+  <!-- 04 — O QUE ESTÁ INCLUSO -->
   <!-- ============================================================ -->
-  <section data-screen-label="05 Escopo">
+  <section data-screen-label="04 Escopo">
     <div class="corner-mark">
       <span class="dot"></span>
       <span class="text">Escopo · produção editorial</span>
@@ -1289,14 +1222,14 @@
     </div>
 
     <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
-    <div class="pager"><strong>05</strong> / 09</div>
+    <div class="pager"><strong>04</strong> / 08</div>
   </section>
 
 
   <!-- ============================================================ -->
-  <!-- 06 — INVESTIMENTO -->
+  <!-- 05 — INVESTIMENTO -->
   <!-- ============================================================ -->
-  <section data-screen-label="06 Investimento">
+  <section data-screen-label="05 Investimento">
     <div class="corner-mark">
       <span class="dot"></span>
       <span class="text">Investimento</span>
@@ -1350,14 +1283,14 @@
     </div>
 
     <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
-    <div class="pager"><strong>06</strong> / 09</div>
+    <div class="pager"><strong>05</strong> / 08</div>
   </section>
 
 
   <!-- ============================================================ -->
-  <!-- 07 — CRONOGRAMA -->
+  <!-- 06 — CRONOGRAMA -->
   <!-- ============================================================ -->
-  <section data-screen-label="07 Cronograma">
+  <section data-screen-label="06 Cronograma">
     <div class="corner-mark">
       <span class="dot"></span>
       <span class="text">Como caminhamos juntos</span>
@@ -1415,14 +1348,14 @@
     </div>
 
     <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
-    <div class="pager"><strong>07</strong> / 09</div>
+    <div class="pager"><strong>06</strong> / 08</div>
   </section>
 
 
   <!-- ============================================================ -->
-  <!-- 08 — LIMITES DO ESCOPO -->
+  <!-- 07 — LIMITES DO ESCOPO -->
   <!-- ============================================================ -->
-  <section data-screen-label="08 Limites do escopo">
+  <section data-screen-label="07 Limites do escopo">
     <div class="corner-mark">
       <span class="dot"></span>
       <span class="text">Condições para uma produção previsível</span>
@@ -1459,14 +1392,14 @@
     </div>
 
     <div class="brand-tag"><span class="o2"></span><span>Agência O2</span></div>
-    <div class="pager"><strong>08</strong> / 09</div>
+    <div class="pager"><strong>07</strong> / 08</div>
   </section>
 
 
   <!-- ============================================================ -->
-  <!-- 09 — ENCERRAMENTO -->
+  <!-- 08 — ENCERRAMENTO -->
   <!-- ============================================================ -->
-  <section data-screen-label="09 Encerramento">
+  <section data-screen-label="08 Encerramento">
     <div class="corner-mark">
       <span class="dot"></span>
       <span class="text">Encerramento</span>
@@ -1492,7 +1425,7 @@
       </div>
     </div>
 
-    <div class="pager"><strong>09</strong> / 09</div>
+    <div class="pager"><strong>08</strong> / 08</div>
   </section>
 
 </deck-stage>
