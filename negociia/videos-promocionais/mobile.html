@@ -8,6 +8,30 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  (function () {
+    const desktopViewport = window.matchMedia('(min-width: 821px)');
+
+    function openDesktopVersion() {
+      window.location.replace('./?desktop=1');
+    }
+
+    if (desktopViewport.matches) {
+      openDesktopVersion();
+      return;
+    }
+
+    function handleViewportChange(event) {
+      if (event.matches) openDesktopVersion();
+    }
+
+    if (desktopViewport.addEventListener) {
+      desktopViewport.addEventListener('change', handleViewportChange);
+    } else {
+      desktopViewport.addListener(handleViewportChange);
+    }
+  })();
+</script>
 <style>
   :root {
     --bg: #191526;
