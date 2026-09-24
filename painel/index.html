@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow,noarchive" />
+<meta name="referrer" content="no-referrer" />
+<meta name="theme-color" content="#0f0b1c" />
+<title>Painel de propostas · Agência O2</title>
+<link rel="icon" type="image/png" href="../assets/logo-o2.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0f0b1c;
+    --surface: #171122;
+    --surface-raised: #1d162b;
+    --ink: #f5f2f8;
+    --ink-soft: #c9c3d5;
+    --ink-mute: #90899f;
+    --accent: #e89a82;
+    --accent-soft: #f4c2b2;
+    --lilac: #998bc2;
+    --line: rgba(255,255,255,.105);
+    --line-strong: rgba(255,255,255,.18);
+    --focus: #f4c2b2;
+    --success: #8dc6a1;
+    --warning: #e8c783;
+    --neutral: #aaa3ba;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    min-height: 100%;
+    background: var(--bg);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 90% -10%, rgba(232,154,130,.16), transparent 36rem),
+      radial-gradient(circle at -10% 30%, rgba(86,71,142,.16), transparent 32rem),
+      var(--bg);
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    color: #1d1210;
+    background: var(--accent-soft);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(232,154,130,.55) rgba(255,255,255,.04);
+  }
+
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-track { background: rgba(255,255,255,.04); }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(232,154,130,.55);
+    border: 3px solid var(--bg);
+    border-radius: 999px;
+  }
+
+  a, button, input, select { font: inherit; }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    border-bottom: 1px solid var(--line);
+    background: rgba(15,11,28,.93);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .topbar-inner {
+    width: min(1240px, calc(100% - 48px));
+    min-height: 76px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .brand img {
+    display: block;
+    width: 104px;
+    height: auto;
+  }
+
+  .internal-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-mute);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+  }
+
+  .internal-mark::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  main {
+    width: min(1240px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 76px 0 64px;
+  }
+
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, .62fr);
+    align-items: end;
+    gap: 64px;
+    padding-bottom: 48px;
+  }
+
+  h1 {
+    max-width: 760px;
+    margin: 0;
+    font-family: "Inter Tight", "Inter", sans-serif;
+    font-size: clamp(42px, 6vw, 78px);
+    line-height: .98;
+    letter-spacing: -.035em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  .intro-copy {
+    max-width: 650px;
+    margin: 24px 0 0;
+    color: var(--ink-soft);
+    font-size: clamp(16px, 1.5vw, 19px);
+    line-height: 1.6;
+  }
+
+  .inventory {
+    margin: 0;
+    padding: 18px 0 18px 28px;
+    border-left: 1px solid var(--line-strong);
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .inventory strong {
+    color: var(--ink);
+    font-family: "Inter Tight", "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .inventory span + span::before {
+    content: "·";
+    margin: 0 10px;
+    color: var(--accent);
+  }
+
+  .panel {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(23,17,34,.88);
+    box-shadow: 0 28px 80px -50px rgba(0,0,0,.9);
+  }
+
+  .controls {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) 210px;
+    gap: 14px;
+    padding: 18px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,255,255,.018);
+  }
+
+  .field {
+    position: relative;
+  }
+
+  .field svg {
+    position: absolute;
+    left: 17px;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    fill: none;
+    stroke: var(--ink-mute);
+    stroke-width: 1.8;
+    pointer-events: none;
+  }
+
+  input[type="search"], select {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    color: var(--ink);
+    background: #120e1c;
+    transition: border-color .18s ease, background .18s ease;
+  }
+
+  input[type="search"] {
+    padding: 0 18px 0 48px;
+    caret-color: var(--accent);
+  }
+
+  input[type="search"]::placeholder { color: #817a90; }
+
+  input[type="search"]:hover, select:hover,
+  input[type="search"]:focus, select:focus {
+    border-color: rgba(232,154,130,.55);
+    background: #171121;
+  }
+
+  select {
+    padding: 0 42px 0 16px;
+    color-scheme: dark;
+  }
+
+  .client-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .client-tab {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--ink-soft);
+    background: transparent;
+    cursor: pointer;
+    transition: color .18s ease, background .18s ease, border-color .18s ease;
+  }
+
+  .client-tab:hover {
+    color: var(--ink);
+    border-color: var(--line-strong);
+  }
+
+  .client-tab[aria-pressed="true"] {
+    color: #2a1712;
+    background: var(--accent);
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+
+  .list-heading,
+  .proposal-link {
+    display: grid;
+    grid-template-columns: minmax(310px, 1.55fr) minmax(150px, .65fr) 110px 130px 118px 30px;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .list-heading {
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-mute);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .list-heading span:nth-child(3),
+  .list-heading span:nth-child(4) { text-align: right; }
+
+  .proposal-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .proposal-item + .proposal-item { border-top: 1px solid var(--line); }
+
+  .proposal-link {
+    position: relative;
+    min-height: 122px;
+    padding: 22px;
+    color: inherit;
+    text-decoration: none;
+    background: transparent;
+    transition: background .2s ease;
+  }
+
+  .proposal-link::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform .2s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .proposal-link:hover {
+    background: rgba(255,255,255,.032);
+  }
+
+  .proposal-link:hover::after { transform: scaleY(1); }
+
+  .proposal-main {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
+  }
+
+  .client-code {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    color: var(--accent-soft);
+    background: rgba(232,154,130,.08);
+    border: 1px solid rgba(232,154,130,.2);
+    font-family: "Inter Tight", "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .02em;
+  }
+
+  .client-name {
+    margin-bottom: 5px;
+    color: var(--ink-mute);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .proposal-title {
+    overflow: hidden;
+    margin: 0;
+    color: var(--ink);
+    font-family: "Inter Tight", "Inter", sans-serif;
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -.015em;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .proposal-subtitle {
+    overflow: hidden;
+    margin: 7px 0 0;
+    color: var(--ink-soft);
+    font-size: 13px;
+    line-height: 1.45;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .proposal-type {
+    color: var(--ink-soft);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .proposal-note {
+    display: block;
+    margin-top: 5px;
+    color: var(--ink-mute);
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .proposal-date,
+  .proposal-value {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .proposal-date {
+    color: var(--ink-soft);
+    font-size: 13px;
+  }
+
+  .proposal-value {
+    color: var(--ink);
+    font-family: "Inter Tight", "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+
+  .status {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 30px;
+    padding: 0 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--neutral);
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .status::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .status-enviada,
+  .status-aprovada { color: var(--success); border-color: rgba(141,198,161,.28); }
+  .status-rascunho { color: var(--warning); border-color: rgba(232,199,131,.28); }
+  .status-sem-status { color: var(--neutral); }
+
+  .open-icon {
+    justify-self: end;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    color: var(--ink-mute);
+    transition: color .18s ease, transform .2s ease;
+  }
+
+  .open-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+  }
+
+  .proposal-link:hover .open-icon {
+    color: var(--accent-soft);
+    transform: translate(2px,-2px);
+  }
+
+  .empty-state {
+    display: none;
+    padding: 72px 24px;
+    text-align: center;
+  }
+
+  .empty-state[aria-hidden="false"] { display: block; }
+
+  .empty-state h2 {
+    margin: 0;
+    font-family: "Inter Tight", "Inter", sans-serif;
+    font-size: 28px;
+    letter-spacing: -.02em;
+  }
+
+  .empty-state p {
+    max-width: 480px;
+    margin: 12px auto 0;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .clear-button {
+    margin-top: 24px;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 10px;
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding-top: 28px;
+    color: var(--ink-mute);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .footer a {
+    color: var(--ink-soft);
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 1040px) {
+    .intro { grid-template-columns: 1fr; gap: 24px; }
+    .inventory { max-width: 620px; padding: 0; border-left: 0; }
+    .list-heading { display: none; }
+    .proposal-link {
+      grid-template-columns: minmax(0, 1fr) 110px 124px 30px;
+      gap: 20px;
+    }
+    .proposal-type { display: none; }
+  }
+
+  @media (max-width: 720px) {
+    .topbar-inner, main { width: min(100% - 32px, 1240px); }
+    .topbar-inner { min-height: 68px; }
+    .brand img { width: 92px; }
+    main { padding: 52px 0 40px; }
+    .intro { padding-bottom: 34px; }
+    h1 { font-size: clamp(40px, 13vw, 58px); }
+    .controls { grid-template-columns: 1fr; }
+    .client-tabs {
+      flex-wrap: wrap;
+      overflow: visible;
+    }
+    .proposal-link {
+      min-height: 0;
+      grid-template-columns: 1fr auto;
+      gap: 18px 14px;
+      padding: 22px 18px;
+    }
+    .proposal-main { grid-column: 1 / -1; }
+    .proposal-title, .proposal-subtitle { white-space: normal; }
+    .proposal-date { grid-column: 1; grid-row: 2; text-align: left; }
+    .proposal-value { grid-column: 2; grid-row: 2; text-align: right; }
+    .status { grid-column: 1; grid-row: 3; }
+    .open-icon { grid-column: 2; grid-row: 3; }
+    .footer { flex-direction: column; }
+  }
+
+  @media (max-width: 430px) {
+    .internal-mark { font-size: 11px; letter-spacing: .1em; }
+    .inventory span { display: block; }
+    .inventory span + span::before { content: none; }
+    .client-tabs { padding-inline: 14px; }
+    .controls { padding: 14px; }
+    .client-code { width: 42px; height: 42px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../" aria-label="Voltar para a página da Agência O2">
+      <img src="../assets/logo-o2.png" alt="Agência O2" />
+    </a>
+    <span class="internal-mark">Acesso interno</span>
+  </div>
+</header>
+
+<main>
+  <section class="intro" aria-labelledby="page-title">
+    <div>
+      <h1 id="page-title">Acervo de propostas.</h1>
+      <p class="intro-copy">Consulte os orçamentos produzidos pela Agência O2, filtre por cliente ou status e abra cada apresentação em sua versão publicada.</p>
+    </div>
+    <p class="inventory" aria-label="Resumo do acervo">
+      <span><strong id="total-proposals">0</strong> propostas</span>
+      <span><strong id="total-clients">0</strong> clientes</span>
+      <span><strong id="total-sent">0</strong> enviadas</span>
+    </p>
+  </section>
+
+  <section class="panel" aria-label="Painel de propostas">
+    <div class="controls">
+      <div class="field">
+        <label class="sr-only" for="proposal-search">Buscar proposta</label>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+        <input id="proposal-search" type="search" autocomplete="off" placeholder="Buscar cliente ou projeto" />
+      </div>
+      <div class="field">
+        <label class="sr-only" for="status-filter">Filtrar por status</label>
+        <select id="status-filter">
+          <option value="todos">Todos os status</option>
+        </select>
+      </div>
+    </div>
+
+    <nav id="client-tabs" class="client-tabs" aria-label="Filtrar por cliente"></nav>
+
+    <div class="list-heading" aria-hidden="true">
+      <span>Proposta</span>
+      <span>Serviço</span>
+      <span>Data</span>
+      <span>Investimento</span>
+      <span>Status</span>
+      <span></span>
+    </div>
+
+    <ul id="proposal-list" class="proposal-list" aria-live="polite"></ul>
+
+    <div id="empty-state" class="empty-state" aria-hidden="true">
+      <h2>Nenhuma proposta encontrada.</h2>
+      <p>Altere a busca ou remova os filtros para visualizar novamente o acervo completo.</p>
+      <button id="clear-filters" class="clear-button" type="button">Limpar filtros</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span id="result-count" aria-live="polite"></span>
+    <span>Agência O2 · painel por link reservado · <a href="../">voltar para a página inicial</a></span>
+  </footer>
+</main>
+
+<noscript>
+  <p style="max-width:760px;margin:40px auto;padding:24px;color:#f5f2f8;background:#171122;border:1px solid rgba(255,255,255,.16);border-radius:14px;">Ative o JavaScript para pesquisar e visualizar a lista de propostas.</p>
+</noscript>
+
+<script src="data.js"></script>
+<script>
+(() => {
+  "use strict";
+
+  const proposals = Array.isArray(window.PROPOSTAS) ? window.PROPOSTAS : [];
+  const list = document.getElementById("proposal-list");
+  const search = document.getElementById("proposal-search");
+  const statusFilter = document.getElementById("status-filter");
+  const clientTabs = document.getElementById("client-tabs");
+  const emptyState = document.getElementById("empty-state");
+  const clearFilters = document.getElementById("clear-filters");
+  const resultCount = document.getElementById("result-count");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let activeClient = "todos";
+
+  const normalize = value => String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+
+  const statusSlug = value => normalize(value).replace(/\s+/g, "-");
+
+  const initials = value => {
+    const words = String(value || "O2").split(/\s+/).filter(Boolean);
+    if (words.length === 1) return words[0].slice(0, 3).toUpperCase();
+    return words.slice(0, 2).map(word => word[0]).join("").toUpperCase();
+  };
+
+  const displayDate = value => {
+    const [year, month] = String(value || "").split("-");
+    const months = {"01":"Jan", "02":"Fev", "03":"Mar", "04":"Abr", "05":"Mai", "06":"Jun", "07":"Jul", "08":"Ago", "09":"Set", "10":"Out", "11":"Nov", "12":"Dez"};
+    return months[month] && year ? `${months[month]} · ${year}` : value || "—";
+  };
+
+  const createText = (tag, className, text) => {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    element.textContent = text || "";
+    return element;
+  };
+
+  const createOpenIcon = () => {
+    const wrapper = document.createElement("span");
+    wrapper.className = "open-icon";
+    wrapper.setAttribute("aria-hidden", "true");
+    wrapper.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 16 16 8M9 8h7v7"></path></svg>';
+    return wrapper;
+  };
+
+  const createProposal = proposal => {
+    const item = document.createElement("li");
+    item.className = "proposal-item";
+
+    const link = document.createElement("a");
+    link.className = "proposal-link";
+    link.href = proposal.href;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.setAttribute("aria-label", `Abrir proposta ${proposal.titulo}, cliente ${proposal.cliente}`);
+
+    const main = document.createElement("div");
+    main.className = "proposal-main";
+    main.appendChild(createText("span", "client-code", initials(proposal.cliente)));
+
+    const identity = document.createElement("div");
+    identity.appendChild(createText("div", "client-name", proposal.cliente));
+    identity.appendChild(createText("h2", "proposal-title", proposal.titulo));
+    identity.appendChild(createText("p", "proposal-subtitle", proposal.subtitulo));
+    main.appendChild(identity);
+
+    const type = createText("div", "proposal-type", proposal.tipo || "—");
+    if (proposal.observacao) type.appendChild(createText("span", "proposal-note", proposal.observacao));
+
+    const date = createText("div", "proposal-date", displayDate(proposal.data));
+    const value = createText("div", "proposal-value", proposal.investimento || "—");
+    const status = createText("span", `status status-${statusSlug(proposal.status)}`, proposal.status || "Sem status");
+
+    link.append(main, type, date, value, status, createOpenIcon());
+    item.appendChild(link);
+    return item;
+  };
+
+  const filterProposals = () => {
+    const query = normalize(search.value);
+    const selectedStatus = statusFilter.value;
+
+    return proposals.filter(proposal => {
+      const haystack = normalize([
+        proposal.cliente,
+        proposal.titulo,
+        proposal.subtitulo,
+        proposal.tipo,
+        proposal.observacao,
+        proposal.investimento,
+        proposal.data
+      ].join(" "));
+
+      const matchesSearch = !query || haystack.includes(query);
+      const matchesClient = activeClient === "todos" || normalize(proposal.cliente) === activeClient;
+      const matchesStatus = selectedStatus === "todos" || statusSlug(proposal.status) === selectedStatus;
+      return matchesSearch && matchesClient && matchesStatus;
+    });
+  };
+
+  const render = () => {
+    const filtered = filterProposals();
+    list.replaceChildren(...filtered.map(createProposal));
+    emptyState.setAttribute("aria-hidden", filtered.length ? "true" : "false");
+    resultCount.textContent = `${filtered.length} ${filtered.length === 1 ? "proposta exibida" : "propostas exibidas"}`;
+
+    if (!reduceMotion && filtered.length) {
+      list.animate(
+        [
+          { opacity: .55, transform: "translateY(5px)" },
+          { opacity: 1, transform: "translateY(0)" }
+        ],
+        { duration: 220, easing: "cubic-bezier(.2,.8,.2,1)" }
+      );
+    }
+  };
+
+  const buildFilters = () => {
+    const clients = [...new Set(proposals.map(item => item.cliente))].sort((a,b) => a.localeCompare(b, "pt-BR"));
+    const statuses = [...new Set(proposals.map(item => item.status || "Sem status"))].sort((a,b) => a.localeCompare(b, "pt-BR"));
+
+    ["Todos", ...clients].forEach((client, index) => {
+      const button = document.createElement("button");
+      button.className = "client-tab";
+      button.type = "button";
+      button.textContent = client;
+      button.dataset.client = index === 0 ? "todos" : normalize(client);
+      button.setAttribute("aria-pressed", index === 0 ? "true" : "false");
+      button.addEventListener("click", () => {
+        activeClient = button.dataset.client;
+        clientTabs.querySelectorAll("button").forEach(tab => tab.setAttribute("aria-pressed", String(tab === button)));
+        render();
+      });
+      clientTabs.appendChild(button);
+    });
+
+    statuses.forEach(status => {
+      const option = document.createElement("option");
+      option.value = statusSlug(status);
+      option.textContent = status;
+      statusFilter.appendChild(option);
+    });
+  };
+
+  const resetFilters = () => {
+    activeClient = "todos";
+    search.value = "";
+    statusFilter.value = "todos";
+    clientTabs.querySelectorAll("button").forEach(tab => tab.setAttribute("aria-pressed", String(tab.dataset.client === "todos")));
+    search.focus();
+    render();
+  };
+
+  document.getElementById("total-proposals").textContent = proposals.length;
+  document.getElementById("total-clients").textContent = new Set(proposals.map(item => item.cliente)).size;
+  document.getElementById("total-sent").textContent = proposals.filter(item => statusSlug(item.status) === "enviada").length;
+
+  buildFilters();
+  render();
+
+  search.addEventListener("input", render);
+  statusFilter.addEventListener("change", render);
+  clearFilters.addEventListener("click", resetFilters);
+})();
+</script>
+</body>
+</html>

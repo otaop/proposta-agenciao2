@@ -1,6 +1,10 @@
 {
-    "titulo":  "Identidade Visual + Site Institucional",
-    "subtitulo":  "Nova identidade de marca e site institucional da Outplan",
-    "data":  "2026-07",
-    "status":  "Enviada"
+  "cliente": "Outplan",
+  "titulo": "Identidade Visual + Site Institucional",
+  "subtitulo": "Nova identidade de marca e site institucional da Outplan",
+  "data": "2026-07",
+  "status": "Enviada",
+  "investimento": "R$ 9.000",
+  "tipo": "Identidade visual + site",
+  "observacao": "Pacote completo recomendado"
 }

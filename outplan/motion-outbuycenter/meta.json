@@ -1,6 +1,10 @@
 {
+  "cliente": "Outplan",
   "titulo": "Motion Graphics · OutBuyCenter",
   "subtitulo": "Vídeo animado de 60s para anúncios e eventos",
   "data": "2026-06",
-  "status": "Enviada"
+  "status": "Enviada",
+  "investimento": "R$ 4.500",
+  "tipo": "Motion graphics",
+  "observacao": "Versão vertical opcional · + R$ 900"
 }

@@ -1,6 +1,10 @@
 {
+  "cliente": "ICFML",
   "titulo": "Livro comemorativo · 15 anos",
   "subtitulo": "Produção editorial e diagramação em Adobe InDesign",
   "data": "2026-09",
-  "status": "rascunho"
+  "status": "Aprovada",
+  "investimento": "R$ 9.400",
+  "tipo": "Projeto editorial",
+  "observacao": "Projeto fechado · até 130 páginas"
 }
