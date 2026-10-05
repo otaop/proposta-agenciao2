@@ -1,5 +1,17 @@
 window.PROPOSTAS = [
   {
+    "id": "icfml-totem-15-anos",
+    "cliente": "ICFML",
+    "titulo": "Peças gráficas · Totem ICFML 15 anos",
+    "subtitulo": "Criação de cinco peças gráficas para exibição no evento",
+    "data": "2026-10",
+    "status": "Rascunho",
+    "investimento": "R$ 900",
+    "tipo": "Design para evento",
+    "observacao": "5 peças gráficas · R$ 180 cada",
+    "href": "../icfml/totem-15-anos/"
+  },
+  {
     "id": "icfml-livro-15-anos",
     "cliente": "ICFML",
     "titulo": "Livro comemorativo · 15 anos",

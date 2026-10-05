@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Proposta — Totem ICFML 15 anos</title>
+<meta name="description" content="Proposta comercial para a criação de cinco peças gráficas destinadas ao totem do evento ICFML 15 anos." />
+<link rel="icon" href="data:," />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  (function () {
+    const mobileViewport = window.matchMedia('(max-width: 820px)');
+    const desktopPreview = new URLSearchParams(window.location.search).get('desktop') === '1';
+    const mobileDevice = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+    function openMobileVersion() {
+      window.location.replace('mobile.html');
+    }
+
+    if (!desktopPreview && (mobileViewport.matches || mobileDevice)) {
+      openMobileVersion();
+      return;
+    }
+
+    function handleViewportChange(event) {
+      if (event.matches) openMobileVersion();
+    }
+
+    if (mobileViewport.addEventListener) {
+      mobileViewport.addEventListener('change', handleViewportChange);
+    } else {
+      mobileViewport.addListener(handleViewportChange);
+    }
+  })();
+</script>
+<script src="deck-stage.js"></script>
+<style>
+  :root {
+    --bg: #191526;
+    --bg-deep: #120f1d;
+    --ink: #f4f2f8;
+    --ink-soft: #c9c3db;
+    --ink-mute: #8a839e;
+    --line: rgba(255,255,255,.09);
+    --line-strong: rgba(255,255,255,.16);
+    --accent: #e89a82;
+    --accent-deep: #2a1a14;
+    --card: rgba(255,255,255,.028);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { color: var(--ink); font-family: "Inter", system-ui, sans-serif; }
+  button, a { font: inherit; }
+  deck-stage:not(:defined) { visibility: hidden; }
+  deck-stage > section {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  .frame { position: absolute; inset: 72px 104px 76px; }
+  .brand {
+    position: absolute;
+    left: 104px;
+    bottom: 48px;
+    width: 128px;
+    height: 28px;
+    background: url("assets/logo-o2.png") left center / contain no-repeat;
+    opacity: .92;
+  }
+  .pager {
+    position: absolute;
+    right: 104px;
+    bottom: 50px;
+    color: var(--ink-mute);
+    font-size: 13px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  .pager strong { color: var(--ink); font-weight: 500; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 17px 9px 13px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink-soft);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  h1, h2, h3, p { margin: 0; }
+
+  .cover .frame { display: flex; flex-direction: column; justify-content: center; padding-bottom: 30px; }
+  .cover h1 {
+    max-width: 1110px;
+    margin-top: 44px;
+    font-family: "Inter Tight", "Inter", sans-serif;
+    font-size: 112px;
+    font-weight: 600;
+    line-height: .98;
+    letter-spacing: -.04em;
+  }
+  .cover h1 span { display: block; color: var(--ink-soft); font-weight: 400; }
+  .cover-meta {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    width: 1040px;
+    margin-top: 72px;
+    border-top: 1px solid var(--line);
+  }
+  .cover-meta div { padding: 20px 28px 0 0; }
+  .cover-meta div + div { padding-left: 28px; border-left: 1px solid var(--line); }
+  .cover-meta small {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--ink-mute);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  .cover-meta strong { color: var(--ink); font-size: 19px; font-weight: 500; }
+
+  .section-copy { display: flex; flex-direction: column; align-items: flex-start; }
+  .section-copy h2 {
+    margin-top: 40px;
+    max-width: 650px;
+    font-family: "Inter Tight", "Inter", sans-serif;
+    font-size: 70px;
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -.035em;
+  }
+  .section-copy h2 span { display: block; color: var(--ink-soft); font-weight: 400; }
+  .section-copy > p { margin-top: 30px; max-width: 590px; color: var(--ink-soft); font-size: 22px; line-height: 1.55; }
+
+  .scope .frame { display: grid; grid-template-columns: 610px minmax(0,1fr); gap: 104px; padding-top: 58px; }
+  .scope-list { align-self: center; border-top: 1px solid var(--line); }
+  .scope-row {
+    display: grid;
+    grid-template-columns: 72px minmax(0,1fr);
+    gap: 22px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .scope-row .number { color: var(--accent); font-size: 14px; font-weight: 600; letter-spacing: .12em; }
+  .scope-row h3 { font-family: "Inter Tight", "Inter", sans-serif; font-size: 27px; font-weight: 600; letter-spacing: -.02em; }
+  .scope-row p { margin-top: 7px; color: var(--ink-soft); font-size: 17px; line-height: 1.45; }
+
+  .investment .frame { display: grid; grid-template-columns: 700px minmax(0,1fr); gap: 100px; padding-top: 58px; }
+  .total {
+    margin-top: 64px;
+    padding: 34px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    width: 100%;
+  }
+  .total small {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--ink-mute);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  .total strong {
+    font-family: "Inter Tight", "Inter", sans-serif;
+    color: var(--accent);
+    font-size: 112px;
+    font-weight: 600;
+    letter-spacing: -.05em;
+  }
+  .total p { margin-top: 8px; color: var(--ink-soft); font-size: 19px; }
+  .investment-details { align-self: center; }
+  .deliverable-summary { border-top: 1px solid var(--line); }
+  .deliverable-row { display: flex; justify-content: space-between; gap: 40px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+  .deliverable-row span { color: var(--ink-mute); font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+  .deliverable-row strong { max-width: 520px; color: var(--ink); font-size: 22px; font-weight: 500; line-height: 1.4; text-align: right; }
+  .conditions { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 34px; }
+  .condition { min-height: 148px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
+  .condition small { display: block; color: var(--ink-mute); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+  .condition strong { display: block; margin-top: 14px; color: var(--ink); font-size: 18px; font-weight: 600; line-height: 1.4; }
+
+  .nav-arrow {
+    position: fixed;
+    top: 50%;
+    z-index: 9999;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    background: rgba(18,15,29,.7);
+    color: var(--accent);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background .2s ease, color .2s ease;
+  }
+  .nav-arrow:hover { background: var(--accent); color: var(--accent-deep); }
+  .nav-arrow:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+  .nav-arrow svg { width: 22px; height: 22px; }
+  .nav-arrow.prev { left: 16px; }
+  .nav-arrow.next { right: 16px; }
+  .wa-cta {
+    position: fixed;
+    left: 50%;
+    bottom: 26px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-deep);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateX(-50%);
+  }
+  .wa-cta:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+  .wa-cta svg { width: 18px; height: 18px; fill: currentColor; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+  @media print {
+    .nav-arrow, .wa-cta { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<deck-stage width="1920" height="1080" no-rail>
+  <section class="slide cover" data-label="Capa">
+    <div class="frame">
+      <span class="eyebrow">Proposta comercial · 2026</span>
+      <h1>5 peças gráficas <span>para o totem do ICFML 15 anos.</span></h1>
+      <div class="cover-meta" aria-label="Dados da proposta">
+        <div><small>Projeto</small><strong>Design para evento</strong></div>
+        <div><small>Entregas</small><strong>5 peças gráficas</strong></div>
+        <div><small>Data</small><strong>Outubro · 2026</strong></div>
+      </div>
+    </div>
+    <span class="brand" aria-label="Agência O2"></span>
+    <span class="pager"><strong>01</strong> / 03</span>
+  </section>
+
+  <section class="slide scope" data-label="Escopo">
+    <div class="frame">
+      <div class="section-copy">
+        <span class="eyebrow">Escopo do projeto</span>
+        <h2>Criação de 5 peças <span>para exibição no totem.</span></h2>
+        <p>O conjunto será desenvolvido a partir da identidade e dos conteúdos fornecidos pelo ICFML.</p>
+      </div>
+
+      <div class="scope-list" aria-label="Etapas incluídas">
+        <article class="scope-row"><span class="number">01</span><div><h3>Direção visual do conjunto</h3><p>Definição da linguagem comum às cinco peças.</p></div></article>
+        <article class="scope-row"><span class="number">02</span><div><h3>Diagramação das peças</h3><p>Organização de textos, imagens e elementos da identidade.</p></div></article>
+        <article class="scope-row"><span class="number">03</span><div><h3>Hierarquia e legibilidade</h3><p>Ajustes para leitura clara no ambiente do evento.</p></div></article>
+        <article class="scope-row"><span class="number">04</span><div><h3>Adaptação técnica</h3><p>Aplicação nas dimensões informadas pela produção do totem.</p></div></article>
+        <article class="scope-row"><span class="number">05</span><div><h3>Finalização</h3><p>Exportação dos cinco arquivos prontos para aplicação.</p></div></article>
+      </div>
+    </div>
+    <span class="brand" aria-label="Agência O2"></span>
+    <span class="pager"><strong>02</strong> / 03</span>
+  </section>
+
+  <section class="slide investment" data-label="Entregas e investimento">
+    <div class="frame">
+      <div class="section-copy">
+        <span class="eyebrow">Entregas e investimento</span>
+        <h2>5 peças gráficas. <span>Um valor fechado.</span></h2>
+        <div class="total">
+          <small>Investimento total</small>
+          <strong>R$ 900</strong>
+          <p>R$ 180 por peça.</p>
+        </div>
+      </div>
+
+      <div class="investment-details">
+        <div class="deliverable-summary">
+          <div class="deliverable-row"><span>Entrega</span><strong>5 peças gráficas finalizadas</strong></div>
+          <div class="deliverable-row"><span>Formato</span><strong>Conforme especificação técnica do totem</strong></div>
+          <div class="deliverable-row"><span>Ajustes</span><strong>1 rodada de revisão no conjunto</strong></div>
+        </div>
+        <div class="conditions" aria-label="Condições comerciais">
+          <div class="condition"><small>Prazo</small><strong>5 dias úteis após o recebimento do conteúdo e das especificações</strong></div>
+          <div class="condition"><small>Pagamento</small><strong>50% no início e 50% na entrega</strong></div>
+          <div class="condition"><small>Validade</small><strong>10 dias</strong></div>
+        </div>
+      </div>
+    </div>
+    <span class="brand" aria-label="Agência O2"></span>
+    <span class="pager"><strong>03</strong> / 03</span>
+  </section>
+</deck-stage>
+
+<button class="nav-arrow prev" type="button" aria-label="Slide anterior">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+</button>
+<button class="nav-arrow next" type="button" aria-label="Próximo slide">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+</button>
+<a class="wa-cta" href="https://api.whatsapp.com/send?phone=5547996461562&amp;text=Quero%20aprovar%20a%20proposta%20do%20totem%20do%20ICFML%2015%20anos" target="_blank" rel="noopener noreferrer">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.49 0 .14 5.35.14 11.93c0 2.1.55 4.15 1.6 5.95L.04 24l6.27-1.64a11.92 11.92 0 0 0 5.75 1.46h.01c6.58 0 11.93-5.35 11.93-11.93 0-3.19-1.24-6.18-3.48-8.41ZM12.07 21.8h-.01a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.72.98.99-3.63-.24-.37a9.87 9.87 0 1 1 8.37 4.61Zm5.41-7.39c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47a8.92 8.92 0 0 1-1.65-2.05c-.17-.3-.02-.46.13-.61.13-.13.3-.35.44-.52.15-.17.2-.3.3-.49.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.91-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.87 1.21 3.07c.15.2 2.09 3.19 5.06 4.47.71.3 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35Z"/></svg>
+  Aprovar proposta
+</a>
+
+<script>
+  // Keyboard navigation (keydown: ArrowRight / PageDown) is provided by deck-stage.js.
+  const stage = document.querySelector('deck-stage');
+  document.querySelector('.prev').addEventListener('click', () => stage.prev?.());
+  document.querySelector('.next').addEventListener('click', () => stage.next?.());
+
+  let wheelDelta = 0;
+  let wheelLocked = false;
+  let wheelReset;
+  window.addEventListener('wheel', (event) => {
+    if (wheelLocked) return;
+    wheelDelta += event.deltaY;
+    clearTimeout(wheelReset);
+    wheelReset = setTimeout(() => { wheelDelta = 0; }, 160);
+    if (Math.abs(wheelDelta) < 60) return;
+
+    wheelLocked = true;
+    if (wheelDelta > 0) stage.next?.();
+    else stage.prev?.();
+    wheelDelta = 0;
+    setTimeout(() => { wheelLocked = false; }, 450);
+  }, { passive: true });
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchStartTime = 0;
+  window.addEventListener('touchstart', (event) => {
+    if (event.touches.length !== 1) return;
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+    touchStartTime = Date.now();
+  }, { passive: true });
+  window.addEventListener('touchend', (event) => {
+    if (!event.changedTouches.length) return;
+    const deltaX = event.changedTouches[0].clientX - touchStartX;
+    const deltaY = event.changedTouches[0].clientY - touchStartY;
+    if (Date.now() - touchStartTime > 900 || Math.abs(deltaX) < 50 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+    event.preventDefault();
+    if (deltaX < 0) stage.next?.();
+    else stage.prev?.();
+  }, { passive: false });
+</script>
+</body>
+</html>
