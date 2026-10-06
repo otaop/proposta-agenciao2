@@ -6,9 +6,9 @@ window.PROPOSTAS = [
     "subtitulo": "Criação de sete banners para exibição no evento",
     "data": "2026-10",
     "status": "Rascunho",
-    "investimento": "R$ 1.260",
+    "investimento": "R$ 1.190",
     "tipo": "Design para evento",
-    "observacao": "7 banners · R$ 180 cada",
+    "observacao": "7 banners · R$ 170 cada",
     "href": "../icfml/totem-15-anos/"
   },
   {
