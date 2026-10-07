@@ -12,6 +12,18 @@ window.PROPOSTAS = [
     "href": "../icfml/totem-15-anos/"
   },
   {
+    "id": "prada-containers-gestao-trafego-pago",
+    "cliente": "Prada Containers",
+    "titulo": "Gestão de tráfego pago",
+    "subtitulo": "Setup inicial, lançamento e gestão mensal de campanhas",
+    "data": "2026-10",
+    "status": "Rascunho",
+    "investimento": "R$ 2.500 + R$ 1.750/mês",
+    "tipo": "Tráfego pago",
+    "observacao": "Setup em 30 dias · gestão mensal após o lançamento",
+    "href": "../prada-containers/gestao-trafego-pago/"
+  },
+  {
     "id": "icfml-livro-15-anos",
     "cliente": "ICFML",
     "titulo": "Livro comemorativo · 15 anos",

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Proposta — Gestão de tráfego pago · Prada Containers</title>
+<meta name="description" content="Proposta comercial da Agência O2 para setup inicial e gestão mensal de tráfego pago da Prada Containers." />
+<link rel="icon" href="data:," />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script>
+  (function () {
+    const desktopViewport = window.matchMedia('(min-width: 821px)');
+
+    function openDesktopVersion() {
+      window.location.replace('./?desktop=1');
+    }
+
+    if (desktopViewport.matches) {
+      openDesktopVersion();
+      return;
+    }
+
+    function handleViewportChange(event) {
+      if (event.matches) openDesktopVersion();
+    }
+
+    if (desktopViewport.addEventListener) {
+      desktopViewport.addEventListener('change', handleViewportChange);
+    } else {
+      desktopViewport.addListener(handleViewportChange);
+    }
+  })();
+</script>
+<style>
+  :root {
+    --bg: #11191d;
+    --bg-deep: #0b1114;
+    --ink: #f3f6f7;
+    --ink-soft: #c4cdd1;
+    --ink-mute: #7f9098;
+    --line: rgba(255,255,255,.09);
+    --line-strong: rgba(255,255,255,.16);
+    --accent: #f2a65a;
+    --accent-deep: #241608;
+    --card: rgba(255,255,255,.028);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    padding: 0 0 calc(92px + env(safe-area-inset-bottom));
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, p { margin: 0; }
+  .topbar {
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    background: rgba(25,21,38,.9);
+    backdrop-filter: blur(16px);
+  }
+  .topbar img { width: 88px; height: auto; }
+  .topbar .counter { color: var(--ink-mute); font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+  .topbar .counter strong { color: var(--ink); font-weight: 600; }
+  .progress {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width .15s ease;
+  }
+  main { padding-top: 56px; }
+  .screen { padding: 52px 20px 58px; border-bottom: 1px solid var(--line); }
+  .screen.setup { padding-bottom: 26px; }
+  .screen.setup + .screen.management { padding-top: 26px; }
+  .cover {
+    min-height: calc(100vh - 56px);
+    min-height: calc(100svh - 56px);
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 13px 7px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink-soft);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  .eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .cover h1 {
+    margin-top: 30px;
+    max-width: 360px;
+    font-family: "Inter Tight", "Inter", sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -.04em;
+  }
+  .cover h1 span { display: block; color: var(--ink-soft); font-weight: 400; }
+  .meta { display: grid; gap: 16px; margin-top: 42px; }
+  .meta div { padding-top: 14px; border-top: 1px solid var(--line); }
+  .meta small { display: block; margin-bottom: 5px; color: var(--ink-mute); font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+  .meta strong { font-size: 15px; font-weight: 500; }
+
+  .section-title h2 {
+    margin-top: 28px;
+    font-family: "Inter Tight", "Inter", sans-serif;
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1.03;
+    letter-spacing: -.035em;
+  }
+  .section-title h2 span { display: block; color: var(--ink-soft); font-weight: 400; }
+  .section-title > p { margin-top: 18px; color: var(--ink-soft); font-size: 16px; line-height: 1.55; }
+  .step-content { margin-top: 28px; }
+  .step-index { display: block; color: var(--accent); font-family: "Inter Tight", "Inter", sans-serif; font-size: 88px; font-weight: 600; line-height: .82; letter-spacing: -.07em; }
+  .step-content > p { margin-top: 18px; color: var(--ink-soft); font-size: 15px; line-height: 1.55; }
+  .workstreams { display: grid; gap: 26px; margin-top: 34px; }
+  .workstream { padding-top: 18px; border-top: 2px solid var(--accent); }
+  .stream-top { display: flex; align-items: center; gap: 12px; }
+  .stream-icon { flex: 0 0 44px; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(242,166,90,.44); border-radius: 13px; background: rgba(242,166,90,.08); color: var(--accent); }
+  .stream-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .workstream small { color: var(--accent); font-size: 9px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+  .workstream h3 { margin-top: 10px; font-family: "Inter Tight", "Inter", sans-serif; font-size: 27px; font-weight: 600; line-height: 1.05; }
+  .workstream > p { margin-top: 10px; color: var(--ink-soft); font-size: 15px; line-height: 1.5; }
+  .work-items { margin: 16px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .work-items li { padding: 15px 0; border-bottom: 1px solid var(--line); }
+  .work-items strong { display: block; color: var(--ink); font-size: 17px; font-weight: 600; }
+  .work-items span { display: block; margin-top: 5px; color: var(--ink-mute); font-size: 14px; line-height: 1.45; }
+  .workflow-head > p { margin-top: 18px; color: var(--ink-soft); font-size: 15px; line-height: 1.55; }
+  .workflow-steps { display: grid; margin-top: 34px; padding-left: 20px; border-left: 2px solid rgba(242,166,90,.45); }
+  .workflow-step { position: relative; padding: 0 0 32px 18px; }
+  .workflow-step:last-child { padding-bottom: 12px; }
+  .workflow-number { position: absolute; top: -3px; left: -34px; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--accent); color: var(--accent-deep); font-size: 10px; font-weight: 700; }
+  .workflow-step small { color: var(--accent); font-size: 9px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+  .workflow-step h3 { margin-top: 8px; font-family: "Inter Tight", "Inter", sans-serif; font-size: 24px; font-weight: 600; line-height: 1.08; }
+  .workflow-step p { margin-top: 8px; color: var(--ink-soft); font-size: 14px; line-height: 1.5; }
+  .workflow-after { margin-top: 26px; padding: 18px; border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; background: var(--card); }
+  .workflow-after small { display: block; color: var(--accent); font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .workflow-after strong { display: block; margin-top: 9px; color: var(--ink); font-size: 15px; font-weight: 600; line-height: 1.45; }
+  .offer-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 10px; margin-top: 28px; }
+  .offer { min-width: 0; padding: 18px 14px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+  .offer.primary { border-color: rgba(242,166,90,.72); background: linear-gradient(145deg, rgba(242,166,90,.13), rgba(255,255,255,.025)); box-shadow: inset 3px 0 0 var(--accent); }
+  .offer-step { display: block; min-height: 26px; color: var(--accent); font-size: 8px; font-weight: 700; letter-spacing: .11em; line-height: 1.3; text-transform: uppercase; }
+  .offer h3 { margin-top: 10px; font-family: "Inter Tight", "Inter", sans-serif; font-size: 20px; font-weight: 600; line-height: 1.05; }
+  .offer > p { margin-top: 9px; min-height: 78px; color: var(--ink-soft); font-size: 12px; line-height: 1.45; }
+  .offer strong { display: block; margin-top: 16px; color: var(--accent); font-family: "Inter Tight", "Inter", sans-serif; font-size: 31px; font-weight: 600; letter-spacing: -.04em; }
+  .offer strong span { display: block; margin-top: 2px; color: var(--ink-mute); font-family: "Inter", sans-serif; font-size: 8px; letter-spacing: .06em; text-transform: uppercase; }
+  .offer strong .price-inline { display: inline; margin: 0 0 0 4px; }
+  .offer-caption { margin-top: 9px; color: var(--ink); font-size: 10px; line-height: 1.35; }
+  .conditions { display: grid; gap: 10px; margin-top: 24px; }
+  .condition { padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+  .condition small { display: block; color: var(--ink-mute); font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+  .condition strong { display: block; margin-top: 8px; color: var(--ink); font-family: "Inter Tight", "Inter", sans-serif; font-size: 21px; font-weight: 600; line-height: 1.1; letter-spacing: -.02em; }
+  .condition span { display: block; margin-top: 6px; color: var(--ink-soft); font-size: 12px; line-height: 1.45; }
+  .commercial-note { margin-top: 20px; color: var(--ink-mute); font-size: 13px; line-height: 1.55; }
+  .footer { padding: 28px 20px; color: var(--ink-mute); font-size: 12px; }
+  .wa-cta {
+    position: fixed;
+    z-index: 30;
+    left: 16px;
+    right: 16px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-deep);
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .wa-cta svg { width: 18px; height: 18px; fill: currentColor; }
+  .wa-cta:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <img src="assets/logo-o2.png" alt="Agência O2" />
+  <span class="counter"><strong id="current-section">01</strong> / 05</span>
+  <span class="progress" id="page-progress" aria-hidden="true"></span>
+</header>
+
+<main>
+  <section class="screen cover">
+    <span class="eyebrow">Proposta comercial · 2026</span>
+    <h1>Gestão de tráfego pago <span>para Prada Containers.</span></h1>
+    <div class="meta">
+      <div><small>Projeto</small><strong>Aquisição digital</strong></div>
+      <div><small>Modelo</small><strong>Setup + gestão mensal</strong></div>
+      <div><small>Data</small><strong>Outubro · 2026</strong></div>
+    </div>
+  </section>
+
+  <section class="screen stage-detail setup section-title">
+    <div class="step-intro"><span class="eyebrow">Etapa 01</span><div class="step-content"><strong class="step-index">01</strong><h2>Setup <span>inicial.</span></h2><p>Implantação da landing page, do tracking, da captação dos leads e das campanhas iniciais.</p></div></div>
+    <div class="workstreams" aria-label="Frentes do setup inicial">
+      <article class="workstream"><div class="stream-top"><span class="stream-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18M8 4v5"></path><circle cx="12" cy="14" r="2.5"></circle><path d="m14 16 3 2"></path></svg></span><small>Conversão</small></div><h3>Base de conversão</h3><p>Criação da landing page, publicação no domínio e configuração dos formulários.</p><ul class="work-items"><li><strong>Landing page</strong><span>1 página responsiva com conteúdo, formulário e CTA.</span></li><li><strong>Domínio e hospedagem</strong><span>DNS, SSL, publicação e configurações técnicas.</span></li><li><strong>Formulários</strong><span>Captação, validação e teste completo do envio.</span></li></ul></article>
+      <article class="workstream"><div class="stream-top"><span class="stream-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"></circle><circle cx="18" cy="6" r="2.5"></circle><circle cx="12" cy="18" r="2.5"></circle><path d="m8 7.5 3 8M16 7.5l-3 8M8.5 6h7"></path></svg></span><small>Dados e automação</small></div><h3>Dados e integrações</h3><p>Configuração do tracking, do destino dos leads e da automação de recebimento.</p><ul class="work-items"><li><strong>Tracking avançado</strong><span>GTM, GA4, pixels, eventos, UTMs e server-side.</span></li><li><strong>Destino dos leads</strong><span>Definição do canal, dos campos e do fluxo de encaminhamento.</span></li><li><strong>Automação</strong><span>1 fluxo de captura, notificação e acompanhamento.</span></li></ul></article>
+      <article class="workstream"><div class="stream-top"><span class="stream-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M22 12h-3M12 22v-3M2 12h3"></path></svg></span><small>Aquisição</small></div><h3>Campanha e lançamento</h3><p>Planejamento, configuração da conta e produção dos anúncios para iniciar a veiculação.</p><ul class="work-items"><li><strong>Planejamento e acessos</strong><span>Objetivos, públicos, indicadores e permissões.</span></li><li><strong>Conta e campanhas</strong><span>Faturamento, públicos, orçamento e conversões.</span></li><li><strong>Anúncios iniciais</strong><span>Copy, até 6 variações, revisão e publicação.</span></li></ul></article>
+    </div>
+  </section>
+
+  <section class="screen stage-detail management section-title">
+    <div class="step-intro"><span class="eyebrow">Etapa 02</span><div class="step-content"><strong class="step-index">02</strong><h2>Gestão de <span>tráfego pago.</span></h2><p>Operação contínua das campanhas para controlar investimento, testar hipóteses e melhorar resultados.</p></div></div>
+    <div class="workstreams" aria-label="Frentes da gestão mensal">
+      <article class="workstream"><div class="stream-top"><span class="stream-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3"></path><path d="M2 19h21"></path></svg></span><small>Estratégia de mídia</small></div><h3>Direção e orçamento</h3><p>Decisões mensais sobre prioridades, públicos e distribuição do investimento.</p><ul class="work-items"><li><strong>Planejamento mensal</strong><span>Campanhas, ofertas, metas e próximos ciclos.</span></li><li><strong>Controle da verba</strong><span>Ritmo, realocação e prevenção de desperdícios.</span></li><li><strong>Públicos e termos</strong><span>Audiências, exclusões e intenção de busca.</span></li></ul></article>
+      <article class="workstream"><div class="stream-top"><span class="stream-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path><circle cx="8" cy="6" r="2"></circle><circle cx="15" cy="12" r="2"></circle><circle cx="11" cy="18" r="2"></circle></svg></span><small>Performance</small></div><h3>Otimização e testes</h3><p>Acompanhamento frequente para identificar e aplicar melhorias.</p><ul class="work-items"><li><strong>Monitoramento</strong><span>Entrega, conversões e comportamento das campanhas.</span></li><li><strong>Otimizações</strong><span>Lances, horários, dispositivos e posicionamentos.</span></li><li><strong>Testes A/B</strong><span>Mensagem, público, criativo, oferta e landing page.</span></li></ul></article>
+      <article class="workstream"><div class="stream-top"><span class="stream-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 1.4 4.2L18 9l-4.6 1.8L12 15l-1.4-4.2L6 9l4.6-1.8L12 3Z"></path><path d="m19 14 .8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14ZM5 14l.7 1.8 1.8.7-1.8.7L5 19l-.7-1.8-1.8-.7 1.8-.7L5 14Z"></path></svg></span><small>Inteligência criativa</small></div><h3>Criativos e inteligência</h3><p>Renovação das mensagens e leitura dos dados que orientam a próxima rodada.</p><ul class="work-items"><li><strong>Novas adaptações</strong><span>Até 4 variações mensais para os testes.</span></li><li><strong>Qualidade dos leads</strong><span>Origem dos contatos, retorno comercial e saúde do tracking.</span></li><li><strong>Relatório e reunião</strong><span>Resultados, aprendizados e próximos testes.</span></li></ul></article>
+    </div>
+  </section>
+
+  <section class="screen commercial section-title">
+    <span class="eyebrow">Investimento e condições</span>
+    <h2>Duas etapas, <span>dois investimentos.</span></h2>
+    <p>O setup implanta e lança a estrutura. A gestão recorrente começa a partir do segundo mês.</p>
+    <div class="offer-grid">
+      <article class="offer primary"><span class="offer-step">Etapa 01 · Primeiro mês</span><h3>Setup inicial</h3><p>Implantação completa, anúncios iniciais e lançamento da campanha.</p><strong>R$ 2.500 <span class="price-inline">único</span></strong><div class="offer-caption">Pagamento: à vista e antecipado.</div></article>
+      <article class="offer"><span class="offer-step">Etapa 02 · Segundo mês</span><h3>Gestão mensal</h3><p>Operação, otimização, testes e relatório.</p><strong>R$ 1.750 <span>/ mês</span></strong><div class="offer-caption">Pagamento: mensalidade antecipada.</div></article>
+    </div>
+    <div class="conditions" aria-label="Condições comerciais">
+      <div class="condition"><small>Prazo do setup</small><strong>30 dias</strong><span>após assinatura do contrato e pagamento do setup</span></div>
+      <div class="condition"><small>Início da gestão</small><strong>Após o lançamento</strong><span>com acompanhamento mensal das campanhas</span></div>
+      <div class="condition"><small>Validade</small><strong>10 dias</strong><span>a partir do envio desta proposta</span></div>
+    </div>
+    <p class="commercial-note">Verba de mídia, hospedagem e ferramentas contratadas não estão incluídas. Escopo base: 1 landing page, 1 integração para recebimento dos leads, 1 automação, até 6 anúncios iniciais e até 4 adaptações mensais.</p>
+  </section>
+
+  <section class="screen workflow section-title">
+    <div class="workflow-head"><span class="eyebrow">Etapas de trabalho</span><h2>Do setup ao lançamento, <span>em 30 dias.</span></h2><p>O cronograma começa a partir da assinatura do contrato e do pagamento do setup.</p></div>
+    <div class="workflow-steps" aria-label="Timeline do setup inicial">
+      <article class="workflow-step"><strong class="workflow-number">01</strong><small>Planejamento</small><h3>Kickoff e alinhamento</h3><p>Objetivos, canais, públicos, indicadores e acesso à conta de anúncios e às ferramentas existentes, se houver.</p></article>
+      <article class="workflow-step"><strong class="workflow-number">02</strong><small>Construção</small><h3>Landing page e infraestrutura</h3><p>Conteúdo, layout, formulário, domínio, hospedagem e publicação.</p></article>
+      <article class="workflow-step"><strong class="workflow-number">03</strong><small>Medição</small><h3>Tracking e destino dos leads</h3><p>Eventos, pixels, UTMs, server-side, encaminhamento e automação.</p></article>
+      <article class="workflow-step"><strong class="workflow-number">04</strong><small>Aquisição</small><h3>Campanhas e anúncios</h3><p>Conta de anúncios, públicos, orçamento, estrutura e criativos iniciais.</p></article>
+      <article class="workflow-step"><strong class="workflow-number">05</strong><small>Lançamento</small><h3>Testes e ativação</h3><p>Validação dos formulários, eventos e integrações antes da veiculação.</p></article>
+    </div>
+    <div class="workflow-after"><small>Depois do lançamento</small><strong>Começa a gestão mensal: monitoramento, otimizações, testes, novos criativos e relatório.</strong></div>
+  </section>
+</main>
+
+<footer class="footer">Agência O2 · Proposta para Prada Containers</footer>
+
+<a class="wa-cta" href="https://api.whatsapp.com/send?phone=5547996461562&amp;text=Quero%20aprovar%20a%20proposta%20de%20gest%C3%A3o%20de%20tr%C3%A1fego%20da%20Prada%20Containers" target="_blank" rel="noopener noreferrer">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.07 0C5.49 0 .14 5.35.14 11.93c0 2.1.55 4.15 1.6 5.95L.04 24l6.27-1.64a11.92 11.92 0 0 0 5.75 1.46h.01c6.58 0 11.93-5.35 11.93-11.93 0-3.19-1.24-6.18-3.48-8.41ZM12.07 21.8h-.01a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.72.98.99-3.63-.24-.37a9.87 9.87 0 1 1 8.37 4.61Zm5.41-7.39c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47a8.92 8.92 0 0 1-1.65-2.05c-.17-.3-.02-.46.13-.61.13-.13.3-.35.44-.52.15-.17.2-.3.3-.49.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.91-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.87 1.21 3.07c.15.2 2.09 3.19 5.06 4.47.71.3 1.26.49 1.69.63.71.23 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35Z"/></svg>
+  Aprovar proposta
+</a>
+<script>
+  const sections = [...document.querySelectorAll('.screen')];
+  const currentSection = document.getElementById('current-section');
+  const pageProgress = document.getElementById('page-progress');
+  let progressTicking = false;
+
+  const updateProgress = () => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
+    pageProgress.style.width = `${progress * 100}%`;
+
+    const marker = window.scrollY + window.innerHeight * .42;
+    let activeIndex = 0;
+    sections.forEach((section, index) => {
+      if (marker >= section.offsetTop) activeIndex = index;
+    });
+    currentSection.textContent = String(activeIndex + 1).padStart(2, '0');
+    progressTicking = false;
+  };
+
+  const requestProgressUpdate = () => {
+    if (progressTicking) return;
+    progressTicking = true;
+    requestAnimationFrame(updateProgress);
+  };
+
+  window.addEventListener('scroll', requestProgressUpdate, { passive: true });
+  window.addEventListener('resize', requestProgressUpdate);
+  updateProgress();
+</script>
+</body>
+</html>
